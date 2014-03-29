@@ -41,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Containers\Pair.cs" />
+    <Compile Include="Containers\PriorityQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
+    <Compile Include="Containers\Triple.cs" />
     <Compile Include="Framework\Lock\BaseLock.cs" />
     <Compile Include="Framework\Lock\EventEx.cs" />
+    <Compile Include="Framework\SingletonHolder.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJob.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJobProcessor.cs" />
     <Compile Include="Framework\ThreadSystem\ScheduleSystem\JobScheduleQueue.cs" />

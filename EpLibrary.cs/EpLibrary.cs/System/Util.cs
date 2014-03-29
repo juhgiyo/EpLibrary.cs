@@ -18,5 +18,12 @@ namespace EpLibrary.cs
             }
             return coreCount;
         }
+
+        private static Random m_random = new Random();
+        public static float Random()
+        {
+            var result = m_random.NextDouble();
+            return (float)result;
+        }
     }
 }
