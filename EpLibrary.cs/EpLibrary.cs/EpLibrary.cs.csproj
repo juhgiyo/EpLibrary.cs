@@ -47,6 +47,7 @@
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
     <Compile Include="Containers\Triple.cs" />
+    <Compile Include="Framework\CmdLineOptions.cs" />
     <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
     <Compile Include="Framework\FileSystem\BinaryFile.cs" />
     <Compile Include="Framework\FileSystem\FolderHelper.cs" />
