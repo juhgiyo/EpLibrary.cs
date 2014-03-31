@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Instrumentation" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +47,17 @@
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
     <Compile Include="Containers\Triple.cs" />
+    <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
+    <Compile Include="Framework\FileSystem\BinaryFile.cs" />
+    <Compile Include="Framework\FileSystem\FolderHelper.cs" />
+    <Compile Include="Framework\FileSystem\LogWriter.cs" />
+    <Compile Include="Framework\FileSystem\PropertiesFile.cs" />
+    <Compile Include="Framework\FileSystem\TextFile.cs" />
     <Compile Include="Framework\Lock\BaseLock.cs" />
     <Compile Include="Framework\Lock\EventEx.cs" />
+    <Compile Include="Framework\Lock\InterlockedEx.cs" />
+    <Compile Include="Framework\Lock\MutexEx.cs" />
+    <Compile Include="Framework\Lock\NoLock.cs" />
     <Compile Include="Framework\SingletonHolder.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJob.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJobProcessor.cs" />
@@ -58,7 +68,13 @@
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadDelegate.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
+    <Compile Include="Math\PrimeNum.cs" />
+    <Compile Include="Math\RandomEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\ConsoleHelper.cs" />
+    <Compile Include="System\DateTimeHelper.cs" />
+    <Compile Include="System\Endian.cs" />
+    <Compile Include="System\RegistryHelper.cs" />
     <Compile Include="System\Util.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,7 +42,7 @@ using System.Text;
 
 namespace EpLibrary.cs
 {
-    public class Triple<T,U,V>
+    public sealed class Triple<T,U,V>
     {
         public Triple()
         {

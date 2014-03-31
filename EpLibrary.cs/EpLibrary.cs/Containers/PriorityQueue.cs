@@ -43,7 +43,7 @@ using System.Collections;
 
 namespace EpLibrary.cs
 {
-    public class PriorityQueue<T> where T : IComparable
+    public sealed class PriorityQueue<T> where T : IComparable
     {
         private List<T> m_data;
 

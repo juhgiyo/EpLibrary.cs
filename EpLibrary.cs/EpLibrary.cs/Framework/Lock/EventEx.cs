@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace EpLibrary.cs
 {
-    public class EventEx:BaseLock
+    public sealed class EventEx:BaseLock
     {
         private EventWaitHandle m_event;
 		private bool m_isInitialRaised;
@@ -26,7 +26,7 @@ namespace EpLibrary.cs
             m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
         }
 
-        public EventEx(bool isInitialRaised, EventResetMode eventResetMode, String eventName = null)
+        public EventEx(bool isInitialRaised, EventResetMode eventResetMode, String eventName = null):base()
         {
             m_eventResetMode=eventResetMode;
 	        m_isInitialRaised=isInitialRaised;
@@ -34,20 +34,16 @@ namespace EpLibrary.cs
             m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
         }
 
-		public EventEx(EventEx b)
+		public EventEx(EventEx b):base(b)
         {
             m_isInitialRaised=b.m_isInitialRaised;
 	        m_name=b.m_name;
             m_eventResetMode=b.m_eventResetMode;
-            if(m_name.Count()==0)
-            {
-                m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode);
-            }
+            m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
         }
 
 		~EventEx()
         {
-            m_event=null;
         }
 
 		public override bool Lock()

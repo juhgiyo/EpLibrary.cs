@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
-    public class JobScheduleQueue:ThreadSafePQueue<BaseJob>
+    public sealed class JobScheduleQueue:ThreadSafePQueue<BaseJob>
     {
        	public JobScheduleQueue()
         {

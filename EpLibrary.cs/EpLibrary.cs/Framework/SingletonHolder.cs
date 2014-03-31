@@ -43,7 +43,7 @@ using System.Collections;
 
 namespace EpLibrary.cs
 {
-    public class SingletonHolder<T> where T : new()
+    public sealed class SingletonHolder<T> where T : new()
     {
         private static T m_instance;
 

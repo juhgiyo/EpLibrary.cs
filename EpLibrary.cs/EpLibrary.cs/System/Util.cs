@@ -7,8 +7,15 @@ using System.Management;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// Utility Class
+    /// </summary>
     public class Util
     {
+        /// <summary>
+        /// Return number of cores during runtime.
+        /// </summary>
+        /// <returns>number of cores</returns>
         public static int GetNumberOfCores()
         {
             int coreCount = 0;
@@ -19,11 +26,5 @@ namespace EpLibrary.cs
             return coreCount;
         }
 
-        private static Random m_random = new Random();
-        public static float Random()
-        {
-            var result = m_random.NextDouble();
-            return (float)result;
-        }
     }
 }

@@ -44,7 +44,7 @@ using System.Collections;
 namespace EpLibrary.cs
 {
 
-    public class Pair<T, U>
+    public sealed class Pair<T, U>
     {
         public Pair()
         {

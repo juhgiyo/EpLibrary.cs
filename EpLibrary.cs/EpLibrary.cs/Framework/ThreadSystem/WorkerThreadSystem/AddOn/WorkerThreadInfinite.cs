@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace EpLibrary.cs
 {
-    public class WorkerThreadInfinite:BaseWorkerThread
+    public sealed class WorkerThreadInfinite:BaseWorkerThread
     {
         public WorkerThreadInfinite(ThreadLifePolicy policy):base(policy)
         {

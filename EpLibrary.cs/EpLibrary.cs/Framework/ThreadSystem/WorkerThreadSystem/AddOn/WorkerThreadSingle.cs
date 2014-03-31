@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace EpLibrary.cs
 {
-    public class WorkerThreadSingle:BaseWorkerThread
+    public sealed class WorkerThreadSingle:BaseWorkerThread
     {
         public WorkerThreadSingle(ThreadLifePolicy policy):base(policy)
 		{}

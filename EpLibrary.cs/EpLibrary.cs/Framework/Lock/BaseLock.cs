@@ -12,7 +12,9 @@ namespace EpLibrary.cs
         public BaseLock()
         {
         }
-
+        public BaseLock(BaseLock b)
+        {
+        }
 		~BaseLock()
         {
         }
