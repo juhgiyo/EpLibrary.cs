@@ -9,12 +9,22 @@ namespace EpLibrary.cs
 {
     public sealed class InterlockedEx:BaseLock
     {
+        /// <summary>
+        /// lock
+        /// </summary>
         private int m_interLock;
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public InterlockedEx():base()
         {
             m_interLock = 0;
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public InterlockedEx(NoLock b)
             : base(b)
         {
@@ -25,6 +35,10 @@ namespace EpLibrary.cs
         {
         }
 
+        /// <summary>
+        /// Locks the critical section
+        /// </summary>
+        /// <returns>true if locked, otherwise false</returns>
         public override bool Lock()
         {
             while (Interlocked.Exchange(ref m_interLock, 1) != 0)
@@ -34,6 +48,12 @@ namespace EpLibrary.cs
             return true;
         }
 
+        /// <summary>
+        /// Try to lock the critical section
+        /// 
+        /// If other thread is already in the critical section, it just returns false and continue, otherwise obtain the ciritical section
+        /// </summary>
+        /// <returns>true if locked, otherwise false</returns>
         public override bool TryLock()
         {
             bool ret = false;
@@ -44,6 +64,11 @@ namespace EpLibrary.cs
             return ret;
         }
 
+        /// <summary>
+        /// Try to lock the critical section for given time
+        /// </summary>
+        /// <param name="dwMilliSecond">the wait time</param>
+        /// <returns>true if locked, otherwise false</returns>
         public override bool TryLockFor(int dwMilliSecond)
         {
             bool ret=false;
@@ -70,6 +95,9 @@ namespace EpLibrary.cs
             return ret;
         }
 
+        /// <summary>
+        /// Leave the critical section
+        /// </summary>
         public override void Unlock()
         {
             Interlocked.Exchange(ref m_interLock, 0);

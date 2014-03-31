@@ -9,11 +9,21 @@ using System.Runtime.InteropServices;
 
 namespace EpLibrary.cs
 {
-    
+    /// <summary>
+    /// This is a class for Folder Processing Class
+    /// </summary>
     public class FolderHelper
     {
+        /// <summary>
+        /// Max path size
+        /// </summary>
         public const int MAX_PATH = 260;
 
+        /// <summary>
+        /// Show the Choose Folder Dialog and return true if successfully folder is chosen with chosen folder path.
+        /// </summary>
+        /// <param name="title">the title of the choose folder dialog</param>
+        /// <returns>selected folder path</returns>
         public static String ChooseFolder(String title)
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
@@ -26,6 +36,12 @@ namespace EpLibrary.cs
             }
             return null;
         }
+        /// <summary>
+        /// Show the Choose Folder Dialog and return true if successfully folder is chosen with chosen folder path.
+        /// </summary>
+        /// <param name="title">the title of the choose folder dialog</param>
+        /// <param name="rootFolder">the root folder</param>
+        /// <returns>selected folder path</returns>
         public static String ChooseFolder(String title, Environment.SpecialFolder rootFolder)
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
@@ -40,6 +56,11 @@ namespace EpLibrary.cs
             return null;
         }
 
+        /// <summary>
+        /// Create given folder path from file system
+        /// </summary>
+        /// <param name="path">the file path to create</param>
+        /// <returns>true if the folder is created successfully, otherwise false</returns>
         public static DirectoryInfo CreateFolder(String path)
         {
             try
@@ -52,6 +73,10 @@ namespace EpLibrary.cs
             }
        }
 
+        /// <summary>
+        /// Delete given folder path from file system
+        /// </summary>
+        /// <param name="path"> the file path to delete</param>
         public static void DeleteFolder(String path)
         {
             try
@@ -63,11 +88,23 @@ namespace EpLibrary.cs
             } 
         }
 
+        /// <summary>
+        /// Check if the given path exists
+        /// </summary>
+        /// <param name="path">the file path to check</param>
+        /// <returns>true if the folder exists, otherwise false</returns>
         public static bool IsPathExist(String path)
         {
             return Directory.Exists(path);
         }
 
+        /// <summary>
+        /// Copy the source file to the destination file
+        /// </summary>
+        /// <param name="fromFile">the source file path</param>
+        /// <param name="toFile">the destination file path</param>
+        /// <param name="overWrite">overwrite if exist</param>
+        /// <returns>true if the copied successfully, otherwise false</returns>
         public static bool CopyFile(String fromFile, String toFile, bool overWrite = true)
         {
             try
@@ -80,6 +117,11 @@ namespace EpLibrary.cs
                 return false;
             }
         }
+        /// <summary>
+        /// Return only the directory of given file path with file name
+        /// </summary>
+        /// <param name="filePath">the full path of the file with file name</param>
+        /// <returns>the directory ending with "\", which contains the given file</returns>
         public static String GetPathOnly(String filePath)
         {
             String retString = filePath;
@@ -95,6 +137,11 @@ namespace EpLibrary.cs
             return retString;
         }
 
+        /// <summary>
+        /// Return only the extension of given file path
+        /// </summary>
+        /// <param name="filePath">the full path of the file with file name</param>
+        /// <returns>the extension of given file path</returns>
         public static String GetFileExtension(String filePath)
         {
             String tmpString = filePath;
@@ -113,6 +160,11 @@ namespace EpLibrary.cs
             return retString;
         }
 
+        /// <summary>
+        /// Return the simple name of the file without extension
+        /// </summary>
+        /// <param name="filePath">the full path of the file with file name</param>
+        /// <returns>the simple name of given file path without extension</returns>
         public static String GetFileTitle(String filePath)
         {
             String tmpString = filePath;
@@ -140,6 +192,11 @@ namespace EpLibrary.cs
             return retString;
         }
 
+        /// <summary>
+        /// Return the simple name of the file
+        /// </summary>
+        /// <param name="filePath">the full path of the file with file name</param>
+        /// <returns>the simple name of given file path</returns>
         public static String GetFileName(String filePath)
         {
             String tmpString = filePath;
@@ -160,6 +217,10 @@ namespace EpLibrary.cs
         [DllImport("coredll.dll", SetLastError = true)]
         private static extern int GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize); 
 
+        /// <summary>
+        /// Return the full path with file name for the current executable file
+        /// </summary>
+        /// <returns>the full path of the current module</returns>
         public static String GetModuleFileName()
         {
             StringBuilder exePath = new StringBuilder(FolderHelper.MAX_PATH);
@@ -167,6 +228,10 @@ namespace EpLibrary.cs
             return exePath.ToString();
         }
         
+        /// <summary>
+        /// Return only the directory ending with "\" which contains the current executable file
+        /// </summary>
+        /// <returns>the directory ending with "\", which contains the current module</returns>
         public static String GetModuleFileDirectory()
         {
             String retString = GetModuleFileName();
@@ -177,25 +242,22 @@ namespace EpLibrary.cs
 
 
 
-    /*! 
-	@class OpenFileDialog epFolderHelper.h
-	@brief This is a class for Open File Dialog
-
-	Implements the Open File Dialog.
-	*/
-	public class OpenFileDialogEx{
-	private OpenFileDialog openFileDialog=new OpenFileDialog();
-    private IWin32Window owner = null;
-		/*!
-		Default Constructor
-
-		Initializes the Open File Dialog
-		@param[in] title the title of the dialog
-		@param[in] defaultExt The default extension
-		@param[in] defaultDir The default directory
-		@param[in] filter The file extension filter
-		@param[in] pParentWnd The parent window
-		*/
+    /// <summary>
+    /// his is a class for Open File Dialog
+    /// </summary>
+	public class OpenFileDialogEx
+    {
+	    private OpenFileDialog openFileDialog=new OpenFileDialog();
+        private IWin32Window owner = null;
+		
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="title">the title of the dialog</param>
+        /// <param name="defaultExt">the default extension</param>
+        /// <param name="defaultDir">the default directory</param>
+        /// <param name="filter">the file extension filter</param>
+        /// <param name="owner">the parent window</param>
 		public OpenFileDialogEx(String title=null, String defaultExt=null,String defaultDir=null,String filter=null, IWin32Window owner=null)
         {
             openFileDialog.Title=title;
@@ -207,51 +269,53 @@ namespace EpLibrary.cs
 
         }
 
-		/*!
-		Default Destructor
-
-		Destroy the Open File Dialog
-		*/
+	
 		~OpenFileDialogEx()
         {
         }
 
-		/*! 
-		Return full path and filename
-		@return full path and filename
-		*/
+	
+        /// <summary>
+        /// Return full path and filename
+        /// </summary>
+        /// <returns>full path and filename</returns>
 		public String GetPathName()
         {
             return openFileDialog.FileName;
         }
-		
-		/*! 
-		Return only filename
-		@return filename
-		*/
+
+        /// <summary>
+        /// Return only filename
+        /// </summary>
+        /// <returns>filename</returns>
 		public String GetFileName()
         {
             return FolderHelper.GetFileName(openFileDialog.FileName);
         }
 
+        /// <summary>
+        /// Return only ext
+        /// </summary>
+        /// <returns>ext</returns>
 		public String GetFileExt()
         {
             return FolderHelper.GetFileExtension(openFileDialog.FileName);
         }
 
-		/*!
-		Return file title
-		@return file title
-		*/
+        /// <summary>
+        /// Return file title
+        /// </summary>
+        /// <returns>file title</returns>
 		public String GetFileTitle()
         {
             return FolderHelper.GetFileTitle(openFileDialog.FileName);
         }
 
-		/*! 
-		Do modal and return Modal result
-		@return Modal result
-		*/
+
+        /// <summary>
+        /// Show dialog and return DialogResult
+        /// </summary>
+        /// <returns>DialogResult</returns>
         public virtual DialogResult ShowDialog()
         {
             if(owner!=null)
@@ -261,24 +325,21 @@ namespace EpLibrary.cs
 	}
 
 
-	/*! 
-	@class OpenMultiFileDialog epFolderHelper.h
-	@brief This is a class for Open Multi-File Dialog
-
-	Implements the Open Multi-File Dialog.
-	*/
+    /// <summary>
+    /// This is a class for Open Multi-File Dialog
+    /// </summary>
 	public class OpenMultiFileDialog{
 		private OpenFileDialog openFileDialog=new OpenFileDialog();
         private IWin32Window owner = null;
-		/*!
-		Default Constructor
 
-		Initializes the Open Multi-File Dialog
-		@param[in] title the title of the dialog
-		@param[in] defaultExt The default extension
-		@param[in] defaultDir The default directory
-		@param[in] filter The file extension filter
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="title">the title of the dialog</param>
+        /// <param name="defaultExt">The default extension</param>
+        /// <param name="defaultDir">The default directory</param>
+        /// <param name="filter">The file extension filter</param>
+        /// <param name="owner">the parent window</param>
 		public OpenMultiFileDialog(String title=null, String defaultExt=null,String defaultDir=null,String filter=null, IWin32Window owner=null)
         {
             openFileDialog.Title=title;
@@ -288,29 +349,25 @@ namespace EpLibrary.cs
             openFileDialog.Multiselect=true;
             this.owner = owner;
         }
-		/*!
-		Default Destructor
 
-		Destroy the Open Multi-File Dialog
-		*/
 		~OpenMultiFileDialog()
         {
         }
 
-		/*! 
-		Return next path name
-		@return the next path name
-		@remark when this function is first called, it returns the first path name.
-		*/
+
+        /// <summary>
+        /// Return the list of selected file names
+        /// </summary>
+        /// <returns>the list of selected file names</returns>
 		public String[] GetFileNames()
         {
             return openFileDialog.FileNames;
         }
 
-		/*! 
-		Do modal and return Modal result
-		@return Modal result
-		*/
+        /// <summary>
+        /// Show dialog and return DialogResult
+        /// </summary>
+        /// <returns>DialogResult</returns>
         public virtual DialogResult ShowDialog()
         {
             if (owner != null)
@@ -319,22 +376,20 @@ namespace EpLibrary.cs
         }
 	}
 
-	/*! 
-	@class OpenFolderDialog epFolderHelper.h
-	@brief This is a class for Open Folder Dialog
-
-	Implements the Open Folder Dialog.
-	*/
-	public class OpenFolderDialog{
-	private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-    private IWin32Window owner = null;
-		/*!
-		Default Constructor
-
-		Initializes the Open Folder Dialog
-		@param[in] hParent the parent window's handle
-		@param[in] title the title of the dialog
-		*/
+    /// <summary>
+    /// This is a class for Open Folder Dialog
+    /// </summary>
+	public class OpenFolderDialog
+    {
+	    private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        private IWin32Window owner = null;
+		
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="title">the title of the dialog</param>
+        /// <param name="showNewFolderButton">flag to show new folder button or not</param>
+        /// <param name="owner">the parent window</param>
 		public OpenFolderDialog(String title=null, bool showNewFolderButton=true, IWin32Window owner=null)
         {
               
@@ -343,27 +398,24 @@ namespace EpLibrary.cs
             this.owner = owner;
         }
 
-		/*!
-		Default Destructor
 
-		Destroy the Open Folder Dialog
-		*/
 		~OpenFolderDialog()
         {}
 
-		/*! 
-		Return full directory path
-		@return full directory path
-		*/
+
+        /// <summary>
+        /// Return full directory path
+        /// </summary>
+        /// <returns>full directory path</returns>
 		public String GetPathName() 
         {
             return folderBrowserDialog.SelectedPath;
         }
 
-		/*! 
-		Do modal and return Modal result
-		@return Modal result
-		*/
+        /// <summary>
+        /// Show dialog and return DialogResult
+        /// </summary>
+        /// <returns>DialogResult</returns>
         public virtual DialogResult ShowDialog()
         {
             if (owner != null)
@@ -372,24 +424,24 @@ namespace EpLibrary.cs
         }
 	}
 
-	/*! 
-	@class SaveFileDialog epFolderHelper.h
-	@brief This is a class for Save File Dialog
 
-	Implements the Save File Dialog.
-	*/
-	public class SaveFileDialogEx{
+    /// <summary>
+    /// This is a class for Save File Dialog
+    /// </summary>
+	public class SaveFileDialogEx
+    {
 	    private SaveFileDialog saveFileDialog=new SaveFileDialog();
         private IWin32Window owner = null;
-		/*!
-		Default Constructor
 
-		Initializes the Save File Dialog
-		@param[in] defaultExt The default extension
-		@param[in] defaultDir The default directory
-		@param[in] filter The file extension filter
-		@param[in] pParentWnd The parent window
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="title">the title of the dialog</param>
+        /// <param name="defaultExt">The default extension</param>
+        /// <param name="defaultDir">The default directory</param>
+        /// <param name="filter">The file extension filter</param>
+        /// <param name="overwritePrompt">flag to prompt when overwrite</param>
+        /// <param name="owner">The parent window</param>
         public SaveFileDialogEx(String title = null, String defaultExt = null, String defaultDir = null, String filter = null, bool overwritePrompt = true, IWin32Window owner = null)
         {
             saveFileDialog.Title=title;
@@ -399,54 +451,52 @@ namespace EpLibrary.cs
             saveFileDialog.OverwritePrompt=overwritePrompt;
             this.owner = owner;
         }
-		/*!
-		Default Destructor
 
-		Destroy the Save File Dialog
-		*/
 		~SaveFileDialogEx()
         {}
 		
-		/*!
-		Return full path and filename
-		@return full path and filename
-		*/
+
+        /// <summary>
+        /// Return full path and filename
+        /// </summary>
+        /// <returns>full path and filename</returns>
         public String GetPathName()
         {
             return saveFileDialog.FileName;
         }
 		
-		/*!
-		Return only filename
-		@return filename
-		*/
+        /// <summary>
+        /// Return only filename
+        /// </summary>
+        /// <returns>filename</returns>
         public String GetFileName()
         {
             return FolderHelper.GetFileName(saveFileDialog.FileName);
         }
 
-		/*! 
-		Return only ext
-		@return ext
-		*/
+
+        /// <summary>
+        /// Return only ext
+        /// </summary>
+        /// <returns>ext</returns>
         public String GetFileExt()
         {
             return FolderHelper.GetFileExtension(saveFileDialog.FileName);
         }
 
-		/*! 
-		Return file title
-		@return file title
-		*/
+        /// <summary>
+        /// Return file title
+        /// </summary>
+        /// <returns>file title</returns>
         public String GetFileTitle()
         {
             return FolderHelper.GetFileTitle(saveFileDialog.FileName);
         }
 
-		/*! 
-		Do modal and return Modal result
-		@return Modal result
-		*/
+        /// <summary>
+        /// Show dialog and return DialogResult
+        /// </summary>
+        /// <returns>DialogResult</returns>
         public virtual DialogResult ShowDialog()
         {
             if (owner != null)

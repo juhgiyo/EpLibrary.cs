@@ -6,27 +6,28 @@ using System.Threading.Tasks;
 using System.IO;
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Properties File.
+    /// </summary>
     public sealed class PropertiesFile:BaseTextFile
     {
+        /// <summary>
+        /// The list of the properties
+        /// </summary>
         private Dictionary<String, String> m_propertyList=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
 
-        	/*!
-		Default Constructor
-
-		Initializes the Properties File 
-		@param[in] encodingType the encoding type for this file
-		@param[in] lockPolicyType The lock policy
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="encoding">the encoding type for this file</param>
 		public PropertiesFile(Encoding encoding=null):base(encoding)
         {
         }
 
-		/*!
-		Default Copy Constructor
-
-		Initializes the PropertiesFile 
-		@param[in] b the second object
-		*/
+        /// <summary>
+        /// Default Copy Constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public PropertiesFile(PropertiesFile b)
             : base(b)
         {
@@ -37,21 +38,16 @@ namespace EpLibrary.cs
         }
 		
 
-		/*!
-		Default Destructor
-
-		Destroy the Properties File 
-		*/
 		~PropertiesFile()
         {
         }
 
-		/*!
-		Set the property with the given key with the value given
-		@param[in] key the key of the property to change the value
-		@param[in] val the value to change the property
-		@return true if changed, otherwise false
-		*/
+        /// <summary>
+        /// Set the property with the given key with the value given
+        /// </summary>
+        /// <param name="key">the key of the property to change the value</param>
+        /// <param name="val">the value to change the property</param>
+        /// <returns></returns>
         public bool SetProperty(String key, String val)
         {
             lock(m_baseTextLock)
@@ -68,12 +64,13 @@ namespace EpLibrary.cs
 
         }
 
-		/*!
-		Get the value of the property with the given key
-		@param[in] key the key of the property to get the value
-		@param[in] retVal the value of the property of given key
-		@return true if found, otherwise false
-		*/
+
+        /// <summary>
+        /// Get the value of the property with the given key
+        /// </summary>
+        /// <param name="key">the key of the property to get the value</param>
+        /// <param name="retVal">the value of the property of given key</param>
+        /// <returns>true if found, otherwise false</returns>
         public bool GetProperty(String key, ref String retVal)
         {
             lock(m_baseTextLock)
@@ -89,12 +86,13 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Get the value of the property with the given key
-		@param[in] key the key of the property to get the value
-		@remark raises exception when key does not exists 
-		@return the value of the property of given key
-		*/
+
+        /// <summary>
+        /// Get the value of the property with the given key
+        /// </summary>
+        /// <param name="key">the key of the property to get the value</param>
+        /// <returns>the value of the property of given key</returns>
+        /// <remarks>raises exception when key does not exists</remarks>
         public String GetProperty(String key)
         {
             lock(m_baseTextLock)
@@ -105,12 +103,12 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Add new property with the given key and value
-		@param[in] key the key of the property to add
-		@param[in] val the value of the new property
-		@return true if successfully added, otherwise false
-		*/
+        /// <summary>
+        /// Add new property with the given key and value
+        /// </summary>
+        /// <param name="key">the key of the property to add</param>
+        /// <param name="val">the value of the new property</param>
+        /// <returns>true if successfully added, otherwise false</returns>
         public bool AddProperty(String key, String val)
         {
             lock(m_baseTextLock)
@@ -124,11 +122,12 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Remove the property with the given key
-		@param[in] key the key of the property to remove
-		@return true if successfully removed, otherwise false
-		*/
+
+        /// <summary>
+        /// Remove the property with the given key
+        /// </summary>
+        /// <param name="key">the key of the property to remove</param>
+        /// <returns>true if successfully removed, otherwise false</returns>
         public bool RemoveProperty(String key)
         {
             lock(m_baseTextLock)
@@ -139,9 +138,9 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Clear the list of the properties
-		*/
+        /// <summary>
+        /// Clear the list of the properties
+        /// </summary>
         public void Clear()
         {
             lock(m_baseTextLock)
@@ -150,13 +149,11 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		If given key exists, then return the value, and 
-		if given key does not exist, then create key and 
-		return the reference to empty value.
-		@param[in] key the key of the property to find/create
-		@return value of the given key.
-		*/
+        /// <summary>
+        /// If given key exists, then return the value, and if given key does not exist, then create key and return the reference to empty value.
+        /// </summary>
+        /// <param name="key">the key of the property to find/create</param>
+        /// <returns>value of the given key.</returns>
 		public  String this[String key]
         {
             get{
@@ -182,10 +179,9 @@ namespace EpLibrary.cs
         }
 
 
-		/*!
-		Loop Function that writes to the file.
-		@remark Sub classes should implement this function
-		*/
+        /// <summary>
+        /// Loop Function that writes to the file.
+        /// </summary>
 		protected override void writeLoop()
         {
             StringBuilder toFileString=new StringBuilder();
@@ -199,11 +195,10 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Actual Load Function that loads values from the file.
-		@remark Sub classes should implement this function
-		@param[in] lines the all data from the file
-		*/
+        /// <summary>
+        /// Actual Load Function that loads values from the file.
+        /// </summary>
+        /// <param name="stream">the stream from the file</param>
 		protected override void loadFromFile(StreamReader stream)
         {
             m_propertyList.Clear();
@@ -228,13 +223,13 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Parse the key and value from the line buffer
-		@param[in] buf the buffer that holds a line
-		@param[out] retKey the key part of the given line
-		@param[out] retVal the value part of the given line
-		@return true if successfully parsed the key and value, otherwise false
-		*/
+        /// <summary>
+        /// Parse the key and value from the line buffer
+        /// </summary>
+        /// <param name="buf">the buffer that holds a line</param>
+        /// <param name="retKey">the key part of the given line</param>
+        /// <param name="retVal">the value part of the given line</param>
+        /// <returns>true if successfully parsed the key and value, otherwise false</returns>
         private bool getValueKeyFromLine(String buf, ref String retKey, ref String retVal)
         {
             char splitChar='\0';

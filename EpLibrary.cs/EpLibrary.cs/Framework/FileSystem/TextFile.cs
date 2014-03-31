@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 using System.IO;
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Text File.
+    /// </summary>
     public sealed class TextFile:BaseTextFile
     {
-        String m_text;
-        		/*!
-		Default Constructor
+        /// <summary>
+        /// the text
+        /// </summary>
+        private String m_text;
 
-		Initializes the Properties File 
-		@param[in] encodingType the encoding type for this file
-		@param[in] lockPolicyType The lock policy
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="encoding">the encoding type for this file</param>
 		public TextFile(Encoding encoding=null):base(encoding)
         {
             m_text="";
         }
 
-		/*!
-		Default Copy Constructor
-
-		Initializes the PropertiesFile 
-		@param[in] b the second object
-		*/
+        /// <summary>
+        /// Default Copy Constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
 		public TextFile(TextFile b):base(b)
         {
             lock(m_baseTextLock)
@@ -35,20 +37,15 @@ namespace EpLibrary.cs
             }
         }
 
-	
-		/*!
-		Default Destructor
-
-		Destroy the Properties File 
-		*/
 		~TextFile()
         {
         }
 
-		/*!
-		Set the text with the given text
-		@param[in] val the text value
-		*/
+
+        /// <summary>
+        /// Set the text with the given text
+        /// </summary>
+        /// <param name="val">the text value</param>
 		void SetText(String val)
         {
             lock(m_baseTextLock)
@@ -57,10 +54,11 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Get the value of the textfile
-		@return text value holding
-		*/
+
+        /// <summary>
+        /// Get the value of the text
+        /// </summary>
+        /// <returns>text value holding</returns>
 		String GetText()
         {
             lock(m_baseTextLock)
@@ -70,9 +68,9 @@ namespace EpLibrary.cs
         }
 
 	
-		/*!
-		Clear the text
-		*/
+        /// <summary>
+        /// Clear the text
+        /// </summary>
 		void Clear()
         {
             lock(m_baseTextLock)
@@ -81,20 +79,19 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Loop Function that writes to the file.
-		@remark Sub classes should implement this function
-		*/
+	
+        /// <summary>
+        /// Loop Function that writes to the file.
+        /// </summary>
 		protected override void writeLoop()
         {
             writeToFile(m_text);
         }
 
-		/*!
-		Actual Load Function that loads values from the file.
-		@remark Sub classes should implement this function
-		@param[in] lines the all data from the file
-		*/
+        /// <summary>
+        /// Actual Load Function that loads values from the file.
+        /// </summary>
+        /// <param name="stream">the stream from the file</param>
         protected override void loadFromFile(StreamReader stream)
         {
             m_text=stream.ReadToEnd();

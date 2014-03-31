@@ -6,24 +6,38 @@ using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
-
+    /// <summary>
+    /// A CmdLine Options class.
+    /// </summary>
     public class CmdLineOptions: Dictionary<String,CmdLineOptions.CmdArgs>
     {
-
+        /// <summary>
+        /// A CmdLine Argument List class.
+        /// </summary>
         public class CmdArgs
         {
             public CmdArgs()
             {
 
             }
+            /// <summary>
+            /// List of arguments
+            /// </summary>
             public List<String> m_args = new List<String>();
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CmdLineOptions(): base(StringComparer.OrdinalIgnoreCase)
         {
 
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public CmdLineOptions(CmdLineOptions b):base(b)
         {
 
@@ -34,6 +48,11 @@ namespace EpLibrary.cs
 
         }
 
+        /// <summary>
+        /// Parse the Command Line Argument with given.
+        /// </summary>
+        /// <param name="argv">the array of argument strings.</param>
+        /// <returns>the number of CmdLine Options parsed</returns>
         int Parse(String[] argv)
         {
             Clear();
@@ -56,24 +75,24 @@ namespace EpLibrary.cs
             return Count;
         }
 
-		/*!
-		Check if CmdLineOptions contain the given option
-		@param[in] option the option string to check
-		@return true if exists otherwise false
-		*/
+        /// <summary>
+        /// Check if CmdLineOptions contain the given option
+        /// </summary>
+        /// <param name="option">the option string to check</param>
+        /// <returns>true if exists otherwise false</returns>
 		bool HasOption(String option)
         {
             return (ContainsKey(option));
         }
 
-		/*!
-		Get argument of given option at given index.
-		@param[in] option the option string to get argument
-		@param[in] idx the index of the arguments of given option
-		@param[in] defaultArg the default argument string if not found 
-		@return the argument string found.
-		@remark if the argument does not exist then return given default argument string.
-		*/
+        /// <summary>
+        /// Get argument of given option at given index.
+        /// </summary>
+        /// <param name="option">the option string to get argument</param>
+        /// <param name="idx">the index of the arguments of given option</param>
+        /// <param name="defaultArg">the default argument string if not found </param>
+        /// <returns>the argument string found.</returns>
+        /// <remarks>if the argument does not exist then return given default argument string.</remarks>
 		String GetArgument(String option,int idx, String defaultArg)
         {
             try{
@@ -93,18 +112,25 @@ namespace EpLibrary.cs
 		@return the argument string found.
 		@remark if the argument does not exist then throws exception 0.
 		*/
+        /// <summary>
+        /// Get argument of given option at given index.
+        /// </summary>
+        /// <param name="option">the option string to get argument</param>
+        /// <param name="idx">the index of the arguments of given option</param>
+        /// <returns>the argument string found.</returns>
+        /// <remarks>if the argument does not exist then throws exception</remarks>
 		String GetArgument(String option,int idx)
         {
             String value=this[option].m_args[idx];
             return value;
         }
 
-		/*!
-		Get the number of arguments of given option
-		@param[in] option the option string to get the number of arguments
-		@return the number of arguments of given option
-		@remark if the option does not exist then return -1
-		*/
+        /// <summary>
+        /// Get the number of arguments of given option
+        /// </summary>
+        /// <param name="option">the option string to get the number of arguments</param>
+        /// <returns>the number of arguments of given option</returns>
+        /// <remarks>if the option does not exist then return -1</remarks>
 		int GetArgumentCount(String option)
         {
             int retCount=-1;
@@ -115,11 +141,11 @@ namespace EpLibrary.cs
             return retCount;
         }
 
-		/*!
-		Check if given option is an option (starts with '-')
-		@param[in] option the option string to check
-		@return true if given option string is an option otherwise false.
-		*/
+        /// <summary>
+        /// Check if given option is an option (starts with '-')
+        /// </summary>
+        /// <param name="option">the option string to check</param>
+        /// <returns>true if given option string is an option otherwise false.</returns>
 		protected bool isOption(String option)
         {
             if(option==null)

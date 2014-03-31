@@ -43,26 +43,47 @@ using System.Collections;
 
 namespace EpLibrary.cs
 {
-
+    /// <summary>
+    ///  A Pair class.
+    /// </summary>
+    /// <typeparam name="T">first object type</typeparam>
+    /// <typeparam name="U">second object type</typeparam>
     public sealed class Pair<T, U>
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Pair()
         {
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">object to copy from</param>
         public Pair(Pair<T, U> b)
         {
             first = b.first;
             second = b.second;
         }
-
+        /// <summary>
+        /// Constructor to set with given values
+        /// </summary>
+        /// <param name="iFirst">first object</param>
+        /// <param name="iSecond">second object</param>
         public Pair(T iFirst, U iSecond)
         {
             this.first = iFirst;
             this.second = iSecond;
         }
 
+        /// <summary>
+        /// first object
+        /// </summary>
         public T first { get; set; }
+        /// <summary>
+        /// second object
+        /// </summary>
         public U second { get; set; }
     }
 }

@@ -7,14 +7,24 @@ using System.Diagnostics;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Thread Safe Priority Queue.
+    /// </summary>
+    /// <typeparam name="DataType">the element type</typeparam>
     public class ThreadSafePQueue<DataType>:ThreadSafeQueue<DataType> where DataType : IComparable<DataType>
     {
-        
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ThreadSafePQueue():base()
         {
             
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">object to copy from</param>
 		public ThreadSafePQueue(ThreadSafePQueue<DataType> b):base(b)
         {
 
@@ -22,7 +32,10 @@ namespace EpLibrary.cs
 
         ~ThreadSafePQueue() { }
 
-
+        /// <summary>
+        /// Insert the new item into the priority queue.
+        /// </summary>
+        /// <param name="data">The inserting data.</param>
         public override void Push(DataType data)
         {
             lock(m_queueLock)

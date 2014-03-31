@@ -7,28 +7,39 @@ using System.IO;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Binary File.
+    /// </summary>
     public class BinaryFile
     {
+        /// <summary>
+        /// Binary stream reader
+        /// </summary>
         protected BinaryReader m_reader=null;
+        /// <summary>
+        /// Binary stream writer
+        /// </summary>
         protected BinaryWriter m_writer=null;
+        /// <summary>
+        /// stream
+        /// </summary>
         protected MemoryStream m_stream=new MemoryStream();
+        /// <summary>
+        /// lock
+        /// </summary>
         protected Object m_baseBinaryLock=new Object();
-        /*!
-		Default Constructor
 
-		Initializes the Binary File 
-		@param[in] lockPolicyType The lock policy
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
 		public BinaryFile()
         {
         }
 
-		/*!
-		Default Copy Constructor
-
-		Initializes the Binary File 
-		@param[in] b the second object
-		*/
+        /// <summary>
+        /// Default Copy Constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public BinaryFile(BinaryFile b)
         {
             lock (b.m_baseBinaryLock)
@@ -38,21 +49,16 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Default Destructor
-
-		Destroy the Binary File 
-		*/
 		~BinaryFile()
         {
         }
 
 	
-		/*!
-		Save the list of the properties from the given file
-		@param[in] filename the name of the file to save the list of properties
-		@return true if successfully saved, otherwise false
-		*/
+        /// <summary>
+        /// Save the binary to the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to save</param>
+        /// <returns>true if successfully saved, otherwise false</returns>
         public bool SaveToFile(String filename)
         {
             lock(m_baseBinaryLock)
@@ -72,11 +78,11 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Append the list of the properties from the given file
-		@param[in] filename the name of the file to append the list of properties
-		@return true if successfully saved, otherwise false
-		*/
+        /// <summary>
+        /// Append the binary to the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to append</param>
+        /// <returns>true if successfully saved, otherwise false</returns>
         public bool AppendToFile(String filename)
         {
             lock(m_baseBinaryLock)
@@ -96,11 +102,12 @@ namespace EpLibrary.cs
             }
         }
 		
-		/*!
-		Load the list of the properties from the given file
-		@param[in] filename the name of the file to load the list of properties
-		@return true if successfully loaded, otherwise false
-		*/
+
+        /// <summary>
+        /// Load the list of the properties from the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to load</param>
+        /// <returns>true if successfully loaded, otherwise false</returns>
         public bool LoadFromFile(String filename)
         {
             lock(m_baseBinaryLock)
@@ -121,10 +128,10 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Get the current stream
-		@return the current stream
-		*/
+        /// <summary>
+        /// Get the current stream
+        /// </summary>
+        /// <returns>the current stream</returns>
         public MemoryStream GetStream()
         {
             lock (m_baseBinaryLock)
@@ -134,11 +141,10 @@ namespace EpLibrary.cs
         }
 
 		
-
-		/*!
-		Set the stream as given stream
-		@param[in] stream the stream to set
-		*/
+        /// <summary>
+        /// Set the stream as given stream
+        /// </summary>
+        /// <param name="stream">the stream to set</param>
         public void SetStream(MemoryStream stream)
         {
             lock (m_baseBinaryLock)

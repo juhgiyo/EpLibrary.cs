@@ -43,14 +43,24 @@ using System.Collections;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// This is a template holding class for Singleton classes  
+    /// </summary>
+    /// <typeparam name="T">Class to make singlton</typeparam>
     public sealed class SingletonHolder<T> where T : new()
     {
+        /// <summary>
+        /// singleton instance
+        /// </summary>
         private static T m_instance;
 
         private SingletonHolder()
         {
         }
 
+        /// <summary>
+        /// Get the Singleton Instance of the Object
+        /// </summary>
         public static T Instance
         {
             get

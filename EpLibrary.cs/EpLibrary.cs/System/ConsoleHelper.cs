@@ -8,26 +8,32 @@ using System.Diagnostics;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// This is a class for Console Processing Class
+    /// </summary>
     public class ConsoleHelper
     {
-        /*!
-		Execute the given command to the console and return the result
 
-		** waitStruct is ignored when isWaitForTerminate is false.
-		@param[in] command the command to execute
-		@param[in] isDosCommand flag whether the command is standard DOS command or not
-		@param[in] isWaitForTerminate flag for waiting for process to terminate or not
-		@param[in] isShowWindow flag for whether to show console window
-		@param[in] useStdOutput flag for whether console to print to console window or to pipe.<br/>
-		                        true to print to pipe; false to print to console.
-		@param[in] priority the priority of the process executing
-		@param[out] retProcessHandle the handle to the process created
-		@return the result of the console command
-		@remark retProcessHandle will be NULL when the function exits.
-		        This can be used when isWaitForTerminate is true, and you need to terminate the process while waiting.
-				Terminate the process from the other thread using the given handle pointer.
-		*/
-        public static String ExecuteConsoleCommand(String command,String arguments, bool isDosCommand = false, bool isWaitForTerminate = true, bool isShowWindow = false, bool redirectStdOutput = true, ThreadPriority priority = ThreadPriority.Normal)
+        /// <summary>
+        /// Execute the given command to the console and return the result
+        /// 
+        /// ** waitStruct is ignored when isWaitForTerminate is false.
+        /// </summary>
+        /// <param name="command">the command to execute</param>
+        /// <param name="arguments">the argument for the command</param>
+        /// <param name="isDosCommand">flag whether the command is standard DOS command or not</param>
+        /// <param name="isWaitForTerminate">flag for waiting for process to terminate or not</param>
+        /// <param name="isShowWindow">flag for whether to show console window</param>
+        /// <param name="redirectStdOutput">flag for whether console to print to console window or to pipe.
+        /// true to print to pipe; false to print to console.
+        /// </param>
+        /// <returns>the result of the console command</returns>
+        /// <remarks>
+        /// retProcessHandle will be NULL when the function exits.
+        /// This can be used when isWaitForTerminate is true, and you need to terminate the process while waiting.
+        /// Terminate the process from the other thread using the given handle pointer.
+        /// </remarks>
+        public static String ExecuteConsoleCommand(String command,String arguments, bool isDosCommand = false, bool isWaitForTerminate = true, bool isShowWindow = false, bool redirectStdOutput = true)
         {
             try
             {
@@ -64,11 +70,11 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Execute the given executable file
-		@param[in] execFilePath the program file path to execute
-		@param[in] parameters the parameter variables for executing file
-		*/
+        /// <summary>
+        /// Execute the given executable file
+        /// </summary>
+        /// <param name="execFilePath">the program file path to execute</param>
+        /// <param name="parameters">the parameter variables for executing file</param>
         public static void ExecuteProgram(String execFilePath, String parameters = null)
         {
             try

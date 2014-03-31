@@ -7,19 +7,32 @@ using System.IO;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Base File.
+    /// </summary>
     public abstract class BaseTextFile
     {
+        /// <summary>
+        /// reader stream
+        /// </summary>
         protected StreamReader m_reader=null;
+        /// <summary>
+        ///  writer stream
+        /// </summary>
         protected StreamWriter m_writer = null;
+        /// <summary>
+        /// Encoding
+        /// </summary>
         protected Encoding m_encoding = Encoding.Unicode;
+        /// <summary>
+        /// lock
+        /// </summary>
         protected Object m_baseTextLock = new Object();
-		/*!
-		Default Constructor
 
-		Initializes the Base File 
-		@param[in] encodingType the encoding type for this file
-		@param[in] lockPolicyType The lock policy
-		*/
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="encoding">the encoding type for this file</param>
 		public BaseTextFile(Encoding encoding=null)
         {
             if (encoding != null)
@@ -28,12 +41,10 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Default Copy Constructor
-
-		Initializes the Base File 
-		@param[in] b the second object
-		*/
+        /// <summary>
+        /// Default Copy Constructor
+        /// </summary>
+        /// <param name="b">the second object</param>
         public BaseTextFile(BaseTextFile b)
         {
             lock (b.m_baseTextLock)
@@ -44,15 +55,14 @@ namespace EpLibrary.cs
             }
         }
 		
-		/*!
-		Default Destructor
-
-		Destroy the Base File 
-		*/
 		~BaseTextFile()
         {
         }
 
+        /// <summary>
+        /// Get current encoding
+        /// </summary>
+        /// <returns>current encoding</returns>
         public Encoding GetEncoding()
         {
             lock(m_baseTextLock)
@@ -60,6 +70,10 @@ namespace EpLibrary.cs
 	            return m_encoding;
             }
         }
+        /// <summary>
+        /// Set encoding as given encoding
+        /// </summary>
+        /// <param name="encoding">encoding to set</param>
         public void SetEncoding(Encoding encoding)
         {
             lock(m_baseTextLock)
@@ -68,11 +82,11 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Save the list of the properties from the given file
-		@param[in] filename the name of the file to save the list of properties
-		@return true if successfully saved, otherwise false
-		*/
+        /// <summary>
+        /// Save the text to the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to save</param>
+        /// <returns>true if successfully saved, otherwise false</returns>
         public bool SaveToFile(String filename)
         {
             lock(m_baseTextLock)
@@ -93,11 +107,12 @@ namespace EpLibrary.cs
             
         }
 
-		/*!
-		Append the list of the properties from the given file
-		@param[in] filename the name of the file to append the list of properties
-		@return true if successfully saved, otherwise false
-		*/
+
+        /// <summary>
+        /// Append the text from the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to append</param>
+        /// <returns>true if successfully saved, otherwise false</returns>
         public bool AppendToFile(String filename)
         {
             lock(m_baseTextLock)
@@ -118,11 +133,11 @@ namespace EpLibrary.cs
 
         }
 		
-		/*!
-		Load the list of the properties from the given file
-		@param[in] filename the name of the file to load the list of properties
-		@return true if successfully loaded, otherwise false
-		*/
+        /// <summary>
+        /// Load the list of the properties from the given file
+        /// </summary>
+        /// <param name="filename">the name of the file to load</param>
+        /// <returns>true if successfully loaded, otherwise false</returns>
         public bool LoadFromFile(String filename)
         {
             lock(m_baseTextLock)
@@ -141,11 +156,10 @@ namespace EpLibrary.cs
             }
         }
 
-
-		/*!
-		Write the given string to the file
-		@param[in] toFileString the string to write to the file
-		*/
+        /// <summary>
+        /// Write the given string to the file
+        /// </summary>
+        /// <param name="toFileString">the string to write to the file</param>
         protected void writeToFile(String toFileString)
         {
             lock (m_baseTextLock)
@@ -164,17 +178,18 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Loop Function that writes to the file.
-		@remark Sub classes should implement this function
-		*/
+
+        /// <summary>
+        /// Loop Function that writes to the file.
+        /// </summary>
+        /// <remarks>Sub classes should implement this function</remarks>
 		protected abstract void writeLoop();
 
-		/*!
-		Actual load Function that loads values from the file.
-		@remark Sub classes should implement this function
-		@param[in] lines the all data from the file
-		*/
+        /// <summary>
+        /// Actual load Function that loads values from the file.
+        /// </summary>
+        /// <param name="stream">stream from the file</param>
+        /// <remarks>Sub classes should implement this function</remarks>
 		protected abstract void loadFromFile(StreamReader stream);
     }
 }

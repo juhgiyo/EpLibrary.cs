@@ -8,17 +8,31 @@ using System.Threading;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class that implements single-job Worker Thread Class.
+    /// </summary>
     public sealed class WorkerThreadSingle:BaseWorkerThread
     {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="policy">the life policy of this worker thread.</param>
         public WorkerThreadSingle(ThreadLifePolicy policy):base(policy)
 		{}
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public WorkerThreadSingle(WorkerThreadSingle b)
             : base(b)
 		{}
 		
 		~WorkerThreadSingle(){}
 
+        /// <summary>
+        /// Actual single-job Thread Code.
+        /// </summary>
         protected override void execute()
         {
             try

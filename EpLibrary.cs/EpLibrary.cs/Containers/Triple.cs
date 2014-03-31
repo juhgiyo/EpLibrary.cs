@@ -42,27 +42,54 @@ using System.Text;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A Triple class.
+    /// </summary>
+    /// <typeparam name="T">first object type</typeparam>
+    /// <typeparam name="U">second object type</typeparam>
+    /// <typeparam name="V">third object type</typeparam>
     public sealed class Triple<T,U,V>
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Triple()
         {
         }
-
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public Triple(Triple<T,U,V> b)
         {
             first = b.first;
             second = b.second;
             third = b.third;
         }
+
+        /// <summary>
+        /// Constructor to set with given values
+        /// </summary>
+        /// <param name="iFirst">first object</param>
+        /// <param name="iSecond">second object</param>
+        /// <param name="iThird">third object</param>
         public Triple(T iFirst, U iSecond,V iThird)
         {
             this.first = iFirst;
             this.second = iSecond;
             this.third = iThird;
         }
-
+        /// <summary>
+        /// first object
+        /// </summary>
         public T first { get; set; }
+        /// <summary>
+        /// second object
+        /// </summary>
         public U second { get; set; }
+        /// <summary>
+        /// third object
+        /// </summary>
         public V third { get; set; }
     }
 }

@@ -7,20 +7,30 @@ using System.IO;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// Log Writer Singleton Instance
+    /// </summary>
     public sealed class LogWriter:BaseTextFile
     {
+        /// <summary>
         /// Name of the Log File
-        String m_fileName;
+        /// </summary>
+        private String m_fileName;
 
-        /// Log String
-        StringBuilder m_logString;
+        /// <summary>
+        /// Log string builder
+        /// </summary>
+        private StringBuilder m_logString;
 
+        /// <summary>
+        /// lock
+        /// </summary>
         private Object m_logLock = new Object();
 
-        /*!
-		Writer given message to the log with current time.
-		@param[in] pMsg the message to print to the log file.
-		*/
+        /// <summary>
+        /// Writer given message to the log with current time.
+        /// </summary>
+        /// <param name="pMsg">the message to print to the log file.</param>
         public void WriteLog(String pMsg)
         {
             lock (m_logLock)
@@ -32,52 +42,42 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Default Constructor
-
-		Initializes the Log Writer
-		@param[in] lockPolicyType The lock policy
-		*/
-        private LogWriter()
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public LogWriter()
         {
             m_fileName = FolderHelper.GetModuleFileName();
             m_fileName.Replace(".exe", ".log");
         }
 		
-		/*!
-		Default Copy Constructor
-
-		Initializes the LogWriter 
-		@param[in] b the second object
-		*/
-        private LogWriter(LogWriter b)
+        /// <summary>
+        /// Default Copy Constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
+        public LogWriter(LogWriter b)
         {
             m_fileName = b.m_fileName;
         }
 
-		/*!
-		Loop Function that writes to the file.
-		@remark Sub classes should implement this function
-		*/
+        /// <summary>
+        /// Loop Function that writes to the file.
+        /// </summary>
         protected override void writeLoop()
         {
             writeToFile(m_logString.ToString());
         }
 
-		/*!
-		Actual load Function that loads values from the file.
-		@remark Sub classes should implement this function
-		@param[in] lines the all data from the file
-		*/
+
+        /// <summary>
+        /// Actual load Function that loads values from the file.
+        /// </summary>
+        /// <param name="stream">stream from the file</param>
         protected override void loadFromFile(StreamReader stream)
         {
         }
 		
-		/*!
-		Default Destructor
 
-		Destroy the Log Writer
-		*/
         ~LogWriter()
         {
         }

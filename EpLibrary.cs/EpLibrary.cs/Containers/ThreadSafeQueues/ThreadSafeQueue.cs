@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class for Thread Safe Queue.
+    /// </summary>
+    /// <typeparam name="DataType">the element type</typeparam>
     public class ThreadSafeQueue<DataType>
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ThreadSafeQueue()
         {
 
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
 		public ThreadSafeQueue(ThreadSafeQueue<DataType> b)
         {
             m_queue=b.GetQueue();
@@ -26,7 +37,10 @@ namespace EpLibrary.cs
              }
          }
 
-
+        /// <summary>
+         /// Check if the queue is empty.
+        /// </summary>
+         /// <returns>true if the queue is empty, otherwise false.</returns>
 		public bool IsEmpty()
         {
             lock(m_queueLock)
@@ -35,6 +49,11 @@ namespace EpLibrary.cs
             }
         }
 
+        /// <summary>
+        /// Check if the given obj exists in the queue.
+        /// </summary>
+        /// <param name="data">obj to check</param>
+        /// <returns>true if exists, otherwise false.</returns>
 		public bool IsExist(DataType data)
         {
             lock(m_queueLock)
@@ -43,14 +62,24 @@ namespace EpLibrary.cs
             }
         }
 
-		public int Size()
+       /// <summary>
+        /// Return the size of the queue.
+       /// </summary>
+		public int Count
         {
-            lock(m_queueLock)
+            get
             {
-                return m_queue.Count;
+                lock (m_queueLock)
+                {
+                    return m_queue.Count;
+                }
             }
         }
 
+        /// <summary>
+        /// Return the first item within the queue.
+        /// </summary>
+        /// <returns>the first element of the queue.</returns>
 		public DataType Front()
         {
             lock(m_queueLock)
@@ -59,6 +88,10 @@ namespace EpLibrary.cs
             }
         }
 
+        /// <summary>
+        /// Return the last item within the queue.
+        /// </summary>
+        /// <returns>the last element of the queue.</returns>
 		public DataType Back()
         {
             lock(m_queueLock)
@@ -67,7 +100,10 @@ namespace EpLibrary.cs
             }
         }
 
-		
+		/// <summary>
+        /// Insert the new item into the queue.
+		/// </summary>
+        /// <param name="data">The inserting data.</param>
 		public virtual void Push(DataType data)
         {
             lock(m_queueLock)
@@ -76,6 +112,11 @@ namespace EpLibrary.cs
             }
         }
 
+        /// <summary>
+        /// Erase the given item from the queue.
+        /// </summary>
+        /// <param name="data">The data to erase.</param>
+        /// <returns>true if successful, otherwise false</returns>
         public bool Erase(DataType data)
         {
             lock (m_queueLock)
@@ -97,9 +138,9 @@ namespace EpLibrary.cs
             
         }
 
-		/*!
-		Remove the first item from the queue.
-		*/
+        /// <summary>
+        /// Remove the first item from the queue.
+        /// </summary>
         public virtual void Pop()
         {
             lock (m_queueLock)
@@ -108,9 +149,9 @@ namespace EpLibrary.cs
             }
         }
 
-		/*!
-		Clear the queue.
-		*/
+        /// <summary>
+        /// Clear the queue.
+        /// </summary>
 		public void Clear()
         {
             lock (m_queueLock)
@@ -119,6 +160,10 @@ namespace EpLibrary.cs
             }
         }
 
+        /// <summary>
+        /// Return the actual queue structure
+        /// </summary>
+        /// <returns>the actual queue structure</returns>
         public List<DataType> GetQueue()
         {
             lock (m_queueLock)
@@ -127,10 +172,14 @@ namespace EpLibrary.cs
             }
         }
 
-		/// Actual queue structure
+        /// <summary>
+        /// Actual queue structure
+        /// </summary>
 		protected List<DataType> m_queue;
 
-       	/// callback Lock
+        /// <summary>
+        /// lock
+        /// </summary>
         protected Object m_queueLock = new Object();
 
     }

@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
+    /// A class that calculates Prime Number.
+    /// </summary>
     public class PrimeNum
     {
+        /// <summary>
+        /// Check if the given number is a prime number
+        /// </summary>
+        /// <param name="x">the value to check if it is a prime number.</param>
+        /// <returns>if x is a prime number, false otherwise</returns>
         public static bool IsPrime(uint x)
         {
             if (x <= 1)
@@ -32,7 +40,11 @@ namespace EpLibrary.cs
                 return false;
             return true;
         }
-
+        /// <summary>
+        /// Find the first prime number larger than given number.
+        /// </summary>
+        /// <param name="x">the value to find a first prime number larger than x.</param>
+        /// <returns>first prime number larger than x</returns>
         public static uint NextPrime(uint x)
         {
             uint multIdx=x/6;

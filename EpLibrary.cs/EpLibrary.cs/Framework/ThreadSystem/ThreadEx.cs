@@ -8,62 +8,110 @@ using System.Diagnostics;
 
 namespace EpLibrary.cs
 {
+    /// <summary>
     /// Enumerator for Thread Operation Code
+    /// </summary>
     public enum ThreadOpCode
     {
+        /// <summary>
         /// The thread is started when it is created.
+        /// </summary>
         CREATE_START = 0,
+        /// <summary>
         /// The thread is suspended when it is created.
+        /// </summary>
         CREATE_SUSPEND
     };
 
+    /// <summary>
     /// Enumerator for Thread Status
+    /// </summary>
     public enum ThreadStatus
     {
+        /// <summary>
         /// The thread is started and running.
+        /// </summary>
         STARTED = 0,
+        /// <summary>
         /// The thread is suspended.
+        /// </summary>
         SUSPENDED,
+        /// <summary>
         /// The thread is terminated.
+        /// </summary>
         TERMINATED
     };
 
+    /// <summary>
     /// Enumerator for Thread Terminate Result
+    /// </summary>
     public enum TerminateResult
     {
-        /// Failed to terminate the thread
+        /// <summary>
+        /// Failed to terminate the thread 
+        /// </summary>
         FAILED = 0,
+        /// <summary>
         /// The thread terminated gracefully
+        /// </summary>
         GRACEFULLY_TERMINATED,
+        /// <summary>
         /// The thread terminated forcefully
+        /// </summary>
         FORCEFULLY_TERMINATE,
+        /// <summary>
         /// The thread was not running
+        /// </summary>
         NOT_ON_RUNNING,
     };
+    /// <summary>
+    /// A class that implements base thread class operation.
+    /// </summary>
     public class ThreadEx
     {
+        /// <summary>
+        /// thread handle
+        /// </summary>
         private Thread m_threadHandle;
         		
-		/// ThreadPriority
+        /// <summary>
+        /// ThreadPriority
+        /// </summary>
 		private ThreadPriority m_threadPriority;
 		
-		/// Parent Thread Handle
+        /// <summary>
+        /// Parent Thread Handle
+        /// </summary>
 		private Thread m_parentThreadHandle;
 		
-		/// Thread Status
+        /// <summary>
+        /// Thread Status
+        /// </summary>
 		private ThreadStatus m_status;
 
+        /// <summary>
         /// thread Func
+        /// </summary>
         private Action m_threadFunc;
 
-		/// Lock
+        /// <summary>
+        /// Lock
+        /// </summary>
         private Object m_threadLock = new Object();
-		/// exit code
+        /// <summary>
+        /// exit code
+        /// </summary>
 		private ulong m_exitCode;
 
+        /// <summary>
+        /// dummy thread function
+        /// </summary>
         private static Action dummyThreadFunc=null;
 
-
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="priority">The priority of the thread.</param>
  		public ThreadEx(ThreadPriority priority=ThreadPriority.Normal)
         {
             m_threadHandle=null;
@@ -74,6 +122,11 @@ namespace EpLibrary.cs
             m_threadFunc = dummyThreadFunc;
         }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="threadFunc">the function for the thread</param>
+        /// <param name="priority">The priority of the thread.</param>
 		public ThreadEx(Action threadFunc, ThreadPriority priority=ThreadPriority.Normal)
         {
             m_threadHandle = null;
@@ -93,6 +146,10 @@ namespace EpLibrary.cs
 
         }
 
+        /// <summary>
+        /// Default copy constructor
+        /// </summary>
+        /// <param name="b">the object to copy from</param>
         public ThreadEx(ThreadEx b)
         {
             m_threadFunc=b.m_threadFunc;
@@ -125,6 +182,12 @@ namespace EpLibrary.cs
             resetThread();
         }
 		
+        /// <summary>
+        /// Start the Thread according to parameters given.
+        /// </summary>
+        /// <param name="opCode">The operation code for creating thread.</param>
+        /// <param name="stackSize">The stack size for the thread.</param>
+        /// <returns>true, if succeeded, otherwise false.</returns>
 		public bool Start(ThreadOpCode opCode=ThreadOpCode.CREATE_START, int stackSize=0)
         {
             lock(m_threadLock)
@@ -152,7 +215,10 @@ namespace EpLibrary.cs
             }
         }
 
-
+        /// <summary>
+        /// Resume the suspended thread.
+        /// </summary>
+        /// <returns>true, if succeeded, otherwise false.</returns>
         public bool Resume()
         {
             lock (m_threadLock)
@@ -168,6 +234,10 @@ namespace EpLibrary.cs
             return false;
         }
 
+        /// <summary>
+        /// Suspend the running thread.
+        /// </summary>
+        /// <returns>true, if succeeded, otherwise false.</returns>
         public bool Suspend()
         {
 
@@ -185,6 +255,10 @@ namespace EpLibrary.cs
             
         }
 
+        /// <summary>
+        /// Terminate the running or suspended thread.
+        /// </summary>
+        /// <returns>true, if succeeded, otherwise false.</returns>
         public bool Terminate()
         {
             Debug.Assert(m_threadHandle != Thread.CurrentThread, "Exception : Thread should not terminate self.");
@@ -206,7 +280,11 @@ namespace EpLibrary.cs
             return true;
         }
 
-
+        /// <summary>
+        /// Wait for thread to terminate
+        /// </summary>
+        /// <param name="tMilliseconds">the time-out interval, in milliseconds.</param>
+        /// <returns>true if successful, otherwise false</returns>
         public bool WaitFor(int tMilliseconds = Timeout.Infinite)
         {
             if(m_status!=ThreadStatus.TERMINATED && m_threadHandle!=null)
@@ -220,6 +298,9 @@ namespace EpLibrary.cs
 	        }
         }
 
+        /// <summary>
+        /// Join the thread
+        /// </summary>
         public void Join()
         {
             if (m_status != ThreadStatus.TERMINATED && m_threadHandle != null)
@@ -228,13 +309,18 @@ namespace EpLibrary.cs
             }
         }
 
-
+        /// <summary>
+        /// Check if the thread class is joinable
+        /// </summary>
+        /// <returns>true if joinable otherwise false</returns>
         public bool Joinable()
         {
             return (m_status != ThreadStatus.TERMINATED && m_threadHandle != null);
         }
 
-
+        /// <summary>
+        /// Detach the thread
+        /// </summary>
         public void Detach()
         {
             Debug.Assert(Joinable() == true);
@@ -247,6 +333,11 @@ namespace EpLibrary.cs
             }
         }
 
+        /// <summary>
+        /// Wait for thread to terminate, and if not terminated, then Terminate.
+        /// </summary>
+        /// <param name="tMilliseconds">the time-out interval, in milliseconds.</param>
+        /// <returns>the terminate result of the thread</returns>
         public TerminateResult TerminateAfter(int tMilliseconds)
         {
            	if(m_status!=ThreadStatus.TERMINATED && m_threadHandle!=null)
@@ -270,41 +361,48 @@ namespace EpLibrary.cs
 	        }
         }
 
-
-		/*!
-		Return the parent's Thread Handle.
-		@return the parent's Thread Handle.
-		*/
+        /// <summary>
+        /// Return the parent's Thread Handle.
+        /// </summary>
+        /// <returns>the parent's Thread Handle.</returns>
 		public Thread GetParentThreadHandle()
 		{
 			return m_parentThreadHandle;
 		}
 
-		/*!
-		Return the Thread Status.
-		@return the current thread status.
-		*/
+        /// <summary>
+        /// Return the Thread Status.
+        /// </summary>
+        /// <returns>the current thread status</returns>
 		public ThreadStatus GetStatus()
 		{
 			return m_status;
 		}
 
-		/*!
-		Return the Thread Exit Code.
-		@return the thread exit code.
-		@remark 0 means successful termination, 1 means unsafe termination.
-		*/
+        /// <summary>
+        /// Return the Thread Exit Code.
+        /// </summary>
+        /// <returns>the thread exit code.</returns>
+        /// <remarks>0 means successful termination, 1 means unsafe termination.</remarks>
 		public ulong GetExitCode()
 		{
 			return m_exitCode;
 		}
 
-
+        /// <summary>
+        /// Return the current Thread Priority.
+        /// </summary>
+        /// <returns>the current Thread Priority.</returns>
         public ThreadPriority GetPriority()
         {
             return m_threadPriority;
         }
 
+        /// <summary>
+        /// Set Priority of the thread
+        /// </summary>
+        /// <param name="priority">The priority of the thread</param>
+        /// <returns>true if successfully set otherwise false</returns>
         public bool SetPriority(ThreadPriority priority)
         {
             m_threadPriority = priority;
@@ -312,23 +410,37 @@ namespace EpLibrary.cs
             return true;
         }
 
+        /// <summary>
+        /// Return the Thread Handle.
+        /// </summary>
+        /// <returns>the current thread handle.</returns>
 		protected Thread getHandle()
 		{
 			return m_threadHandle;
 		}
 
 
-
+        /// <summary>
+        /// Actual Thread Code.
+        /// </summary>
+        /// <remarks>Subclass should override this function for executing the thread function.</remarks>
         protected virtual void execute()
         {
             m_threadFunc();
         }
 
+        /// <summary>
+        /// Calls when the thread terminated.
+        /// </summary>
+        /// <param name="exitCode">the exit code of the thread</param>
+        /// <param name="isInDeletion">the flag whether the thread class is in deletion or not</param>
         protected virtual void onTerminated(ulong exitCode, bool isInDeletion = false)
         {
         }
 
-
+        /// <summary>
+        /// Terminate the thread successfully.
+        /// </summary>
         private void successTerminate()
         {
             lock (m_threadLock)
@@ -342,12 +454,19 @@ namespace EpLibrary.cs
             onTerminated(m_exitCode);
         }
 
+        /// <summary>
+        /// Running the thread when thread is created.
+        /// </summary>
+        /// <returns>the exit code of the current thread.</returns>
         private int run()
         {
             execute();
             successTerminate();
             return 0;
         }
+        /// <summary>
+        /// Reset Thread
+        /// </summary>
         private void resetThread()
         {
             if(m_status!=ThreadStatus.TERMINATED)
@@ -362,6 +481,11 @@ namespace EpLibrary.cs
 	        m_exitCode=0;
             m_status = ThreadStatus.TERMINATED;
         }
+
+        /// <summary>
+        /// Entry point for the thread
+        /// </summary>
+        /// <param name="pThis">The argument for the thread (this for current case)</param>
         private static void entryPoint(object pThis)
         {
             ThreadEx pt = (ThreadEx)pThis;
