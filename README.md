@@ -16,16 +16,22 @@ FEATURES
 --------
 
 * Math Framework
-  3. Prime Number Operation
+  1. Prime Number Operation
 
 * Container Framework
   1. ThreadSafeQueue
+  2. ThreadSafePQueue
+  3. PriorityQueue
+  4. Pair
+  5. Triple
 
 
 * FileSystem Framework
   1. Folder Operation
   2. Properties File Operation
-  4. Text File Operation
+  3. Text File Operation
+  4. Binary File Operation
+  5. Log Writer
 
 * System Framework
   1. Console Operation
@@ -40,11 +46,15 @@ FEATURES
 
 * Lock Framework
   1. Mutex
-  4. NoLock
-  5. InterlockedEx
+  2. NoLock
+  3. InterlockedEx
+  4. EventEx
 
 * Other Frameworks
   1. Singleton Holder
+  2. WebRequestEx
+  3. Crypt
+  4. CmdLineOptions
 
 
 USAGE
