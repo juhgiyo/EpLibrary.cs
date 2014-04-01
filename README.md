@@ -1,4 +1,80 @@
 EpLibrary.cs
 ============
+#### Visual C# Utility Library ####
 
-EpLibrary.cs
+
+DESCRIPTION
+-----------
+
+EpLibrary is a Visual C# utility library that supports to develop an application easier under a [MIT License](http://opensource.org/licenses/mit-license.php).
+You will no longer have to create the basic functionalities over and over again. 
+EpLibrary supports Visual C# 2012.
+Source can be downloaded at [EpLibrary](http://github.com/juhgiyo/eplibrary.cs)
+
+
+FEATURES
+--------
+
+* Math Framework
+  3. Prime Number Operation
+
+* Container Framework
+  1. ThreadSafeQueue
+
+
+* FileSystem Framework
+  1. Folder Operation
+  2. Properties File Operation
+  4. Text File Operation
+
+* System Framework
+  1. Console Operation
+  2. DateTime Operation
+  3. Endian Operation
+  4. Registry Operation
+
+* Thread System
+  1. Simple Thread Scheduler
+  2. Thread Class
+  3. Worker Thread System
+
+* Lock Framework
+  1. Mutex
+  4. NoLock
+  5. InterlockedEx
+
+* Other Frameworks
+  1. Singleton Holder
+
+
+USAGE
+-----
+
+To find the usage examples, please see the [wiki page](https://github.com/juhgiyo/EpLibrary.cs/wiki).
+
+
+LICENSE
+-------
+
+[The MIT License](http://opensource.org/licenses/mit-license.php)
+
+Copyright (c) 2014 Woong Gyu La <[juhgiyo@gmail.com](mailto:juhgiyo@gmail.com)>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
