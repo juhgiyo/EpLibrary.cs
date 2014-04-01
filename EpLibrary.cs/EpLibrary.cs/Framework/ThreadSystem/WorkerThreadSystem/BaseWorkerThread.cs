@@ -1,4 +1,41 @@
-﻿using System;
+﻿/*! 
+@file BaseWorkerThread.cs
+@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
+		<http://github.com/juhgiyo/eplibrary.cs>
+@date April 01, 2014
+@brief BaseWorkerThread Interface
+@version 2.0
+
+@section LICENSE
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Woong Gyu La <juhgiyo@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+@section DESCRIPTION
+
+A BaseWorkerThread Class.
+
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +75,7 @@ namespace EpLibrary.cs
         public BaseWorkerThread(ThreadLifePolicy policy):base(ThreadPriority.Normal)
         {
             m_lifePolicy=policy;
-            m_callBackClass=null;
+            m_callBackFunc = null;
 
         }
 
@@ -51,7 +88,7 @@ namespace EpLibrary.cs
             lock(b.m_callBackLock)
             {
                 m_lifePolicy=b.m_lifePolicy;
-	            m_callBackClass=b.m_callBackClass;
+                m_callBackFunc = b.m_callBackFunc;
 	            m_jobProcessor=b.m_jobProcessor;
 	            m_workPool=b.m_workPool;
             }
@@ -116,12 +153,12 @@ namespace EpLibrary.cs
 		/// <summary>
         /// Set call back class to call when work is done.
 		/// </summary>
-        /// <param name="callBackClass">the call back class.</param>
-		public virtual void SetCallBackClass(WorkerThreadDelegate callBackClass)
+        /// <param name="callBackFunc">the call back function.</param>
+		public virtual void SetCallBackClass(Action<BaseWorkerThread> callBackFunc)
         {
             lock(m_callBackLock)
             {
-                m_callBackClass=callBackClass;
+                m_callBackFunc = callBackFunc;
             }
         }
 
@@ -175,9 +212,9 @@ namespace EpLibrary.cs
         {
             lock (m_callBackLock)
             {
-                if (m_callBackClass != null)
-                    m_callBackClass.CallBackFunc(this);
-                m_callBackClass = null;
+                if (m_callBackFunc != null)
+                    m_callBackFunc(this);
+                m_callBackFunc = null;
             }
         }
 
@@ -192,7 +229,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// the call back class
         /// </summary>
-        protected WorkerThreadDelegate m_callBackClass;
+        protected Action<BaseWorkerThread> m_callBackFunc;
 
         /// <summary>
         /// callback Lock

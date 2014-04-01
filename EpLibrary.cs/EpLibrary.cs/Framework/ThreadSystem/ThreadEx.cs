@@ -1,4 +1,41 @@
-﻿using System;
+﻿/*! 
+@file ThreadEx.cs
+@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
+		<http://github.com/juhgiyo/eplibrary.cs>
+@date April 01, 2014
+@brief ThreadEx Interface
+@version 2.0
+
+@section LICENSE
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Woong Gyu La <juhgiyo@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+@section DESCRIPTION
+
+A ThreadEx Class.
+
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,6 +132,14 @@ namespace EpLibrary.cs
         private Action m_threadFunc;
 
         /// <summary>
+        /// thread parameterized Func
+        /// </summary>
+        private Action<object> m_threadParameterizedFunc;
+        /// <summary>
+        /// parameter object for parameterized function
+        /// </summary>
+        private object m_parameter;
+        /// <summary>
         /// Lock
         /// </summary>
         private Object m_threadLock = new Object();
@@ -103,10 +148,7 @@ namespace EpLibrary.cs
         /// </summary>
 		private ulong m_exitCode;
 
-        /// <summary>
-        /// dummy thread function
-        /// </summary>
-        private static Action dummyThreadFunc=null;
+        
 
         /// <summary>
         /// Default Constructor
@@ -119,7 +161,9 @@ namespace EpLibrary.cs
             m_parentThreadHandle=null;
             m_status=ThreadStatus.TERMINATED;
             m_exitCode=0;
-            m_threadFunc = dummyThreadFunc;
+            m_threadFunc = null;
+            m_threadParameterizedFunc = null;
+            m_parameter = null;
         }
 
         /// <summary>
@@ -135,7 +179,8 @@ namespace EpLibrary.cs
             m_status = ThreadStatus.TERMINATED;
             m_exitCode = 0;
             m_threadFunc = threadFunc;
-
+            m_threadParameterizedFunc = null;
+            m_parameter = null;
 
 	        m_parentThreadHandle=Thread.CurrentThread;
 	        m_threadHandle=new Thread(ThreadEx.entryPoint);
@@ -147,13 +192,40 @@ namespace EpLibrary.cs
         }
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="threadParameterizedFunc">the parameterized function for the thread</param>
+        /// <param name="priority">The priority of the thread.</param>
+        public ThreadEx(Action<object> threadParameterizedFunc,object parameter, ThreadPriority priority = ThreadPriority.Normal)
+        {
+            m_threadHandle = null;
+            m_threadPriority = priority;
+            m_parentThreadHandle = null;
+            m_status = ThreadStatus.TERMINATED;
+            m_exitCode = 0;
+            m_threadFunc = null;
+            m_threadParameterizedFunc = threadParameterizedFunc;
+            m_parameter = parameter;
+
+            m_parentThreadHandle = Thread.CurrentThread;
+            m_threadHandle = new Thread(ThreadEx.entryPoint);
+            m_threadHandle.Priority = m_threadPriority;
+            m_threadHandle.Start(this);
+            m_status = ThreadStatus.STARTED;
+
+
+        }
+
+        /// <summary>
         /// Default copy constructor
         /// </summary>
         /// <param name="b">the object to copy from</param>
         public ThreadEx(ThreadEx b)
         {
             m_threadFunc=b.m_threadFunc;
-	        if(m_threadFunc!=dummyThreadFunc)
+            m_threadParameterizedFunc = b.m_threadParameterizedFunc;
+            m_parameter = b.m_parameter;
+	        if(m_threadFunc!=null||m_parentThreadHandle!=null)
 	        {
 		        m_parentThreadHandle=b.m_parentThreadHandle;
 		        m_threadHandle=b.m_threadHandle;
@@ -426,7 +498,10 @@ namespace EpLibrary.cs
         /// <remarks>Subclass should override this function for executing the thread function.</remarks>
         protected virtual void execute()
         {
-            m_threadFunc();
+            if (m_threadFunc != null)
+                m_threadFunc();
+            else if (m_threadParameterizedFunc != null)
+                m_threadParameterizedFunc(m_parameter);
         }
 
         /// <summary>

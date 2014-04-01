@@ -48,6 +48,7 @@
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
     <Compile Include="Containers\Triple.cs" />
     <Compile Include="Framework\CmdLineOptions.cs" />
+    <Compile Include="Framework\Crypt.cs" />
     <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
     <Compile Include="Framework\FileSystem\BinaryFile.cs" />
     <Compile Include="Framework\FileSystem\FolderHelper.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadDelegate.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
+    <Compile Include="Framework\WebRequestEx.cs" />
     <Compile Include="Math\PrimeNum.cs" />
     <Compile Include="Math\RandomEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

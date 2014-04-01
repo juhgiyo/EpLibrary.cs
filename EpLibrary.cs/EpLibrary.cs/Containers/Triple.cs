@@ -1,8 +1,8 @@
 ﻿/*! 
 @file Triple.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
-		<http://github.com/juhgiyo/eppathfinding>
-@date July 16, 2013
+		<http://github.com/juhgiyo/eplibrary.cs>
+@date April 01, 2014
 @brief Triple Interface
 @version 2.0
 
@@ -10,7 +10,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Woong Gyu La <juhgiyo@gmail.com>
+Copyright (c) 2014 Woong Gyu La <juhgiyo@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-An Interface for the Triple Class.
+A Triple Class.
 
 */
 using System;
