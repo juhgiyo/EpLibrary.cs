@@ -68,7 +68,6 @@
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\AddOn\WorkerThreadInfinite.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\AddOn\WorkerThreadSingle.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
-    <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadDelegate.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
     <Compile Include="Framework\WebRequestEx.cs" />
     <Compile Include="Math\PrimeNum.cs" />
