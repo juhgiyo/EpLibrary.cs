@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Instrumentation" />
     <Reference Include="System.Windows.Forms" />
@@ -70,6 +71,9 @@
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
     <Compile Include="Framework\WebRequestEx.cs" />
+    <Compile Include="GUI\TaskbarNotifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Math\PrimeNum.cs" />
     <Compile Include="Math\RandomEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +82,10 @@
     <Compile Include="System\Endian.cs" />
     <Compile Include="System\RegistryHelper.cs" />
     <Compile Include="System\Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GUI\close.bmp" />
+    <Content Include="GUI\skin.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

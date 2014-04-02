@@ -114,7 +114,7 @@ namespace EpLibrary.cs
             {
                 String opKey=key.Trim();
                 opKey+="=";
-                if(m_propertyList.ContainsKey(key))
+                if (m_propertyList.ContainsKey(opKey))
                 {
                     retVal=m_propertyList[opKey];
                     return true;
@@ -293,7 +293,7 @@ namespace EpLibrary.cs
             }
             retKey=builder.ToString();
             retVal = buf;
-            retVal.Remove(0, bufTrav);
+            retVal=retVal.Remove(0, bufTrav);
 
             return true;
         }

@@ -167,7 +167,7 @@ namespace EpLibrary.cs
             for (int stringTrav = strLength - 1; stringTrav >= 0; stringTrav--)
             {
                 if (retString[stringTrav].CompareTo('\\')!=0)
-                    retString.Remove(stringTrav, 1);
+                    retString=retString.Remove(stringTrav, 1);
                 else
                     return retString;
             }
@@ -189,8 +189,7 @@ namespace EpLibrary.cs
             {
                 if (tmpString[stringTrav].CompareTo('.')==0)
                 {
-                    tmpString.Remove(0, stringTrav + 1);
-                    retString = tmpString;
+                    retString=tmpString.Remove(0, stringTrav + 1);
                     break;
                 }
             }
@@ -211,7 +210,7 @@ namespace EpLibrary.cs
             {
                 if (tmpString[stringTrav].CompareTo('.')==0)
                 {
-                    tmpString.Remove(stringTrav,tmpString.Length- stringTrav);
+                    tmpString=tmpString.Remove(stringTrav,tmpString.Length- stringTrav);
                     break;
                 }
             }
@@ -221,7 +220,7 @@ namespace EpLibrary.cs
             {
                 if (tmpString[stringTrav].CompareTo('\\')==0)
                 {
-                    tmpString.Remove(0, stringTrav + 1);
+                    tmpString = tmpString.Remove(0, stringTrav + 1);
                     retString = tmpString;
                     break;
                 }
@@ -243,7 +242,7 @@ namespace EpLibrary.cs
             {
                 if (tmpString[stringTrav].CompareTo('\\')==0)
                 {
-                    tmpString.Remove(0, stringTrav + 1);
+                    tmpString=tmpString.Remove(0, stringTrav + 1);
                     retString = tmpString;
                     break;
                 }
@@ -260,9 +259,10 @@ namespace EpLibrary.cs
         /// <returns>the full path of the current module</returns>
         public static String GetModuleFileName()
         {
-            StringBuilder exePath = new StringBuilder(FolderHelper.MAX_PATH);
-            int exePathLen = GetModuleFileName((IntPtr)0, exePath, exePath.Capacity);
-            return exePath.ToString();
+            //StringBuilder exePath = new StringBuilder(FolderHelper.MAX_PATH);
+            //int exePathLen = GetModuleFileName((IntPtr)0, exePath, exePath.Capacity);
+            //return exePath.ToString();
+            return System.Windows.Forms.Application.ExecutablePath;
         }
         
         /// <summary>

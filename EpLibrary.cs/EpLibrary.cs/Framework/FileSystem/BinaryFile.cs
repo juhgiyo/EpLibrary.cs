@@ -103,7 +103,7 @@ namespace EpLibrary.cs
                 try
                 {
 
-                    m_writer = new BinaryWriter(File.Open(filename,FileMode.OpenOrCreate));
+                    m_writer = new BinaryWriter(File.Open(filename, FileMode.Create));
                     m_writer.Write(m_stream.ToArray());
                     m_writer.Close();
                     return true;
@@ -151,7 +151,7 @@ namespace EpLibrary.cs
             {
                 try
                 {
-                    m_reader = new BinaryReader(File.Open(filename,FileMode.OpenOrCreate));
+                    m_reader = new BinaryReader(File.Open(filename, FileMode.OpenOrCreate));
                     FileInfo fInfo = new FileInfo(filename);
                     m_stream.SetLength(fInfo.Length);
                     m_reader.Read(m_stream.GetBuffer(),0,(int)fInfo.Length);
