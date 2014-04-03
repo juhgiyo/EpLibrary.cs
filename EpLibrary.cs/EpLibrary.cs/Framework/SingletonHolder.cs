@@ -53,6 +53,7 @@ namespace EpLibrary.cs
         /// singleton instance
         /// </summary>
         private static T m_instance;
+        private static object syncRoot = new Object();
 
         private SingletonHolder()
         {
@@ -65,11 +66,14 @@ namespace EpLibrary.cs
         {
             get
             {
-                if (m_instance == null)
+                lock (syncRoot)
                 {
-                    m_instance = new T();
+                    if (m_instance == null)
+                    {
+                        m_instance = new T();
+                    }
+                    return m_instance;
                 }
-                return m_instance;
             }
         }
     }

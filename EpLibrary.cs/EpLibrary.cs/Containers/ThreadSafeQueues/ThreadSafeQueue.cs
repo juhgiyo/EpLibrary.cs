@@ -212,7 +212,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// Actual queue structure
         /// </summary>
-		protected List<DataType> m_queue;
+		protected List<DataType> m_queue=new List<DataType>();
 
         /// <summary>
         /// lock

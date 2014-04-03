@@ -85,7 +85,7 @@ namespace EpLibrary.cs
         public LogWriter()
         {
             m_fileName = FolderHelper.GetModuleFileName();
-            m_fileName.Replace(".EXE", ".log");
+            m_fileName.Replace(".exe", ".log");
         }
 		
         /// <summary>
