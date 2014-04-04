@@ -109,8 +109,9 @@ namespace EpLibrary.cs
                         return Encoding.Unicode.GetString(retData);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
             return null;
         }
@@ -156,8 +157,9 @@ namespace EpLibrary.cs
                 cryptStream.FlushFinalBlock();
                 return memStream.ToArray();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
             return null;
         }

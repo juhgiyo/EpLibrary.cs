@@ -104,8 +104,9 @@ namespace EpLibrary.cs
             {
                 return Directory.CreateDirectory(path);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return null;
             }
        }
@@ -120,8 +121,9 @@ namespace EpLibrary.cs
             {
                 Directory.Delete(path, true);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             } 
         }
 
@@ -149,8 +151,9 @@ namespace EpLibrary.cs
                 File.Copy(fromFile, toFile, overWrite);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return false;
             }
         }

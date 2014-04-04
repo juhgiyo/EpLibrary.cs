@@ -73,22 +73,12 @@ namespace EpLibrary.cs
         /// Insert the new item into the priority queue.
         /// </summary>
         /// <param name="data">The inserting data.</param>
-        public override void Push(DataType data)
+        public override void Enqueue(DataType data)
         {
             lock(m_queueLock)
             {
-		        if(m_queue.Count>0)
-		        {
-			        int retIdx=m_queue.BinarySearch(data);
-                    if (retIdx < 0)
-                        m_queue.Insert(~retIdx, data);
-                    else
-                        Debug.Assert(false, "Same Object already in the queue!");
-		        }
-		        else
-		        {
-			        m_queue.Add(data);
-		        }
+                m_queue.Add(data);
+                m_queue.Sort();
             }
 		    
         }

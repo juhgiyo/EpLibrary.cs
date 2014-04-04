@@ -118,8 +118,9 @@ namespace EpLibrary.cs
             {
                 return m_mutex.WaitOne();
             }
-            catch (AbandonedMutexException)
+            catch (AbandonedMutexException ex)
             {
+                Console.WriteLine(ex.Message+" >"+ex.StackTrace);
                 m_isMutexAbandoned = true;
                 return false;
             }
@@ -137,8 +138,9 @@ namespace EpLibrary.cs
             {
                 return m_mutex.WaitOne(0);
             }
-            catch (AbandonedMutexException)
+            catch (AbandonedMutexException ex)
             {
+                Console.WriteLine(ex.Message+" >"+ex.StackTrace);
                 m_isMutexAbandoned = true;
                 return false;
             }
@@ -156,8 +158,9 @@ namespace EpLibrary.cs
             {
                 return m_mutex.WaitOne(dwMilliSecond);
             }
-            catch (AbandonedMutexException)
+            catch (AbandonedMutexException ex)
             {
+                Console.WriteLine(ex.Message+" >"+ex.StackTrace);
                 m_isMutexAbandoned = true;
                 return false;
             }

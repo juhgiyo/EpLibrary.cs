@@ -110,8 +110,7 @@ namespace EpLibrary.cs
                     Debug.Assert(m_jobProcessor != null,"Job Processor is NULL!");
                     if (m_jobProcessor == null)
                         break;
-                    BaseJob jobPtr = m_workPool.Front();
-                    m_workPool.Pop();
+                    BaseJob jobPtr = m_workPool.Dequeue();
                     jobPtr.JobReport(JobStatus.IN_PROCESS);
                     m_jobProcessor.DoJob(this, jobPtr);
                     jobPtr.JobReport(JobStatus.DONE);
@@ -122,8 +121,7 @@ namespace EpLibrary.cs
             {
                 while (m_workPool.IsEmpty())
                 {
-                    BaseJob jobPtr = m_workPool.Front();
-                    m_workPool.Pop();
+                    BaseJob jobPtr = m_workPool.Dequeue();
                     jobPtr.JobReport(JobStatus.INCOMPLETE);
                 }
             }

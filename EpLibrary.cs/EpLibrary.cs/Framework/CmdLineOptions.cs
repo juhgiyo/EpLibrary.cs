@@ -136,8 +136,9 @@ namespace EpLibrary.cs
                 String value=this[option].m_args[idx];
                 return value;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return defaultArg;
             }
         }

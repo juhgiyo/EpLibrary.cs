@@ -95,8 +95,9 @@ namespace EpLibrary.cs
                 response.Close();
                 return responseFromServer;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return null;
             }
         }
@@ -124,8 +125,9 @@ namespace EpLibrary.cs
                 RequestTranporter transporter = new RequestTranporter(request, callbackFunc);
                 request.BeginGetResponse(new AsyncCallback(RespCallback), transporter);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 if (callbackFunc != null)
                     callbackFunc(null);
             }
@@ -231,8 +233,9 @@ namespace EpLibrary.cs
                     webRequestEx.m_callbackFunc(responseFromServer);
                 return;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 if (webRequestEx.m_callbackFunc != null)
                     webRequestEx.m_callbackFunc(null);
             }
@@ -254,8 +257,9 @@ namespace EpLibrary.cs
                 if(tranporter.m_callbackFunc!=null)
                     tranporter.m_callbackFunc(myDataBuffer);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 if (tranporter.m_callbackFunc != null)
                     tranporter.m_callbackFunc(null);
             }
@@ -300,8 +304,9 @@ namespace EpLibrary.cs
                 if (tranporter.m_callbackFunc != null)
                     tranporter.m_callbackFunc(DownloadFileStatus.SUCCESS);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 if (tranporter.m_callbackFunc != null)
                     tranporter.m_callbackFunc(DownloadFileStatus.FAILED);
             }

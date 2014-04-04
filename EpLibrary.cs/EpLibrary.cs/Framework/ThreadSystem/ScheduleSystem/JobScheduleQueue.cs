@@ -69,9 +69,9 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">data The inserting data</param>
         /// <param name="status">the status to set for the data</param>
-		public void Push(BaseJob data,JobStatus status=JobStatus.IN_QUEUE)
+		public void Enqueue(BaseJob data,JobStatus status=JobStatus.IN_QUEUE)
         {
-            base.Push(data);
+            base.Enqueue(data);
             if (status != JobStatus.NONE)
                 data.JobReport(status);
         }

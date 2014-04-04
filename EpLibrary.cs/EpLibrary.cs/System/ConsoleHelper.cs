@@ -100,8 +100,9 @@ namespace EpLibrary.cs
                     return proc.StandardOutput.ReadToEnd();
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 // Log the exception
                 return null;
             }
@@ -128,8 +129,9 @@ namespace EpLibrary.cs
                 proc.StartInfo = procStartInfo;
                 proc.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
         }
     }

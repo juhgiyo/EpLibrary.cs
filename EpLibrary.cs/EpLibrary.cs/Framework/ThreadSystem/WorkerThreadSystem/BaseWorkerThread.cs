@@ -100,7 +100,7 @@ namespace EpLibrary.cs
             while(!m_workPool.IsEmpty())
 	        {
 		        m_workPool.Front().JobReport(JobStatus.INCOMPLETE);
-		        m_workPool.Pop();
+		        m_workPool.Dequeue();
 	        }
         }
 
@@ -110,7 +110,7 @@ namespace EpLibrary.cs
         /// <param name="work">the new work to put into the work pool.</param>
 		public void Push(BaseJob  work)
         {
-            m_workPool.Push(work);
+            m_workPool.Enqueue(work);
             if(m_lifePolicy==ThreadLifePolicy.SUSPEND_AFTER_WORK)
                 Resume();
         }
@@ -118,9 +118,9 @@ namespace EpLibrary.cs
 		/// <summary>
         /// Pop a work from the work pool.
 		/// </summary>
-		public void Pop()
+		public BaseJob Pop()
         {
-            m_workPool.Pop();
+            return m_workPool.Dequeue();
         }
 
         /// <summary>

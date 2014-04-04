@@ -65,8 +65,9 @@ namespace EpLibrary.cs
                 registry = registry.CreateSubKey(subKey);
                 registry.SetValue(regName, regData);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return false;
             }
             return true;
@@ -88,8 +89,9 @@ namespace EpLibrary.cs
                 registry = registry.OpenSubKey(subKey);
                 retRegData = registry.GetValue(regName);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return false;
             }
             return true;
@@ -109,8 +111,9 @@ namespace EpLibrary.cs
                 registry = registry.OpenSubKey(subkey);
                 registry.DeleteValue(regName);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
         }
 
@@ -127,8 +130,9 @@ namespace EpLibrary.cs
                 registry = registry.OpenSubKey(subkey);
                 registry.DeleteSubKeyTree(subkey);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
         }
 
@@ -147,8 +151,9 @@ namespace EpLibrary.cs
                 registry = registry.OpenSubKey(subkey);
                 return registry.GetValueKind(regName);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 return RegistryValueKind.Unknown;
             }
         }

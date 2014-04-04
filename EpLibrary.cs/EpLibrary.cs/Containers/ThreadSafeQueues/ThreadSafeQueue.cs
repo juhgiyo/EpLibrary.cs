@@ -63,7 +63,7 @@ namespace EpLibrary.cs
         /// <param name="b">the object to copy from</param>
 		public ThreadSafeQueue(ThreadSafeQueue<DataType> b)
         {
-            m_queue=b.GetQueue();
+            m_queue = new List<DataType>(b.GetQueue());
         }
 
 		 ~ThreadSafeQueue()
@@ -141,7 +141,7 @@ namespace EpLibrary.cs
         /// Insert the new item into the queue.
 		/// </summary>
         /// <param name="data">The inserting data.</param>
-		public virtual void Push(DataType data)
+		public virtual void Enqueue(DataType data)
         {
             lock(m_queueLock)
             {
@@ -178,11 +178,13 @@ namespace EpLibrary.cs
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual void Pop()
+        public virtual DataType Dequeue()
         {
             lock (m_queueLock)
             {
+                DataType data=m_queue[0];
                 m_queue.RemoveAt(0);
+                return data;
             }
         }
 

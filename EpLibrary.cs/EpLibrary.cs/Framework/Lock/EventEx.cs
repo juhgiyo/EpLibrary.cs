@@ -79,7 +79,10 @@ namespace EpLibrary.cs
             m_eventResetMode=EventResetMode.AutoReset;
 	        m_isInitialRaised=true;
             m_name=eventName;
-            m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
+            if (m_name == null)
+                m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode);
+            else
+                m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode, m_name);
         }
 
         /// <summary>
@@ -93,7 +96,10 @@ namespace EpLibrary.cs
             m_eventResetMode=eventResetMode;
 	        m_isInitialRaised=isInitialRaised;
             m_name=eventName;
-            m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
+            if(m_name==null)
+                m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode);
+            else
+                m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
         }
 
         /// <summary>
@@ -105,7 +111,10 @@ namespace EpLibrary.cs
             m_isInitialRaised=b.m_isInitialRaised;
 	        m_name=b.m_name;
             m_eventResetMode=b.m_eventResetMode;
-            m_event=new EventWaitHandle(m_isInitialRaised,m_eventResetMode,m_name);
+            if (m_name == null)
+                m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode);
+            else
+                m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode, m_name);
         }
 
 		~EventEx()

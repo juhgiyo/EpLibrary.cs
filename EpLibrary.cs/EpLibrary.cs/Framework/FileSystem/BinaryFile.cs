@@ -108,8 +108,9 @@ namespace EpLibrary.cs
                     m_writer.Close();
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
             }
@@ -132,8 +133,9 @@ namespace EpLibrary.cs
                     m_writer.Close();
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
             }
@@ -158,8 +160,9 @@ namespace EpLibrary.cs
                     m_writer.Close();
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
             }
