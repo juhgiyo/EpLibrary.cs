@@ -247,8 +247,8 @@ namespace EpLibrary.cs
 		        String val="";
 		        if(getValueKeyFromLine(line,ref key,ref val))
 		        {
-			        key.Trim();
-                    val.Trim();
+			        key=key.Trim();
+                    val=val.Trim();
 			        m_propertyList.Add(key,val);
 		        }
 		        else
