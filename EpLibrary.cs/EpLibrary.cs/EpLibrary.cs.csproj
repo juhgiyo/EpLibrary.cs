@@ -46,6 +46,7 @@
     <Compile Include="Containers\Pair.cs" />
     <Compile Include="Containers\PriorityQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
+    <Compile Include="Containers\ThreadSafeQueues\ThreadSafeErasableQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
     <Compile Include="Containers\Triple.cs" />
     <Compile Include="Framework\CmdLineOptions.cs" />
