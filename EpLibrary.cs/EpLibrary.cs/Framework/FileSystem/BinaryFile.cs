@@ -86,10 +86,6 @@ namespace EpLibrary.cs
             }
         }
 
-		~BinaryFile()
-        {
-        }
-
 	
         /// <summary>
         /// Save the binary to the given file

@@ -68,7 +68,6 @@ namespace EpLibrary.cs
             m_terminateEvent=new EventEx(false,EventResetMode.AutoReset);
         }
 
-        ~WorkerThreadInfinite(){}
 
         /// <summary>
         /// Wait for worker thread to terminate, and if not terminated, then Terminate.

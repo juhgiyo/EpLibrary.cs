@@ -61,9 +61,6 @@ namespace EpLibrary.cs
         {
         }
 
-        ~NoLock()
-        {
-        }
 
         /// <summary>
         /// Locks the critical section

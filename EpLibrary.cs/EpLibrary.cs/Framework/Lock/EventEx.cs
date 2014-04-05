@@ -117,9 +117,6 @@ namespace EpLibrary.cs
                 m_event = new EventWaitHandle(m_isInitialRaised, m_eventResetMode, m_name);
         }
 
-		~EventEx()
-        {
-        }
 
         /// <summary>
         /// Locks the critical section

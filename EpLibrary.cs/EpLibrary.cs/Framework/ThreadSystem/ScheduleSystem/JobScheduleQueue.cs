@@ -62,7 +62,6 @@ namespace EpLibrary.cs
 		{
 		}
 
-        ~JobScheduleQueue() { }
 
         /// <summary>
         /// Insert the new item into the schedule queue.

@@ -29,13 +29,6 @@ namespace EpLibrary.cs
             m_queue = new Queue<DataType>(b.GetQueue());
         }
 
-        ~ThreadSafeQueue()
-        {
-            lock (m_queueLock)
-            {
-                m_queue.Clear();
-            }
-        }
 
         /// <summary>
         /// Check if the queue is empty.

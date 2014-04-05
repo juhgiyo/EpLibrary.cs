@@ -309,10 +309,6 @@ namespace EpLibrary.cs
 
         }
 
-	
-		~OpenFileDialogEx()
-        {
-        }
 
 	
         /// <summary>
@@ -390,10 +386,6 @@ namespace EpLibrary.cs
             this.owner = owner;
         }
 
-		~OpenMultiFileDialog()
-        {
-        }
-
 
         /// <summary>
         /// Return the list of selected file names
@@ -438,9 +430,6 @@ namespace EpLibrary.cs
             this.owner = owner;
         }
 
-
-		~OpenFolderDialog()
-        {}
 
 
         /// <summary>
@@ -492,9 +481,6 @@ namespace EpLibrary.cs
             this.owner = owner;
         }
 
-		~SaveFileDialogEx()
-        {}
-		
 
         /// <summary>
         /// Return full path and filename

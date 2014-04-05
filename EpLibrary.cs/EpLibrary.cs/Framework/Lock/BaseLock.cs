@@ -62,9 +62,7 @@ namespace EpLibrary.cs
         public BaseLock(BaseLock b)
         {
         }
-		~BaseLock()
-        {
-        }
+
 
         /// <summary>
         /// Locks the critical section

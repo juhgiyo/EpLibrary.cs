@@ -74,10 +74,6 @@ namespace EpLibrary.cs
             }
         }
 
-		~TextFile()
-        {
-        }
-
 
         /// <summary>
         /// Set the text with the given text

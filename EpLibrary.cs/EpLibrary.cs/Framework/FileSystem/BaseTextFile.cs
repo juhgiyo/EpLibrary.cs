@@ -91,10 +91,6 @@ namespace EpLibrary.cs
                 m_writer = b.m_writer;
             }
         }
-		
-		~BaseTextFile()
-        {
-        }
 
         /// <summary>
         /// Get current encoding

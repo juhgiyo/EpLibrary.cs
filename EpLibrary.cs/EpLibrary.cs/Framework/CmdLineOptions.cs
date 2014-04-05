@@ -80,11 +80,6 @@ namespace EpLibrary.cs
 
         }
 
-        ~CmdLineOptions()
-        {
-
-        }
-
         /// <summary>
         /// Parse the Command Line Argument with given.
         /// </summary>

@@ -65,7 +65,6 @@ namespace EpLibrary.cs
             : base(b)
 		{}
 		
-		~WorkerThreadSingle(){}
 
         /// <summary>
         /// Actual single-job Thread Code.

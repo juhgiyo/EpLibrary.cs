@@ -75,9 +75,6 @@ namespace EpLibrary.cs
         }
 		
 
-		~PropertiesFile()
-        {
-        }
 
         /// <summary>
         /// Set the property with the given key with the value given

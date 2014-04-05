@@ -89,11 +89,6 @@ namespace EpLibrary.cs
     {
 
 
-		
-		~BaseJob()
-        {
-
-        }
 
         /// <summary>
         /// Return the current Job Status.

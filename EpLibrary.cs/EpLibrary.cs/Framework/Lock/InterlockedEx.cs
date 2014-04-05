@@ -68,9 +68,6 @@ namespace EpLibrary.cs
             m_interLock = 0;
         }
 
-        ~InterlockedEx()
-        {
-        }
 
         /// <summary>
         /// Locks the critical section

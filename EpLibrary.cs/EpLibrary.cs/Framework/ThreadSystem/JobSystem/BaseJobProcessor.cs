@@ -83,10 +83,7 @@ namespace EpLibrary.cs
     /// </summary>
     public abstract class BaseJobProcessor
     {
-		~BaseJobProcessor()
-        {
 
-        }
 
         /// <summary>
         /// Process the job given, subclasses must implement this function.

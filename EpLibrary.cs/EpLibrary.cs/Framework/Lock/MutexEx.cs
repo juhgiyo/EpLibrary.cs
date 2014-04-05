@@ -104,9 +104,6 @@ namespace EpLibrary.cs
             m_mutex=new Mutex(m_isInitialOwned,m_name);
         }
 
-        ~MutexEx()
-        {
-        }
 
         /// <summary>
         /// Locks the critical section

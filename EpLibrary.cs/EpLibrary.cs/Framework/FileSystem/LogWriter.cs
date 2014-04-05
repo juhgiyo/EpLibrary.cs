@@ -115,9 +115,6 @@ namespace EpLibrary.cs
         }
 		
 
-        ~LogWriter()
-        {
-        }
 
 		
     }
