@@ -129,6 +129,7 @@ namespace EpLibrary.cs
 
                     m_writer = new StreamWriter(filename, false, m_encoding);
                     writeLoop();
+                    m_writer.Flush();
                     m_writer.Close();
                     return true;
                 }
@@ -156,6 +157,7 @@ namespace EpLibrary.cs
 
                     m_writer = new StreamWriter(filename, true, m_encoding);
                     writeLoop();
+                    m_writer.Flush();
                     m_writer.Close();
                     return true;
                 }

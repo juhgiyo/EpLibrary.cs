@@ -101,6 +101,7 @@ namespace EpLibrary.cs
 
                     m_writer = new BinaryWriter(File.Open(filename, FileMode.Create));
                     m_writer.Write(m_stream.ToArray());
+                    m_writer.Flush();
                     m_writer.Close();
                     return true;
                 }
@@ -126,6 +127,7 @@ namespace EpLibrary.cs
 
                     m_writer = new BinaryWriter(File.Open(filename,FileMode.Append));
                     m_writer.Write(m_stream.ToArray());
+                    m_writer.Flush();
                     m_writer.Close();
                     return true;
                 }
