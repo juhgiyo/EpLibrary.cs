@@ -6,9 +6,9 @@ EpLibrary.cs
 DESCRIPTION
 -----------
 
-EpLibrary is a Visual C# utility library that supports to develop an application easier under a [MIT License](http://opensource.org/licenses/mit-license.php).
+EpLibrary.cs is a Visual C# utility library that supports to develop an application easier under a [MIT License](http://opensource.org/licenses/mit-license.php).
 You will no longer have to create the basic functionalities over and over again. 
-EpLibrary supports Visual C# 2012.
+EpLibrary.cs supports Visual C# 2012.
 Source can be downloaded at [EpLibrary](http://github.com/juhgiyo/eplibrary.cs)
 
 
