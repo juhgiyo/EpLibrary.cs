@@ -107,6 +107,11 @@ namespace EpLibrary.cs
                 }
                 catch (Exception ex)
                 {
+                    if (m_writer != null)
+                    {
+                        m_writer.Close();
+                        m_writer = null;
+                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
@@ -133,6 +138,11 @@ namespace EpLibrary.cs
                 }
                 catch (Exception ex)
                 {
+                    if (m_writer != null)
+                    {
+                        m_writer.Close();
+                        m_writer = null;
+                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
@@ -151,15 +161,20 @@ namespace EpLibrary.cs
             {
                 try
                 {
-                    m_reader = new BinaryReader(File.Open(filename, FileMode.OpenOrCreate));
+                    m_reader = new BinaryReader(File.Open(filename, FileMode.Open));
                     FileInfo fInfo = new FileInfo(filename);
                     m_stream.SetLength(fInfo.Length);
                     m_reader.Read(m_stream.GetBuffer(),0,(int)fInfo.Length);
-                    m_writer.Close();
+                    m_reader.Close();
                     return true;
                 }
                 catch (Exception ex)
                 {
+                    if (m_reader != null)
+                    {
+                        m_reader.Close();
+                        m_reader = null;
+                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
