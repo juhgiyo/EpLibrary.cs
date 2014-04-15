@@ -166,6 +166,7 @@ namespace EpLibrary.cs
                     m_stream.SetLength(fInfo.Length);
                     m_reader.Read(m_stream.GetBuffer(),0,(int)fInfo.Length);
                     m_reader.Close();
+                    m_stream.Seek(0, SeekOrigin.Begin);
                     return true;
                 }
                 catch (Exception ex)
