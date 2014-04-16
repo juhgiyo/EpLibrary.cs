@@ -82,18 +82,13 @@ namespace EpLibrary.cs
         /// <param name="key">the key of the property to change the value</param>
         /// <param name="val">the value to change the property</param>
         /// <returns></returns>
-        public bool SetProperty(String key, String val)
+        public void SetProperty(String key, String val)
         {
             lock(m_baseTextLock)
             {
                 String opKey=key.Trim();
                 opKey+="=";
-                if(m_propertyList.ContainsKey(opKey))
-                {
-                    m_propertyList[opKey]=val.Trim();
-                    return true;
-                }
-                return false;
+                m_propertyList[opKey]=val.Trim();
             }
 
         }
