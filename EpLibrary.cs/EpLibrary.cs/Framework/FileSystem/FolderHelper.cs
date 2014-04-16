@@ -277,6 +277,30 @@ namespace EpLibrary.cs
             String retString = GetModuleFileName();
             return GetPathOnly(retString);
         }
+
+        public static List<string> GetDirList(string dirPath)
+        {
+            DirectoryInfo dir = new DirectoryInfo(dirPath);
+            List<string> dirList = new List<string>();
+            try
+            {
+
+                foreach (DirectoryInfo d in dir.GetDirectories())
+                {
+                    dirList.Add(d.Name + "\\");
+                }
+                foreach (FileInfo f in dir.GetFiles())
+                {
+                    //Console.WriteLine("File {0}", f.FullName);
+                    dirList.Add(f.Name);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
+            }
+            return dirList;
+        }
     }
 
 
@@ -358,6 +382,7 @@ namespace EpLibrary.cs
                 return openFileDialog.ShowDialog(owner);
             return openFileDialog.ShowDialog();
         }
+
 	}
 
 
