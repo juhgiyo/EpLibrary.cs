@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Serialization
+namespace EpLibrary.cs
 {
     public class GetWritableAttributes
     {

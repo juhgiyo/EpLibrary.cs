@@ -21,7 +21,7 @@ using System.Text;
 #endregion
 
 
-namespace Serialization
+namespace EpLibrary.cs
 {
     /// <summary>
     ///   Indicates that a property or field should not be serialized

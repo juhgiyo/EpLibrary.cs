@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Serialization
+namespace EpLibrary.cs
 {
     public interface IStorage
     {

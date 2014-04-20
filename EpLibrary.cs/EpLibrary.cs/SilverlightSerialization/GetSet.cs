@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Serialization
+namespace EpLibrary.cs
 {
     public abstract class GetSet
     {

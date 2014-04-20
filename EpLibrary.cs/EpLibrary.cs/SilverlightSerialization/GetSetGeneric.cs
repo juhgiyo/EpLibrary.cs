@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Serialization
+namespace EpLibrary.cs
 {
     public class GetSetGeneric<T, TR> : GetSet
     {
