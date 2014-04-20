@@ -82,10 +82,16 @@ namespace EpLibrary.cs
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public LogWriter()
+        public LogWriter(string logFilename=null)
         {
-            m_fileName = FolderHelper.GetModuleFileName();
-            m_fileName=m_fileName.Replace(".EXE", ".log");
+            if (logFilename == null)
+            {
+                m_fileName = FolderHelper.GetModuleFileName();
+                m_fileName = m_fileName.Replace(".EXE", ".log");
+            }
+            else
+                m_fileName = logFilename;
+            
         }
 		
         /// <summary>
