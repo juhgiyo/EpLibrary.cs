@@ -1,9 +1,9 @@
 ﻿/*! 
-@file Crypt.cs
+@file RijndaelCrypt.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eplibrary.cs>
 @date April 01, 2014
-@brief Crypt Interface
+@brief RijndaelCrypt Interface
 @version 2.0
 
 @section LICENSE
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-A Crypt Class.
+A Rijndael Crypt Class.
 
 */
 using System;
@@ -45,25 +45,12 @@ using System.Security.Cryptography;
 
 namespace EpLibrary.cs
 {
-    /// <summary>
-    /// Crypt type
-    /// </summary>
-    public enum CryptType
-    {
-        /// <summary>
-        /// Encryption
-        /// </summary>
-        Encrypt,
-        /// <summary>
-        /// Decryption
-        /// </summary>
-        Decrypt
-    }
+
  
     /// <summary>
-    /// This is a class for Crypt Class
+    /// This is a class for Rijndael Crypt Class
     /// </summary>
-    public class Crypt
+    public class RijndaelCrypt
     {
         /// <summary>
         /// Encrypt/Decypt the given cryptData string with the given password
@@ -162,35 +149,6 @@ namespace EpLibrary.cs
                 Console.WriteLine(ex.Message + " >" + ex.StackTrace);
             }
             return null;
-        }
-
-        /// <summary>
-        /// Create random salt with given length
-        /// </summary>
-        /// <param name="length">length of salt bytes</param>
-        /// <returns>randomly created salt</returns>
-        public static byte[] CreateRandomSalt(int length)
-        {
-            // Create a buffer 
-            byte[] randBytes;
-
-            if (length >= 1)
-            {
-                randBytes = new byte[length];
-            }
-            else
-            {
-                randBytes = new byte[1];
-            }
-
-            // Create a new RNGCryptoServiceProvider.
-            RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
-
-            // Fill the buffer with random bytes.
-            rand.GetBytes(randBytes);
-
-            // return the bytes. 
-            return randBytes;
         }
     }
 }

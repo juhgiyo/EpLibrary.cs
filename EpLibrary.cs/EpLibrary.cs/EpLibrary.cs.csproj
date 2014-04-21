@@ -49,8 +49,24 @@
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeErasableQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
     <Compile Include="Containers\Triple.cs" />
+    <Compile Include="DotNetZip\CRC32.cs" />
+    <Compile Include="DotNetZip\Deflate.cs" />
+    <Compile Include="DotNetZip\DeflateStream.cs" />
+    <Compile Include="DotNetZip\GZipStream.cs" />
+    <Compile Include="DotNetZip\Inflate.cs" />
+    <Compile Include="DotNetZip\InfTree.cs" />
+    <Compile Include="DotNetZip\ParallelDeflateOutputStream.cs" />
+    <Compile Include="DotNetZip\Tree.cs" />
+    <Compile Include="DotNetZip\Zlib.cs" />
+    <Compile Include="DotNetZip\ZlibBaseStream.cs" />
+    <Compile Include="DotNetZip\ZlibCodec.cs" />
+    <Compile Include="DotNetZip\ZlibConstants.cs" />
+    <Compile Include="DotNetZip\ZlibStream.cs" />
+    <Compile Include="Framework\Compression\GZip.cs" />
+    <Compile Include="Framework\Crypt\AesCrypt.cs" />
     <Compile Include="Framework\CmdLineOptions.cs" />
-    <Compile Include="Framework\Crypt.cs" />
+    <Compile Include="Framework\Crypt\Crypt.cs" />
+    <Compile Include="Framework\Crypt\RijndaelCrypt.cs" />
     <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
     <Compile Include="Framework\FileSystem\BinaryFile.cs" />
     <Compile Include="Framework\FileSystem\FolderHelper.cs" />
@@ -91,6 +107,7 @@
     <Compile Include="System\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DotNetZip\License.zlib.txt" />
     <Content Include="GUI\close.bmp" />
     <Content Include="GUI\skin.bmp" />
   </ItemGroup>
