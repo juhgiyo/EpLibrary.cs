@@ -73,6 +73,12 @@
     <Compile Include="Framework\FileSystem\LogWriter.cs" />
     <Compile Include="Framework\FileSystem\PropertiesFile.cs" />
     <Compile Include="Framework\FileSystem\TextFile.cs" />
+    <Compile Include="Framework\IPC\IpcClient.cs" />
+    <Compile Include="Framework\IPC\IpcClientInterface.cs" />
+    <Compile Include="Framework\IPC\IpcConf.cs" />
+    <Compile Include="Framework\IPC\IpcPipe.cs" />
+    <Compile Include="Framework\IPC\IpcServer.cs" />
+    <Compile Include="Framework\IPC\IpcServerInterfaces.cs" />
     <Compile Include="Framework\Lock\BaseLock.cs" />
     <Compile Include="Framework\Lock\EventEx.cs" />
     <Compile Include="Framework\Lock\InterlockedEx.cs" />
