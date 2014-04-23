@@ -78,7 +78,7 @@ namespace EpLibrary.cs
         /// <param name="numOfReadyBytes">maximum read buffer size</param>
         /// <param name="numOfWriteBytes">maximum write buffer size</param>
         /// <param name="callBackObj">callback object</param>
-        public IpcServerOps(string pipeName, IpcServerCallbackInterface callBackObj, int maximumInstance=IpcConf.PIPE_UNLIMITED_INSTANCES, int numOfReadyBytes=IpcConf.DEFAULT_READ_BUF_SIZE, int numOfWriteBytes=IpcConf.DEFAULT_WRITE_BUF_SIZE)
+        public IpcServerOps(string pipeName, IpcServerCallbackInterface callBackObj, int maximumInstance = IpcConf.DEFAULT_PIPE_INSTANCES, int numOfReadyBytes = IpcConf.DEFAULT_READ_BUF_SIZE, int numOfWriteBytes = IpcConf.DEFAULT_WRITE_BUF_SIZE)
         {
             m_pipeName=pipeName;
             m_maximumInstances=maximumInstance;
@@ -93,7 +93,7 @@ namespace EpLibrary.cs
 		{
             m_callBackObj = null;
             m_pipeName = null;
-            m_maximumInstances = IpcConf.PIPE_UNLIMITED_INSTANCES;
+            m_maximumInstances = IpcConf.DEFAULT_PIPE_INSTANCES;
             m_numOfReadBytes = IpcConf.DEFAULT_READ_BUF_SIZE;
             m_numOfWriteBytes = IpcConf.DEFAULT_WRITE_BUF_SIZE;
 

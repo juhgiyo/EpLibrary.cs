@@ -150,7 +150,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// Unlimited instance of pipe
         /// </summary>
-        public const int PIPE_UNLIMITED_INSTANCES = -1;
+        public const int DEFAULT_PIPE_INSTANCES = 255;
         /// <summary>
         /// Default write buffer size
         /// </summary>

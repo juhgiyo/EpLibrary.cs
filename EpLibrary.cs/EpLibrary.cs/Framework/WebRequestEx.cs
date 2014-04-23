@@ -73,77 +73,47 @@ namespace EpLibrary.cs
         /// <param name="uri">uri</param>
         /// <param name="credentials">credentials</param>
         /// <returns></returns>
-        public static String GetResponse(String uri=null, ICredentials credentials=null)
+        public static String GetResponse(String uri, ICredentials credentials = null)
         {
             if (uri == null || uri.Length == 0)
                 throw new Exception("Must supply valid URI!");
-            ICredentials useCredentials = CredentialCache.DefaultCredentials;
-            WebRequest request;
+
+            WebClient client = new WebClient(); WebRequest.Create(uri);
+            string result = null;
             if (credentials != null)
-                useCredentials = credentials;
-
-
-            try
+                client.Credentials = credentials;
+            EventEx doneEvent = new EventEx(false, EventResetMode.AutoReset);
+            client.DownloadStringCompleted += (s, e) =>
             {
-                request = WebRequest.Create(uri);
-                request.Credentials = useCredentials;
-                WebResponse response = request.GetResponse();
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                String responseFromServer = reader.ReadToEnd();
-                reader.Close();
-                response.Close();
-                return responseFromServer;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                return null;
-            }
+                result = e.Result;
+                doneEvent.SetEvent();
+            };
+            client.DownloadStringAsync(new Uri(uri, UriKind.Absolute));
+            doneEvent.WaitForEvent();
+            return result;
         }
+
         /// <summary>
         /// Get response from the given uri with given credentials
         /// </summary>
         /// <param name="uri">uri</param>
         /// <param name="credentials">credentials</param>
         /// <param name="callbackFunc">callback function</param>
-        public static void GetResponseAsync(String uri, ICredentials credentials, Action<String> callbackFunc)
+        public static void GetResponseAsync(String uri, Action<String> callbackFunc, ICredentials credentials = null)
         {
             if (uri == null || uri.Length == 0)
                 throw new Exception("Must supply valid URI!");
-            ICredentials useCredentials = CredentialCache.DefaultCredentials;
-            WebRequest request;
+
+            WebClient client = new WebClient(); WebRequest.Create(uri);
             if (credentials != null)
-                useCredentials = credentials;
-
-
-            try
+                client.Credentials = credentials;
+            client.DownloadStringCompleted += (s, e) =>
             {
-                request = WebRequest.Create(uri);
-                request.Credentials = useCredentials;
-                WebResponse response = request.GetResponse();
-                RequestTranporter transporter = new RequestTranporter(request, callbackFunc);
-                request.BeginGetResponse(new AsyncCallback(RespCallback), transporter);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                if (callbackFunc != null)
-                    callbackFunc(null);
-            }
+                callbackFunc(e.Result);
+            };
+            client.DownloadStringAsync(new Uri(uri, UriKind.Absolute));
         }
 
-        /// <summary>
-        /// Download data from given uri
-        /// </summary>
-        /// <param name="uri">uri</param>
-        /// <returns>downloaded data</returns>
-        public static byte[] DownloadData(String uri)
-        {
-            WebClient webClient = new WebClient();
-            byte[] myDataBuffer = webClient.DownloadData(uri);
-            return myDataBuffer;
-        }
         /// <summary>
         /// Download file from given uri to given filepath
         /// </summary>
@@ -151,8 +121,32 @@ namespace EpLibrary.cs
         /// <param name="filepath">filepath</param>
         public static void DownloadFile(String uri, String filepath)
         {
+            if (uri == null || uri.Length == 0)
+                throw new Exception("Must supply valid URI!");
+            if (filepath == null || filepath.Length == 0)
+                throw new Exception("Must supply valid filepath!");
             WebClient webClient = new WebClient();
-            webClient.DownloadFile(uri, filepath);
+            EventEx doneEvent = new EventEx(false, EventResetMode.AutoReset);
+            webClient.OpenReadCompleted += (s, e) =>
+            {
+                try
+                {
+                    using (FileStream stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+                    {
+                        e.Result.CopyTo(stream);
+                        stream.Flush();
+                        stream.Close();
+                        doneEvent.SetEvent();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
+                }
+            };
+            webClient.OpenReadAsync(new Uri(uri, UriKind.Absolute));
+            doneEvent.WaitForEvent();
         }
 
         /// <summary>
@@ -160,12 +154,24 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="uri">uri</param>
         /// <param name="callbackFunc">callback function</param>
-        public static void DownloadDataAsync(String uri, Action<byte[]> callbackFunc)
+        public static void DownloadDataAsync(String uri, Action<Stream> callbackFunc)
         {
             if (uri == null || uri.Length == 0)
-                throw new Exception("Must supply Valid URI!");
-            ThreadEx thread = new ThreadEx(downloadData, new DownloadDataTranporter(uri, callbackFunc));
-            thread.Start();
+                throw new Exception("Must supply valid URI!");
+            WebClient webClient = new WebClient();
+            webClient.OpenReadCompleted += (s, e) =>
+            {
+                try
+                {
+                    callbackFunc(e.Result);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
+                }
+            };
+            webClient.OpenReadAsync(new Uri(uri, UriKind.Absolute));
         }
 
         /// <summary>
@@ -180,168 +186,28 @@ namespace EpLibrary.cs
                 throw new Exception("Must supply valid URI!");
             if (filepath == null || filepath.Length == 0)
                 throw new Exception("Must supply valid filepath!");
-            ThreadEx thread = new ThreadEx(downloadFile, new DownloadFileTranporter(uri, filepath, callbackFunc));
-            thread.Start();
-        }
-
-        /// <summary>
-        /// Request Transporter class
-        /// </summary>
-        private class RequestTranporter
-        {
-            /// <summary>
-            /// WebRequest callback object
-            /// </summary>
-            public Action<String> m_callbackFunc;
-            /// <summary>
-            /// WebRequest object
-            /// </summary>
-            public WebRequest m_request;
-            
-            /// <summary>
-            /// Default constructor
-            /// </summary>
-            /// <param name="request">request object</param>
-            /// <param name="callbackFunc">callback function</param>
-            public RequestTranporter(WebRequest request, Action<String> callbackFunc)
-            {
-                m_callbackFunc = callbackFunc;
-                m_request = request;
-            }
-        }
-        /// <summary>
-        /// Request callback function
-        /// </summary>
-        /// <param name="asynchronousResult">RequestTransporter object</param>
-        private static void RespCallback(IAsyncResult asynchronousResult)
-        {
-            RequestTranporter webRequestEx = null;
-            try
-            {
-                // State of request is asynchronous.
-                webRequestEx = (RequestTranporter)asynchronousResult.AsyncState;
-                HttpWebRequest myHttpWebRequest = (HttpWebRequest)webRequestEx.m_request;
-                WebResponse response = (HttpWebResponse)myHttpWebRequest.EndGetResponse(asynchronousResult);
-
-                // Read the response into a Stream object.
-                Stream responseStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-                String responseFromServer = reader.ReadToEnd();
-                reader.Close();
-                response.Close();
-                if(webRequestEx.m_callbackFunc!=null)
-                    webRequestEx.m_callbackFunc(responseFromServer);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                if (webRequestEx.m_callbackFunc != null)
-                    webRequestEx.m_callbackFunc(null);
-            }
-        }
-
-
-
-        /// <summary>
-        /// download data thread funtion
-        /// </summary>
-        /// <param name="param">download data transporter object</param>
-        private static void downloadData(object param)
-        {
-            DownloadDataTranporter tranporter = (DownloadDataTranporter)param;
             WebClient webClient = new WebClient();
-            try
+            webClient.OpenReadCompleted += (s, e) =>
             {
-                byte[] myDataBuffer = webClient.DownloadData(tranporter.m_uri);
-                if(tranporter.m_callbackFunc!=null)
-                    tranporter.m_callbackFunc(myDataBuffer);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                if (tranporter.m_callbackFunc != null)
-                    tranporter.m_callbackFunc(null);
-            }
-            
-        }
-        /// <summary>
-        /// Download data tranporter class
-        /// </summary>
-        private class DownloadDataTranporter
-        {
-            /// <summary>
-            /// uri
-            /// </summary>
-            public String m_uri;
-            /// <summary>
-            /// callback function
-            /// </summary>
-            public Action<byte[]> m_callbackFunc;
-            /// <summary>
-            /// Default constructor
-            /// </summary>
-            /// <param name="uri">uri</param>
-            /// <param name="callbackFunc">callback function</param>
-            public DownloadDataTranporter(String uri, Action<byte[]> callbackFunc)
-            {
-                m_uri = uri;
-                m_callbackFunc = callbackFunc;
-            }
+                try
+                {
+                    using (FileStream stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+                    {
+                        e.Result.CopyTo(stream);
+                        stream.Flush();
+                        stream.Close();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message + " >" + ex.StackTrace);
+                }
+            };
+            webClient.OpenReadAsync(new Uri(uri, UriKind.Absolute));
         }
 
-        /// <summary>
-        /// download file thread function
-        /// </summary>
-        /// <param name="param">download file tranporter object</param>
-        private static void downloadFile(object param)
-        {
-            DownloadFileTranporter tranporter = (DownloadFileTranporter)param;
-            WebClient webClient = new WebClient();
-            try
-            {
-               webClient.DownloadFile(tranporter.m_uri,tranporter.m_filepath);
-                if (tranporter.m_callbackFunc != null)
-                    tranporter.m_callbackFunc(DownloadFileStatus.SUCCESS);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                if (tranporter.m_callbackFunc != null)
-                    tranporter.m_callbackFunc(DownloadFileStatus.FAILED);
-            }
 
-        }
-        /// <summary>
-        /// Download file tranporter class
-        /// </summary>
-        private class DownloadFileTranporter
-        {
-            /// <summary>
-            /// uri
-            /// </summary>
-            public String m_uri;
-            /// <summary>
-            /// filepath
-            /// </summary>
-            public String m_filepath;
-            /// <summary>
-            /// m_callbackFunc
-            /// </summary>
-            public Action<DownloadFileStatus> m_callbackFunc;
-            /// <summary>
-            /// Default constructor
-            /// </summary>
-            /// <param name="uri">uri</param>
-            /// <param name="filepath">filepath</param>
-            /// <param name="callbackFunc">callback function</param>
-            public DownloadFileTranporter(String uri, String filepath, Action<DownloadFileStatus> callbackFunc)
-            {
-                m_uri = uri;
-                m_filepath = filepath;
-                m_callbackFunc = callbackFunc;
-            }
-        }
 
     }
 }

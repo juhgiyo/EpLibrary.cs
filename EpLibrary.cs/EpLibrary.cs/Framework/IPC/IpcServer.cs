@@ -111,7 +111,8 @@ namespace EpLibrary.cs
                 m_options.m_numOfWriteBytes = IpcConf.DEFAULT_WRITE_BUF_SIZE;
             if (ops.m_numOfReadBytes <= 0)
                 m_options.m_numOfReadBytes = IpcConf.DEFAULT_READ_BUF_SIZE;
-
+            if (ops.m_maximumInstances <= 0)
+                m_options.m_maximumInstances = IpcConf.DEFAULT_PIPE_INSTANCES;
             Start();
         }
 
@@ -123,11 +124,8 @@ namespace EpLibrary.cs
             StartStatus status=StartStatus.SUCCESS;
             try
             {
-                IpcPipeOps pipeOptions = new IpcPipeOps(m_options.m_pipeName,this,m_options.m_maximumInstances, m_options.m_numOfReadBytes, m_options.m_numOfWriteBytes);
-                int numOfPipeInstance = m_options.m_maximumInstances;
-                if (numOfPipeInstance >= 255)
-                    numOfPipeInstance = 255;
-                for (int trav = 0; trav < numOfPipeInstance; trav++)
+                IpcPipeOps pipeOptions = new IpcPipeOps(m_options.m_pipeName,this, m_options.m_numOfReadBytes, m_options.m_numOfWriteBytes);
+                for (int trav = 0; trav < m_options.m_maximumInstances; trav++)
                 {
                     IpcPipe pipeInst = new IpcPipe(pipeOptions);
                     pipeInst.Create();

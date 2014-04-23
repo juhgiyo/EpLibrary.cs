@@ -61,10 +61,7 @@ namespace EpLibrary.cs
         /// Name of the pipe
         /// </summary>
         public string m_pipeName;
-        /// <summary>
-        /// The maximum possible number of pipe instances
-        /// </summary>
-        public int m_maximumInstances;
+
         /// <summary>
         /// read byte size
         /// </summary>
@@ -78,14 +75,12 @@ namespace EpLibrary.cs
         /// Default Constructor
         /// </summary>
         /// <param name="pipeName">the name of the pipe</param>
-        /// <param name="maximumInstance">maximum number of pipe instance</param>
         /// <param name="numOfReadyBytes">maximum read buffer size</param>
         /// <param name="numOfWriteBytes">maximum write buffer size</param>
         /// <param name="callBackObj">callback object</param>
-        public IpcPipeOps(string pipeName, IpcPipeCallbackInterface callBackObj, int maximumInstance = IpcConf.PIPE_UNLIMITED_INSTANCES, int numOfReadyBytes = IpcConf.DEFAULT_READ_BUF_SIZE, int numOfWriteBytes = IpcConf.DEFAULT_WRITE_BUF_SIZE)
+        public IpcPipeOps(string pipeName, IpcPipeCallbackInterface callBackObj, int numOfReadyBytes = IpcConf.DEFAULT_READ_BUF_SIZE, int numOfWriteBytes = IpcConf.DEFAULT_WRITE_BUF_SIZE)
         {
             m_pipeName = pipeName;
-            m_maximumInstances = maximumInstance;
             m_callBackObj = callBackObj;
             m_numOfReadBytes = numOfReadyBytes;
             m_numOfWriteBytes = numOfWriteBytes;
@@ -234,7 +229,7 @@ namespace EpLibrary.cs
                 m_pipeHandle = new NamedPipeServerStream(
                 m_options.m_pipeName,
                 PipeDirection.InOut,
-                m_options.m_maximumInstances,     // maximum instances
+               -1,     // maximum instances
                 PipeTransmissionMode.Message,
                 PipeOptions.Asynchronous | PipeOptions.WriteThrough,
                 m_options.m_numOfWriteBytes,
