@@ -172,7 +172,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="pipe">the pipe</param>
         /// <param name="status">status of connect</param>
-        void OnConnected(IpcClientInterface pipe, ConnectStatus status);
+        void OnConnected(IpcClientInterface pipe, IpcConnectStatus status);
         /// <summary>
         /// Received the data from the client.
         /// </summary>
@@ -185,7 +185,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="pipe">the pipe which wrote the packet</param>
         /// <param name="status">the status of write</param>
-        void OnWriteComplete(IpcClientInterface pipe, WriteStatus status);
+        void OnWriteComplete(IpcClientInterface pipe, IpcWriteStatus status);
         /// <summary>
         ///  The pipe is disconnected.
         /// </summary>

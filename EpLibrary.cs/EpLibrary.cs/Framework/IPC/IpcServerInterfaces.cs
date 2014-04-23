@@ -203,7 +203,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="server">the server</param>
         /// <param name="status">started status</param>
-        void OnServerStarted(IpcServerInterface server, StartStatus status);
+        void OnServerStarted(IpcServerInterface server, IpcStartStatus status);
 
         /// <summary>
         /// When accepted client tries to make connection.
@@ -213,7 +213,7 @@ namespace EpLibrary.cs
         /// <param name="status">status of connection</param>
         /// <remarks>When this function calls, it is right before making connection,
         /// so user can configure the pipe before the connection is actually made.</remarks>
-        void OnNewConnection(IpcServerInterface server, IpcInterface pipe, ConnectStatus status);
+        void OnNewConnection(IpcServerInterface server, IpcInterface pipe, IpcConnectStatus status);
 
         /// <summary>
         /// Received the data from the client.
@@ -230,7 +230,7 @@ namespace EpLibrary.cs
         /// <param name="server">the server</param>
         /// <param name="pipe">the pipe which wrote the packet</param>
         /// <param name="status">the status of write</param>
-        void OnWriteComplete(IpcServerInterface server, IpcInterface pipe, WriteStatus status);
+        void OnWriteComplete(IpcServerInterface server, IpcInterface pipe, IpcWriteStatus status);
 
         /// <summary>
         /// when pipe is disconnected

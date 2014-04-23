@@ -121,7 +121,7 @@ namespace EpLibrary.cs
         /// </summary>
         protected override void execute()
         {
-            StartStatus status=StartStatus.SUCCESS;
+            IpcStartStatus status = IpcStartStatus.SUCCESS;
             try
             {
                 IpcPipeOps pipeOptions = new IpcPipeOps(m_options.m_pipeName,this, m_options.m_numOfReadBytes, m_options.m_numOfWriteBytes);
@@ -136,7 +136,7 @@ namespace EpLibrary.cs
             {
                 Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 m_started = false;
-                status = StartStatus.FAIL_PIPE_CREATE_FAILED;
+                status = IpcStartStatus.FAIL_PIPE_CREATE_FAILED;
             }
             m_options.m_callBackObj.OnServerStarted(this, status);
             
@@ -201,9 +201,9 @@ namespace EpLibrary.cs
         /// <param name="status">status of connect</param>
         /// <remarks>hen this function calls, it is right before making connection,
         /// so user can configure the pipe before the connection is actually made.	</remarks>
-        public void OnNewConnection(IpcInterface pipe, ConnectStatus status)
+        public void OnNewConnection(IpcInterface pipe, IpcConnectStatus status)
         {
-            if (status == ConnectStatus.SUCCESS)
+            if (status == IpcConnectStatus.SUCCESS)
             {
                 if (!m_pipes.Contains(pipe))
                     m_pipes.Add(pipe);
@@ -227,7 +227,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="pipe">the pipe which wrote the packet</param>
         /// <param name="status">the status of write</param>
-        public void OnWriteComplete(IpcInterface pipe, WriteStatus status)
+        public void OnWriteComplete(IpcInterface pipe, IpcWriteStatus status)
         {
             m_options.m_callBackObj.OnWriteComplete(this, pipe, status);
         }

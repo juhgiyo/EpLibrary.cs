@@ -45,7 +45,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// Server start status
     /// </summary>
-    public enum StartStatus
+    public enum IpcStartStatus
     {
         /// <summary>
         /// Success
@@ -59,7 +59,8 @@ namespace EpLibrary.cs
 	/// <summary>
     /// Connect Status
 	/// </summary>
-	public enum ConnectStatus{
+    public enum IpcConnectStatus
+    {
 		/// <summary>
         /// Success
 		/// </summary>
@@ -90,7 +91,7 @@ namespace EpLibrary.cs
 	/// <summary>
     /// Write Status
 	/// </summary>
-	public enum WriteStatus{
+	public enum IpcWriteStatus{
 		/// <summary>
         /// Success
 		/// </summary>

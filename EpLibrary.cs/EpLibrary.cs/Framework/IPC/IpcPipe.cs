@@ -116,7 +116,7 @@ namespace EpLibrary.cs
         /// <param name="status">status of connect</param>
         /// <remarks>when this function calls, it is right before making connection,
         /// so user can configure the pipe before the connection is actually made.	</remarks>
-        void OnNewConnection(IpcInterface pipe, ConnectStatus status);
+        void OnNewConnection(IpcInterface pipe, IpcConnectStatus status);
 
         /// <summary>
         /// Received the data from the client.
@@ -131,7 +131,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="pipe">the pipe which wrote the packet</param>
         /// <param name="status">the status of write</param>
-        void OnWriteComplete(IpcInterface pipe, WriteStatus status);
+        void OnWriteComplete(IpcInterface pipe, IpcWriteStatus status);
 
         /// <summary>
         ///  The pipe is disconnected.
@@ -342,7 +342,7 @@ namespace EpLibrary.cs
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                pipeInst.m_options.m_callBackObj.OnNewConnection(this, ConnectStatus.FAIL_WAIT_FOR_CONNECTION_FAILED);
+                pipeInst.m_options.m_callBackObj.OnNewConnection(this, IpcConnectStatus.FAIL_WAIT_FOR_CONNECTION_FAILED);
                 return;
             }
             
@@ -350,13 +350,13 @@ namespace EpLibrary.cs
             {
                 m_pipeHandle.BeginRead(m_readBuffer, 0, m_options.m_numOfReadBytes, OnReadComplete, this);
                 m_connected = true;
-                m_options.m_callBackObj.OnNewConnection(this, ConnectStatus.SUCCESS);
+                m_options.m_callBackObj.OnNewConnection(this, IpcConnectStatus.SUCCESS);
             }
             catch (System.Exception ex)
             {
                 Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 KillConnection();
-                m_options.m_callBackObj.OnNewConnection(this, ConnectStatus.FAIL_READ_FAILED);
+                m_options.m_callBackObj.OnNewConnection(this, IpcConnectStatus.FAIL_READ_FAILED);
             }
             
         }
@@ -411,7 +411,7 @@ namespace EpLibrary.cs
             {
                 Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                 KillConnection();
-                pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, WriteStatus.FAIL_WRITE_FAILED);
+                pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, IpcWriteStatus.FAIL_WRITE_FAILED);
                 return;
             }
 
@@ -431,13 +431,13 @@ namespace EpLibrary.cs
                         catch (System.Exception ex)
                         {
                             Console.WriteLine(ex.Message + " >" + ex.StackTrace);
-                            pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, WriteStatus.SUCCESS);
+                            pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, IpcWriteStatus.SUCCESS);
                             KillConnection();
-                            pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, WriteStatus.FAIL_WRITE_FAILED);
+                            pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, IpcWriteStatus.FAIL_WRITE_FAILED);
                             return;
                         }
                     }
-                    pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, WriteStatus.SUCCESS);
+                    pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, IpcWriteStatus.SUCCESS);
                 }
             }
         }
