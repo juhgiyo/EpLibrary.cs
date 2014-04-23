@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1DE9AD04-A7AD-4C41-BFBD-4C9231891DB6}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EpLibrary.cs</RootNamespace>
+    <AssemblyName>EpLibrary.cs</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Containers\Pair.cs" />
+    <Compile Include="Containers\PriorityQueue.cs" />
+    <Compile Include="Containers\ThreadSafeQueues\ThreadSafeErasableQueue.cs" />
+    <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
+    <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />
+    <Compile Include="Containers\Triple.cs" />
+    <Compile Include="DotNetZip\CRC32.cs" />
+    <Compile Include="DotNetZip\Deflate.cs" />
+    <Compile Include="DotNetZip\DeflateStream.cs" />
+    <Compile Include="DotNetZip\GZipStream.cs" />
+    <Compile Include="DotNetZip\Inflate.cs" />
+    <Compile Include="DotNetZip\InfTree.cs" />
+    <Compile Include="DotNetZip\ParallelDeflateOutputStream.cs" />
+    <Compile Include="DotNetZip\Tree.cs" />
+    <Compile Include="DotNetZip\Zlib.cs" />
+    <Compile Include="DotNetZip\ZlibBaseStream.cs" />
+    <Compile Include="DotNetZip\ZlibCodec.cs" />
+    <Compile Include="DotNetZip\ZlibConstants.cs" />
+    <Compile Include="DotNetZip\ZlibStream.cs" />
+    <Compile Include="Framework\Compression\GZip.cs" />
+    <Compile Include="Framework\Crypt\AesCrypt.cs" />
+    <Compile Include="Framework\CmdLineOptions.cs" />
+    <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
+    <Compile Include="Framework\FileSystem\BinaryFile.cs" />
+    <Compile Include="Framework\FileSystem\FolderHelper.cs" />
+    <Compile Include="Framework\FileSystem\LogWriter.cs" />
+    <Compile Include="Framework\FileSystem\PropertiesFile.cs" />
+    <Compile Include="Framework\FileSystem\TextFile.cs" />
+    <Compile Include="Framework\Lock\BaseLock.cs" />
+    <Compile Include="Framework\Lock\EventEx.cs" />
+    <Compile Include="Framework\Lock\InterlockedEx.cs" />
+    <Compile Include="Framework\Lock\NoLock.cs" />
+    <Compile Include="Framework\SingletonHolder.cs" />
+    <Compile Include="Framework\ThreadSystem\JobSystem\BaseJob.cs" />
+    <Compile Include="Framework\ThreadSystem\JobSystem\BaseJobProcessor.cs" />
+    <Compile Include="Framework\ThreadSystem\ScheduleSystem\JobScheduleQueue.cs" />
+    <Compile Include="Framework\ThreadSystem\ThreadEx.cs" />
+    <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\AddOn\WorkerThreadInfinite.cs" />
+    <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\AddOn\WorkerThreadSingle.cs" />
+    <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
+    <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
+    <Compile Include="Framework\WebRequestEx.cs" />
+    <Compile Include="Math\PrimeNum.cs" />
+    <Compile Include="Math\RandomEx.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SilverlightSerialization\GetSet.cs" />
+    <Compile Include="SilverlightSerialization\GetSetGeneric.cs" />
+    <Compile Include="SilverlightSerialization\GetWritableAttributes.cs" />
+    <Compile Include="SilverlightSerialization\IStorage.cs" />
+    <Compile Include="SilverlightSerialization\SerializationUnits.cs" />
+    <Compile Include="SilverlightSerialization\SilverlightSerializer.cs" />
+    <Compile Include="System\ConsoleHelper.cs" />
+    <Compile Include="System\DateTimeHelper.cs" />
+    <Compile Include="System\Endian.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
