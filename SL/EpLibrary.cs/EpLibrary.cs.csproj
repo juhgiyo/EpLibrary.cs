@@ -87,6 +87,7 @@
     <Compile Include="Framework\FileSystem\LogWriter.cs" />
     <Compile Include="Framework\FileSystem\PropertiesFile.cs" />
     <Compile Include="Framework\FileSystem\TextFile.cs" />
+    <Compile Include="Framework\FrameworkElementEx.cs" />
     <Compile Include="Framework\Lock\BaseLock.cs" />
     <Compile Include="Framework\Lock\EventEx.cs" />
     <Compile Include="Framework\Lock\InterlockedEx.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="System\ConsoleHelper.cs" />
     <Compile Include="System\DateTimeHelper.cs" />
     <Compile Include="System\Endian.cs" />
+    <Compile Include="System\MouseButtonHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

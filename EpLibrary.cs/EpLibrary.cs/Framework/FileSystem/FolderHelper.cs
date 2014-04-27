@@ -278,6 +278,11 @@ namespace EpLibrary.cs
             return GetPathOnly(retString);
         }
 
+        /// <summary>
+        /// Get the directory and file list of given path
+        /// </summary>
+        /// <param name="dirPath">the folder path</param>
+        /// <returns>the directory and file list found</returns>
         public static List<string> GetDirList(string dirPath)
         {
             DirectoryInfo dir = new DirectoryInfo(dirPath);

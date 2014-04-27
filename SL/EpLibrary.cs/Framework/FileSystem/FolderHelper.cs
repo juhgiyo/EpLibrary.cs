@@ -140,6 +140,24 @@ namespace EpLibrary.cs
         }
 
         /// <summary>
+        /// Return the simple path of given path
+        /// </summary>
+        /// <param name="filePath">the full path of folder</param>
+        /// <returns>the simple path</returns>
+        public static String GetSimplePath(String filePath)
+        {
+            if (filePath == null || filePath.Length <= 0)
+                return "";
+            if (filePath[filePath.Length - 1] == '\\')
+                filePath=filePath.Remove(filePath.Length - 1);
+            int last=filePath.LastIndexOf('\\');
+            if (last > 0)
+            {
+                filePath = filePath.Remove(0, last+1);
+            }
+            return filePath;
+        }
+        /// <summary>
         /// Return only the extension of given file path
         /// </summary>
         /// <param name="filePath">the full path of the file with file name</param>
@@ -213,6 +231,34 @@ namespace EpLibrary.cs
                 }
             }
             return retString;
+        }
+
+        /// <summary>
+        /// Get the directory and file list of given path
+        /// </summary>
+        /// <param name="dirPath">the folder path</param>
+        /// <returns>the directory and file list found</returns>
+        public static List<string> GetDirList(string dirPath)
+        {
+            List<string> dirList = new List<string>();
+            try
+            {
+
+                foreach (string d in Directory.EnumerateDirectories(dirPath))
+                {
+                    dirList.Add(GetSimplePath(d) + "\\");
+                }
+                foreach (string f in Directory.EnumerateFiles(dirPath))
+                {
+                    //Console.WriteLine("File {0}", f.FullName);
+                    dirList.Add(GetSimplePath(f));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " >" + ex.StackTrace);
+            }
+            return dirList;
         }
     }
 
