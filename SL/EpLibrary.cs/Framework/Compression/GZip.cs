@@ -55,7 +55,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="gzip">byte array to decompress</param>
         /// <returns>decompressed byte array</returns>
-        static byte[] Decompress(byte[] gzip)
+        public static byte[] Decompress(byte[] gzip)
         {
             // Create a GZIP stream with decompression mode.
             // ... Then create a buffer and write into while reading from the GZIP stream.
@@ -92,6 +92,57 @@ namespace EpLibrary.cs
                 using (GZipStream gzip = new GZipStream(memory, CompressionMode.Compress, true))
                 {
                     gzip.Write(raw, 0, raw.Length);
+                }
+                return memory.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Decompress the given byte array
+        /// </summary>
+        /// <param name="gzip">byte array to decompress</param>
+        /// <param name="offset">index to start decompress</param>
+        /// <param name="count">size of given byte</param>
+        /// <returns>decompressed data</returns>
+        public static byte[] Decompress(byte[] gzip, int offset, int count)
+        {
+            // Create a GZIP stream with decompression mode.
+            // ... Then create a buffer and write into while reading from the GZIP stream.
+            using (GZipStream stream = new GZipStream(new MemoryStream(gzip, offset, count), CompressionMode.Decompress))
+            {
+                const int size = 4096;
+                byte[] buffer = new byte[size];
+                using (MemoryStream memory = new MemoryStream())
+                {
+                    int tCount = 0;
+                    do
+                    {
+                        tCount = stream.Read(buffer, 0, size);
+                        if (tCount > 0)
+                        {
+                            memory.Write(buffer, 0, tCount);
+                        }
+                    }
+                    while (tCount > 0);
+                    return memory.ToArray();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Compress the given byte array
+        /// </summary>
+        /// <param name="raw">byte array to compress</param>
+        /// <param name="offset">index to start compress</param>
+        /// <param name="count">size of given byte</param>
+        /// <returns>compressed byte array</returns>
+        public static byte[] Compress(byte[] raw, int offset, int count)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                using (GZipStream gzip = new GZipStream(memory, CompressionMode.Compress, true))
+                {
+                    gzip.Write(raw, offset, count);
                 }
                 return memory.ToArray();
             }
