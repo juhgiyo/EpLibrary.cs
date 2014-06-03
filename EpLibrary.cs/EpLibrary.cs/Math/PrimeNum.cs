@@ -84,6 +84,11 @@ namespace EpLibrary.cs
         /// <returns>first prime number larger than x</returns>
         public static uint NextPrime(uint x)
         {
+            if (x < 2)
+                return 2;
+            if (x == 2)
+                return 3;
+
             uint multIdx=x/6;
 	        uint check1;
 	        uint check2;
