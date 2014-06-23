@@ -269,14 +269,11 @@ namespace EpLibrary.cs
             retKey = "";
             retVal = "";
             StringBuilder builder = new StringBuilder();
-            
+            buf = buf.Trim();
 
-            for (int testTrav = 0; testTrav < buf.Length; testTrav++)
-            {
-                if (buf[testTrav]== '#')
-                    return false;
-            }
-
+            if (buf[0] == '#')
+                return false;
+           
             while (splitChar != '=' && bufTrav < buf.Length)
             {
                 splitChar = buf[bufTrav];
