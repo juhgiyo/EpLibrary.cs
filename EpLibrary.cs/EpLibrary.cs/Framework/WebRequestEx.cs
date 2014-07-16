@@ -72,8 +72,9 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="uri">uri</param>
         /// <param name="credentials">credentials</param>
+        /// <param name="waitTimeInMilliSec">wait time in milliseconds</param>
         /// <returns></returns>
-        public static String GetResponse(String uri, ICredentials credentials = null)
+        public static String GetResponse(String uri, ICredentials credentials = null, int waitTimeInMilliSec = Timeout.Infinite)
         {
             if (uri == null || uri.Length == 0)
                 throw new Exception("Must supply valid URI!");
@@ -89,7 +90,7 @@ namespace EpLibrary.cs
                 doneEvent.SetEvent();
             };
             client.DownloadStringAsync(new Uri(uri, UriKind.Absolute));
-            doneEvent.WaitForEvent();
+            doneEvent.WaitForEvent(waitTimeInMilliSec);
             return result;
         }
 
@@ -119,7 +120,8 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="uri">uri</param>
         /// <param name="filepath">filepath</param>
-        public static void DownloadFile(String uri, String filepath)
+        /// <param name="waitTimeInMilliSec">wait time in milliseconds</param>
+        public static void DownloadFile(String uri, String filepath, int waitTimeInMilliSec=Timeout.Infinite)
         {
             if (uri == null || uri.Length == 0)
                 throw new Exception("Must supply valid URI!");
@@ -146,7 +148,7 @@ namespace EpLibrary.cs
                 }
             };
             webClient.OpenReadAsync(new Uri(uri, UriKind.Absolute));
-            doneEvent.WaitForEvent();
+            doneEvent.WaitForEvent(waitTimeInMilliSec);
         }
 
         /// <summary>
