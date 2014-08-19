@@ -89,7 +89,7 @@ namespace EpLibrary.cs
         {
             Clear();
             String curSector;
-            for(int argTrav=1;argTrav<argv.Length;argTrav++)
+            for(int argTrav=0;argTrav<argv.Length;argTrav++)
             {
                 if(isOption(argv[argTrav]))
                 {

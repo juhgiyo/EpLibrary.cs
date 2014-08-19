@@ -85,11 +85,11 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="argv">the array of argument strings.</param>
         /// <returns>the number of CmdLine Options parsed</returns>
-        int Parse(String[] argv)
+        public int Parse(String[] argv)
         {
             Clear();
             String curSector;
-            for(int argTrav=1;argTrav<argv.Length;argTrav++)
+            for(int argTrav=0;argTrav<argv.Length;argTrav++)
             {
                 if(isOption(argv[argTrav]))
                 {
@@ -112,7 +112,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="option">the option string to check</param>
         /// <returns>true if exists otherwise false</returns>
-		bool HasOption(String option)
+        public bool HasOption(String option)
         {
             return (ContainsKey(option));
         }
@@ -125,7 +125,7 @@ namespace EpLibrary.cs
         /// <param name="defaultArg">the default argument string if not found </param>
         /// <returns>the argument string found.</returns>
         /// <remarks>if the argument does not exist then return given default argument string.</remarks>
-		String GetArgument(String option,int idx, String defaultArg)
+        public String GetArgument(String option, int idx, String defaultArg)
         {
             try{
                 String value=this[option].m_args[idx];
@@ -152,7 +152,7 @@ namespace EpLibrary.cs
         /// <param name="idx">the index of the arguments of given option</param>
         /// <returns>the argument string found.</returns>
         /// <remarks>if the argument does not exist then throws exception</remarks>
-		String GetArgument(String option,int idx)
+        public String GetArgument(String option, int idx)
         {
             String value=this[option].m_args[idx];
             return value;
@@ -164,7 +164,7 @@ namespace EpLibrary.cs
         /// <param name="option">the option string to get the number of arguments</param>
         /// <returns>the number of arguments of given option</returns>
         /// <remarks>if the option does not exist then return -1</remarks>
-		int GetArgumentCount(String option)
+        public int GetArgumentCount(String option)
         {
             int retCount=-1;
             if(ContainsKey(option))
