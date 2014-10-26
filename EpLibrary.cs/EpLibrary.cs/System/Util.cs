@@ -63,5 +63,29 @@ namespace EpLibrary.cs
             return coreCount;
         }
 
+        /// <summary>
+        /// Convert string to byte array
+        /// </summary>
+        /// <param name="str">string to convert to byte array</param>
+        /// <returns>byte array converted from string</returns>
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        /// <summary>
+        /// Convert byte array to string
+        /// </summary>
+        /// <param name="bytes">bytes to convert to string</param>
+        /// <returns>string converted from bytes</returns>
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
     }
 }
