@@ -2355,6 +2355,7 @@ namespace EpLibrary.cs
         /// </summary>
         private static readonly Dictionary<Type, Dictionary<string, EntryConfiguration>> StoredTypes = new Dictionary<Type, Dictionary<string, EntryConfiguration>>();
 
+        private static Object m_generalLock = new Object();
         /// <summary>
         /// Gets a property setter and a standard default type for an entry
         /// </summary>
@@ -2362,40 +2363,44 @@ namespace EpLibrary.cs
         private static void UpdateEntryWithName(Entry entry)
         {
             Dictionary<string, EntryConfiguration> configurations;
-            if (!StoredTypes.TryGetValue(entry.OwningType, out configurations))
+            lock (m_generalLock)
             {
-                configurations = new Dictionary<string, EntryConfiguration>();
-                StoredTypes[entry.OwningType] = configurations;
-            }
-
-            EntryConfiguration entryConfiguration;
-            if (!configurations.TryGetValue(entry.Name, out entryConfiguration))
-            {
-                entryConfiguration = new EntryConfiguration();
-
-                var pi = entry.OwningType.GetProperty(entry.Name);
-                if (pi != null)
+                if (!StoredTypes.TryGetValue(entry.OwningType, out configurations))
                 {
-                    entryConfiguration.Type = pi.PropertyType;
-                    var gs = typeof(GetSetGeneric<,>);
-                    var tp = gs.MakeGenericType(new Type[] { entry.OwningType, pi.PropertyType });
-                    entryConfiguration.Setter = (GetSet)Activator.CreateInstance(tp, new object[] { pi });
+                    configurations = new Dictionary<string, EntryConfiguration>();
+                    StoredTypes[entry.OwningType] = configurations;
                 }
-                else
+
+
+                EntryConfiguration entryConfiguration;
+                if (!configurations.TryGetValue(entry.Name, out entryConfiguration))
                 {
-                    var fi = entry.OwningType.GetField(entry.Name);
-                    if (fi != null)
+                    entryConfiguration = new EntryConfiguration();
+
+                    var pi = entry.OwningType.GetProperty(entry.Name);
+                    if (pi != null)
                     {
-                        entryConfiguration.Type = fi.FieldType;
+                        entryConfiguration.Type = pi.PropertyType;
                         var gs = typeof(GetSetGeneric<,>);
-                        var tp = gs.MakeGenericType(new Type[] { entry.OwningType, fi.FieldType });
-                        entryConfiguration.Setter = (GetSet)Activator.CreateInstance(tp, new object[] { fi });
+                        var tp = gs.MakeGenericType(new Type[] { entry.OwningType, pi.PropertyType });
+                        entryConfiguration.Setter = (GetSet)Activator.CreateInstance(tp, new object[] { pi });
                     }
+                    else
+                    {
+                        var fi = entry.OwningType.GetField(entry.Name);
+                        if (fi != null)
+                        {
+                            entryConfiguration.Type = fi.FieldType;
+                            var gs = typeof(GetSetGeneric<,>);
+                            var tp = gs.MakeGenericType(new Type[] { entry.OwningType, fi.FieldType });
+                            entryConfiguration.Setter = (GetSet)Activator.CreateInstance(tp, new object[] { fi });
+                        }
+                    }
+                    configurations[entry.Name] = entryConfiguration;
                 }
-                configurations[entry.Name] = entryConfiguration;
+                entry.StoredType = entryConfiguration.Type;
+                entry.Setter = entryConfiguration.Setter;
             }
-            entry.StoredType = entryConfiguration.Type;
-            entry.Setter = entryConfiguration.Setter;
         }
     }
 }
