@@ -88,6 +88,10 @@ namespace EpLibrary.cs
             return new string(chars);
         }
 
+        /// <summary>
+        /// Return the path of the executable
+        /// </summary>
+        /// <returns>the path of the executable</returns>
         public static string GetApplicationPath()
         {
             return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
