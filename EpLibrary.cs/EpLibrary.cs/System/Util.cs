@@ -41,6 +41,7 @@ using System.Linq;
 using System.Text;
 
 using System.Management;
+using System.IO;
 
 namespace EpLibrary.cs
 {
@@ -87,5 +88,9 @@ namespace EpLibrary.cs
             return new string(chars);
         }
 
+        public static string GetApplicationPath()
+        {
+            return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+        }
     }
 }
