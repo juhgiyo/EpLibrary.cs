@@ -65,6 +65,10 @@ namespace EpLibrary.cs
     public enum CryptAlgo
     {
         /// <summary>
+        /// No Crypt
+        /// </summary>
+        None,
+        /// <summary>
         /// Rijndael Algorithm
         /// </summary>
         Rijndael,
@@ -151,6 +155,30 @@ namespace EpLibrary.cs
         /// Encrypt/Decypt the given cryptData with the given password
         /// </summary>
         /// <param name="cryptData">data to crypt</param>
+        /// <param name="offset">offset of cryptData for crypt</param>
+        /// <param name="count">length for crypt</param>
+        /// <param name="cryptPwd">password string</param>
+        /// <param name="cryptType">crypt type</param>
+        /// <returns>encrypted/decrypted data</returns>
+        public static byte[] GetCrypt(CryptAlgo algoType, byte[] cryptData,int offset, int count, string cryptPwd, CryptType cryptType)
+        {
+            byte[] retBytes = null;
+            switch (algoType)
+            {
+                case CryptAlgo.Aes:
+                    retBytes = AesCrypt.GetCrypt(cryptData,offset,count, cryptPwd, null, cryptType);
+                    break;
+                case CryptAlgo.Rijndael:
+                    retBytes = RijndaelCrypt.GetCrypt(cryptData, offset, count, cryptPwd, null, cryptType);
+                    break;
+            }
+            return retBytes;
+        }
+
+        /// <summary>
+        /// Encrypt/Decypt the given cryptData with the given password
+        /// </summary>
+        /// <param name="cryptData">data to crypt</param>
         /// <param name="cryptPwd">password string</param>
         /// <param name="keySalt">salt string</param>
         /// <param name="cryptType">crypt type</param>
@@ -170,6 +198,34 @@ namespace EpLibrary.cs
             }
             return retBytes;
         }
+
+        /// <summary>
+        /// Encrypt/Decypt the given cryptData with the given password
+        /// </summary>
+        /// <param name="algoType">Algorithm type</param>
+        /// <param name="cryptData">data to crypt</param>
+        /// <param name="offset">offset of cryptData for crypt</param>
+        /// <param name="count">length for crypt</param>
+        /// <param name="cryptPwd">password string</param>
+        /// <param name="keySalt">salt string</param>
+        /// <param name="cryptType">crypt type</param>
+        /// <returns>encrypted/decrypted data</returns>
+        /// <remarks>if keySalt is null, then default keySalt is used</remarks>
+        public static byte[] GetCrypt(CryptAlgo algoType, byte[] cryptData,int offset, int count, string cryptPwd, byte[] keySalt, CryptType cryptType)
+        {
+            byte[] retBytes = null;
+            switch (algoType)
+            {
+                case CryptAlgo.Aes:
+                    retBytes = AesCrypt.GetCrypt(cryptData,offset,count, cryptPwd, keySalt, cryptType);
+                    break;
+                case CryptAlgo.Rijndael:
+                    retBytes = RijndaelCrypt.GetCrypt(cryptData,offset,count, cryptPwd, keySalt, cryptType);
+                    break;
+            }
+            return retBytes;
+        }
+
         /// <summary>
         /// Create random salt with given length
         /// </summary>
