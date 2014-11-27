@@ -170,7 +170,7 @@ namespace EpLibrary.cs
 
                 MemoryStream memStream = new MemoryStream();
                 CryptoStream cryptStream = new CryptoStream(memStream, cryptoTranform, CryptoStreamMode.Write);
-                cryptStream.Write(cryptData, offset, offset);
+                cryptStream.Write(cryptData, offset, count);
                 cryptStream.FlushFinalBlock();
                 return memStream.ToArray();
             }
