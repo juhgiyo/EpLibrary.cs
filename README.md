@@ -1,3 +1,5 @@
+<a href='https://pledgie.com/campaigns/27768'><img alt='Click here to lend your support to: EpLibrary.cs and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27768.png?skin_name=chrome' border='0' ></a>
+
 EpLibrary.cs
 ============
 #### Visual C# Utility Library ####
@@ -62,6 +64,11 @@ USAGE
 
 To find the usage examples, please see the [wiki page](https://github.com/juhgiyo/EpLibrary.cs/wiki).
 
+
+Donation
+-------
+
+<a href='https://pledgie.com/campaigns/27768'><img alt='Click here to lend your support to: EpLibrary.cs and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27768.png?skin_name=chrome' border='0' ></a>
 
 LICENSE
 -------
