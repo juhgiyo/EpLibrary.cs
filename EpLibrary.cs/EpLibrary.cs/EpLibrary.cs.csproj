@@ -81,6 +81,7 @@
     <Compile Include="Framework\IPC\IpcPipe.cs" />
     <Compile Include="Framework\IPC\IpcServer.cs" />
     <Compile Include="Framework\IPC\IpcServerInterfaces.cs" />
+    <Compile Include="Framework\License\License.cs" />
     <Compile Include="Framework\Lock\BaseLock.cs" />
     <Compile Include="Framework\Lock\EventEx.cs" />
     <Compile Include="Framework\Lock\InterlockedEx.cs" />
