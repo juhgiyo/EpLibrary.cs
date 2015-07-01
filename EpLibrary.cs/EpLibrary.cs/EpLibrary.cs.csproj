@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Containers\ErasableQueue.cs" />
     <Compile Include="Containers\Pair.cs" />
     <Compile Include="Containers\PriorityQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />

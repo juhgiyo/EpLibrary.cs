@@ -1,9 +1,9 @@
 ﻿/*! 
-@file ThreadSafeErasableQueue.cs
+@file ErasableQueue.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eplibrary.cs>
 @date April 01, 2014
-@brief ThreadSafeErasableQueue Interface
+@brief ErasableQueue Interface
 @version 2.0
 
 @section LICENSE
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-A ThreadSafeErasableQueue Class.
+A ErasableQueue Class.
 
 */
 using System;
@@ -44,15 +44,15 @@ using System.Text;
 namespace EpLibrary.cs
 {
     /// <summary>
-    /// A class for Thread Safe Erasable Queue.
+    /// A class for Erasable Queue.
     /// </summary>
     /// <typeparam name="DataType">the element type</typeparam>
-    public class ThreadSafeErasableQueue<DataType>
+    public class ErasableQueue<DataType>
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ThreadSafeErasableQueue()
+        public ErasableQueue()
         {
 
         }
@@ -61,22 +61,19 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">the object to copy from</param>
-		public ThreadSafeErasableQueue(ThreadSafeErasableQueue<DataType> b)
+        public ErasableQueue(ErasableQueue<DataType> b)
         {
             m_queue = new LinkedList<DataType>(b.GetQueue());
         }
 
 
         /// <summary>
-         /// Check if the queue is empty.
+        /// Check if the queue is empty.
         /// </summary>
-         /// <returns>true if the queue is empty, otherwise false.</returns>
-		public bool IsEmpty()
+        /// <returns>true if the queue is empty, otherwise false.</returns>
+        public bool IsEmpty()
         {
-            lock(m_queueLock)
-            {
-                return m_queue.Count==0;
-            }
+            return m_queue.Count == 0;
         }
 
         /// <summary>
@@ -84,25 +81,19 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-		public bool IsExist(DataType data)
+        public bool IsExist(DataType data)
         {
-            lock(m_queueLock)
-            {
-                return m_queue.Contains(data);
-            }
+            return m_queue.Contains(data);
         }
 
-       /// <summary>
+        /// <summary>
         /// Return the size of the queue.
-       /// </summary>
-		public int Count
+        /// </summary>
+        public int Count
         {
             get
             {
-                lock (m_queueLock)
-                {
-                    return m_queue.Count;
-                }
+                return m_queue.Count;
             }
         }
 
@@ -119,36 +110,27 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-		public DataType Front()
+        public DataType Front()
         {
-            lock(m_queueLock)
-            {
-                return m_queue.First();
-            }
+            return m_queue.First();
         }
 
         /// <summary>
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-		public DataType Back()
+        public DataType Back()
         {
-            lock(m_queueLock)
-            {
-                return m_queue.Last();
-            }
+            return m_queue.Last();
         }
 
-		/// <summary>
+        /// <summary>
         /// Insert the new item into the queue.
-		/// </summary>
+        /// </summary>
         /// <param name="data">The inserting data.</param>
-		public virtual void Enqueue(DataType data)
+        public virtual void Enqueue(DataType data)
         {
-            lock(m_queueLock)
-            {
-                m_queue.AddLast(data);
-            }
+            m_queue.AddLast(data);
         }
 
         /// <summary>
@@ -156,12 +138,9 @@ namespace EpLibrary.cs
         /// </summary>
         public virtual DataType Dequeue()
         {
-            lock (m_queueLock)
-            {
-                DataType data=m_queue.First();
-                m_queue.Remove(m_queue.First);
-                return data;
-            }
+            DataType data = m_queue.First();
+            m_queue.Remove(m_queue.First);
+            return data;
         }
 
 
@@ -172,28 +151,21 @@ namespace EpLibrary.cs
         /// <returns>true if successful, otherwise false</returns>
         public bool Erase(DataType data)
         {
-            lock (m_queueLock)
+            LinkedListNode<DataType> node = m_queue.Find(data);
+            if (node != null)
             {
-                LinkedListNode<DataType> node = m_queue.Find(data);
-                if (node != null)
-                {
-                    m_queue.Remove(node);
-                    return true;
-                }
-                return false;
+                m_queue.Remove(node);
+                return true;
             }
-
+            return false;
         }
 
         /// <summary>
         /// Clear the queue.
         /// </summary>
-		public void Clear()
+        public void Clear()
         {
-            lock (m_queueLock)
-            {
-                m_queue.Clear();
-            }
+            m_queue.Clear();
         }
 
         /// <summary>
@@ -202,21 +174,13 @@ namespace EpLibrary.cs
         /// <returns>the actual queue structure</returns>
         public LinkedList<DataType> GetQueue()
         {
-            lock (m_queueLock)
-            {
-                return new LinkedList<DataType>(m_queue);
-            }
+            return new LinkedList<DataType>(m_queue);
         }
 
         /// <summary>
         /// Actual queue structure
         /// </summary>
         protected LinkedList<DataType> m_queue = new LinkedList<DataType>();
-
-        /// <summary>
-        /// lock
-        /// </summary>
-        protected Object m_queueLock = new Object();
 
     }
 }
