@@ -63,7 +63,7 @@ namespace EpLibrary.cs
         /// <param name="b">the object to copy from</param>
 		public ThreadSafeErasableQueue(ThreadSafeErasableQueue<DataType> b)
         {
-            m_queue = new List<DataType>(b.GetQueue());
+            m_queue = new LinkedList<DataType>(b.GetQueue());
         }
 
 
@@ -107,6 +107,15 @@ namespace EpLibrary.cs
         }
 
         /// <summary>
+        /// Return peek element
+        /// </summary>
+        /// <returns>the peek element of the queue </returns>
+        public DataType Peek()
+        {
+            return Front();
+        }
+
+        /// <summary>
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
@@ -138,9 +147,23 @@ namespace EpLibrary.cs
         {
             lock(m_queueLock)
             {
-                m_queue.Add(data);
+                m_queue.AddLast(data);
             }
         }
+
+        /// <summary>
+        /// Remove the first item from the queue.
+        /// </summary>
+        public virtual DataType Dequeue()
+        {
+            lock (m_queueLock)
+            {
+                DataType data=m_queue.First();
+                m_queue.Remove(m_queue.First);
+                return data;
+            }
+        }
+
 
         /// <summary>
         /// Erase the given item from the queue.
@@ -151,34 +174,15 @@ namespace EpLibrary.cs
         {
             lock (m_queueLock)
             {
-                if (m_queue.Contains(data))
+                LinkedListNode<DataType> node = m_queue.Find(data);
+                if (node != null)
                 {
-                    for (int idx = m_queue.Count - 1; idx >= 0; idx--)
-                    {
-                        if (m_queue[idx].Equals(data))
-                        {
-                            m_queue.RemoveAt(idx);
-                            return true;
-                        }
-                    }
+                    m_queue.Remove(node);
+                    return true;
                 }
                 return false;
-
             }
-            
-        }
 
-        /// <summary>
-        /// Remove the first item from the queue.
-        /// </summary>
-        public virtual DataType Dequeue()
-        {
-            lock (m_queueLock)
-            {
-                DataType data=m_queue[0];
-                m_queue.RemoveAt(0);
-                return data;
-            }
         }
 
         /// <summary>
@@ -196,18 +200,18 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public List<DataType> GetQueue()
+        public LinkedList<DataType> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new List<DataType>(m_queue);
+                return new LinkedList<DataType>(m_queue);
             }
         }
 
         /// <summary>
         /// Actual queue structure
         /// </summary>
-		protected List<DataType> m_queue=new List<DataType>();
+        protected LinkedList<DataType> m_queue = new LinkedList<DataType>();
 
         /// <summary>
         /// lock

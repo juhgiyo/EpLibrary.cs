@@ -50,6 +50,20 @@ namespace EpLibrary.cs
     public class ThreadSafePQueue<DataType> where DataType : IComparable<DataType>
     {
         /// <summary>
+        /// Reverse order comparer
+        /// </summary>
+        public class ReverseOrderClass : IComparer<DataType>
+        {
+
+            // Calls CaseInsensitiveComparer.Compare with the parameters reversed. 
+            int IComparer<DataType>.Compare(DataType x, DataType y)
+            {
+                return x.CompareTo(y) * -1;
+            }
+        }
+        IComparer<DataType> pQueueComparer = new ReverseOrderClass();
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         public ThreadSafePQueue()
@@ -124,7 +138,7 @@ namespace EpLibrary.cs
         {
             lock (m_queueLock)
             {
-                return m_queue.First();
+                return m_queue.Last();
             }
         }
 
@@ -136,7 +150,7 @@ namespace EpLibrary.cs
         {
             lock (m_queueLock)
             {
-                return m_queue.Last();
+                return m_queue.First();
             }
         }
         /// <summary>
@@ -148,34 +162,9 @@ namespace EpLibrary.cs
             lock(m_queueLock)
             {
                 m_queue.Add(data);
-                m_queue.Sort();
+                m_queue.Sort(pQueueComparer);
             }
 		    
-        }
-        /// <summary>
-        /// Erase the given item from the queue.
-        /// </summary>
-        /// <param name="data">The data to erase.</param>
-        /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(DataType data)
-        {
-            lock (m_queueLock)
-            {
-                if (m_queue.Contains(data))
-                {
-                    for (int idx = m_queue.Count - 1; idx >= 0; idx--)
-                    {
-                        if (m_queue[idx].Equals(data))
-                        {
-                            m_queue.RemoveAt(idx);
-                            return true;
-                        }
-                    }
-                }
-                return false;
-
-            }
-
         }
 
         /// <summary>
@@ -185,9 +174,28 @@ namespace EpLibrary.cs
         {
             lock (m_queueLock)
             {
-                DataType data = m_queue[0];
-                m_queue.RemoveAt(0);
+                DataType data = m_queue[m_queue.Count-1];
+                m_queue.RemoveAt(m_queue.Count - 1);
                 return data;
+            }
+        }
+
+        /// <summary>
+        /// Erase the given item from the queue.
+        /// </summary>
+        /// <param name="data">The data to erase.</param>
+        /// <returns>true if successful, otherwise false</returns>
+        public bool Erase(DataType data)
+        {
+            lock (m_queueLock)
+            {
+                int idx = m_queue.BinarySearch(data, pQueueComparer);
+                if (idx >= 0)
+                {
+                    m_queue.RemoveAt(idx);
+                    return true;
+                }
+                return false;
             }
         }
 
