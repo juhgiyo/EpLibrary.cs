@@ -92,7 +92,7 @@ namespace EpLibrary.cs
         /// <returns>true if exists, otherwise false</returns>
         public virtual bool Contains(T queueItem)
         {
-            return m_list.Contains(queueItem);
+            return m_list.BinarySearch(queueItem, queueComparer) >= 0;
         }
 
         /// <summary>
@@ -163,10 +163,7 @@ namespace EpLibrary.cs
         /// <returns>true if successful, otherwise false</returns>
         public virtual bool Erase(T data)
         {
-            int idx = m_list.FindIndex(delegate(T i)
-            {
-                return i.CompareTo(data) == 0;
-            });
+            int idx = m_list.BinarySearch(data, queueComparer);
             if (idx >= 0)
             {
                 m_list.RemoveAt(idx);
