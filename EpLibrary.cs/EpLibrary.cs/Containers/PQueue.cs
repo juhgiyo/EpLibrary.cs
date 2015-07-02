@@ -140,8 +140,15 @@ namespace EpLibrary.cs
         /// <param name="queueItem">The inserting item.</param>
         public virtual void Enqueue(T queueItem)
         {
-            m_list.Add(queueItem);
-            m_list.Sort(queueComparer);
+            int idx = m_list.BinarySearch(queueItem, queueComparer);
+            if (idx <= 0)
+            {
+                m_list.Insert(~idx, queueItem);
+            }
+            else
+            {
+                m_list.Insert(idx, queueItem);
+            }
         }
 
 
