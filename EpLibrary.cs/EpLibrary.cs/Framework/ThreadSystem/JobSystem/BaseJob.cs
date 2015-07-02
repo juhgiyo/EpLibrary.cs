@@ -88,6 +88,14 @@ namespace EpLibrary.cs
     public class BaseJob: IComparable<BaseJob>
     {
 
+        /// <summary>
+        /// current Job Status
+        /// </summary>
+        private JobStatus m_status;
+        /// <summary>
+        /// priority of the Job
+        /// </summary>
+        private ThreadPriority m_priority;
 
 
         /// <summary>
@@ -182,13 +190,5 @@ namespace EpLibrary.cs
             return CompareTo(obj as object);
         }
 
-        /// <summary>
-        /// current Job Status
-        /// </summary>
-		private JobStatus m_status;
-        /// <summary>
-        /// priority of the Job
-        /// </summary>
-		private ThreadPriority m_priority;
     }
 }

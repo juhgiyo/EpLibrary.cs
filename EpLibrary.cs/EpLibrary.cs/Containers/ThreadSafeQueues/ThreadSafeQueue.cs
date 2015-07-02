@@ -12,6 +12,18 @@ namespace EpLibrary.cs
     /// <typeparam name="T">the element type</typeparam>
     public class ThreadSafeQueue<T> : IQueue<T> where T : IComparable<T>
     {
+
+        /// <summary>
+        /// Actual queue structure
+        /// </summary>
+        protected Queue<T> m_queue = new Queue<T>();
+
+        /// <summary>
+        /// lock
+        /// </summary>
+        protected Object m_queueLock = new Object();
+
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -159,15 +171,6 @@ namespace EpLibrary.cs
             }
         }
 
-        /// <summary>
-        /// Actual queue structure
-        /// </summary>
-        protected Queue<T> m_queue = new Queue<T>();
-
-        /// <summary>
-        /// lock
-        /// </summary>
-        protected Object m_queueLock = new Object();
 
     }
 }

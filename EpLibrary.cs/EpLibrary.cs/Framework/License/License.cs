@@ -89,6 +89,17 @@ namespace EpLibrary.cs
     /// </summary>
     public class License
     {
+
+        /// <summary>
+        /// license crypt password
+        /// </summary>
+        private String m_password;
+        /// <summary>
+        /// license type
+        /// </summary>
+        private LicenseType m_licenseType;
+
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -214,13 +225,5 @@ namespace EpLibrary.cs
             return true;
         }
 
-       /// <summary>
-       /// license crypt password
-       /// </summary>
-        private String m_password;
-        /// <summary>
-        /// license type
-        /// </summary>
-        private LicenseType m_licenseType;
     }
 }

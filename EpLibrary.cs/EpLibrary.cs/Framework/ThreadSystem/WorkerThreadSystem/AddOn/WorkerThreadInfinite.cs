@@ -50,6 +50,13 @@ namespace EpLibrary.cs
     /// </summary>
     public sealed class WorkerThreadInfinite:BaseWorkerThread
     {
+
+        /// <summary>
+        /// Terminate Signal Event
+        /// </summary>
+        private EventEx m_terminateEvent;
+
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -126,9 +133,5 @@ namespace EpLibrary.cs
             }
         }
 
-        /// <summary>
-        /// Terminate Signal Event
-        /// </summary>
-		private EventEx m_terminateEvent;
     }
 }

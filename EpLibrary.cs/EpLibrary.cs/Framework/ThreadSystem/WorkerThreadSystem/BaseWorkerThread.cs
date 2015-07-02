@@ -68,6 +68,30 @@ namespace EpLibrary.cs
     /// </summary>
     public abstract class BaseWorkerThread:ThreadEx
     {
+
+        /// <summary>
+        /// the work list
+        /// </summary>
+        protected JobScheduleQueue m_workPool;
+        /// <summary>
+        /// the life policy of the thread
+        /// </summary>
+        protected ThreadLifePolicy m_lifePolicy;
+        /// <summary>
+        /// the call back class
+        /// </summary>
+        protected Action<BaseWorkerThread> m_callBackFunc;
+
+        /// <summary>
+        /// callback Lock
+        /// </summary>
+        protected Object m_callBackLock = new Object();
+        /// <summary>
+        /// Job Processor
+        /// </summary>
+        protected BaseJobProcessor m_jobProcessor;
+
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -218,26 +242,5 @@ namespace EpLibrary.cs
             }
         }
 
-        /// <summary>
-        /// the work list
-        /// </summary>
-        protected JobScheduleQueue m_workPool;
-        /// <summary>
-        /// the life policy of the thread
-        /// </summary>
-        protected ThreadLifePolicy m_lifePolicy;
-        /// <summary>
-        /// the call back class
-        /// </summary>
-        protected Action<BaseWorkerThread> m_callBackFunc;
-
-        /// <summary>
-        /// callback Lock
-        /// </summary>
-        protected Object m_callBackLock = new Object();
-        /// <summary>
-        /// Job Processor
-        /// </summary>
-        protected BaseJobProcessor m_jobProcessor;
     }
 }

@@ -43,12 +43,19 @@ using System.Text;
 
 namespace EpLibrary.cs
 {
+
     /// <summary>
     /// A class for Erasable Queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
     public class ErasableQueue<T> : IQueue<T> where T : IComparable<T>
     {
+
+        /// <summary>
+        /// Actual queue structure
+        /// </summary>
+        protected LinkedList<T> m_queue = new LinkedList<T>();
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -177,10 +184,6 @@ namespace EpLibrary.cs
             return new List<T>(m_queue);
         }
 
-        /// <summary>
-        /// Actual queue structure
-        /// </summary>
-        protected LinkedList<T> m_queue = new LinkedList<T>();
 
     }
 }

@@ -84,6 +84,10 @@ namespace EpLibrary.cs
     public abstract class BaseJobProcessor
     {
 
+        /// <summary>
+        /// current Job Processor Status
+        /// </summary>
+        private JobProcessorStatus m_status;
 
         /// <summary>
         /// Process the job given, subclasses must implement this function.
@@ -129,10 +133,5 @@ namespace EpLibrary.cs
             m_status = status;
         }
 
-
-        /// <summary>
-        /// current Job Processor Status
-        /// </summary>
-		private JobProcessorStatus m_status;
     }
 }

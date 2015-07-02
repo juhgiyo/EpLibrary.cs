@@ -51,6 +51,20 @@ namespace EpLibrary.cs
     public sealed class Triple<T,U,V>
     {
         /// <summary>
+        /// first object
+        /// </summary>
+        public T first { get; set; }
+        /// <summary>
+        /// second object
+        /// </summary>
+        public U second { get; set; }
+        /// <summary>
+        /// third object
+        /// </summary>
+        public V third { get; set; }
+
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         public Triple()
@@ -79,17 +93,6 @@ namespace EpLibrary.cs
             this.second = iSecond;
             this.third = iThird;
         }
-        /// <summary>
-        /// first object
-        /// </summary>
-        public T first { get; set; }
-        /// <summary>
-        /// second object
-        /// </summary>
-        public U second { get; set; }
-        /// <summary>
-        /// third object
-        /// </summary>
-        public V third { get; set; }
+
     }
 }

@@ -65,6 +65,7 @@ namespace EpLibrary.cs
         }
         IComparer<T> queueComparer = new ReverseOrderClass();
 
+
         protected List<T> m_list = new List<T>();
 
         public PQueue()

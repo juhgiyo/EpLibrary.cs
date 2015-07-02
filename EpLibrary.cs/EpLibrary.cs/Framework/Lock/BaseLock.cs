@@ -96,6 +96,13 @@ namespace EpLibrary.cs
         /// </summary>
 		public class BaseLockObj
 		{
+
+            /// <summary>
+            /// lock
+            /// </summary>
+            BaseLock m_lock;
+
+
             /// <summary>
             /// Default Constructor
             /// </summary>
@@ -130,10 +137,6 @@ namespace EpLibrary.cs
                 m_lock = null;
             }
 
-            /// <summary>
-            /// lock
-            /// </summary>
-			BaseLock m_lock;
 		};
 
     }

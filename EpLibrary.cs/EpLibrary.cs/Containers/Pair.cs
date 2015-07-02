@@ -50,6 +50,17 @@ namespace EpLibrary.cs
     /// <typeparam name="U">second object type</typeparam>
     public sealed class Pair<T, U>
     {
+
+        /// <summary>
+        /// first object
+        /// </summary>
+        public T first { get; set; }
+        /// <summary>
+        /// second object
+        /// </summary>
+        public U second { get; set; }
+
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -77,14 +88,6 @@ namespace EpLibrary.cs
             this.second = iSecond;
         }
 
-        /// <summary>
-        /// first object
-        /// </summary>
-        public T first { get; set; }
-        /// <summary>
-        /// second object
-        /// </summary>
-        public U second { get; set; }
     }
 }
 
