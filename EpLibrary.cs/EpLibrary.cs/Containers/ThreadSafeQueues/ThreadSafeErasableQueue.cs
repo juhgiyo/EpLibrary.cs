@@ -46,8 +46,8 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class for Thread Safe Erasable Queue.
     /// </summary>
-    /// <typeparam name="DataType">the element type</typeparam>
-    public class ThreadSafeErasableQueue<DataType>
+    /// <typeparam name="T">the element type</typeparam>
+    public class ThreadSafeErasableQueue<T>
     {
         /// <summary>
         /// Default constructor
@@ -61,9 +61,9 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">the object to copy from</param>
-		public ThreadSafeErasableQueue(ThreadSafeErasableQueue<DataType> b)
+        public ThreadSafeErasableQueue(ThreadSafeErasableQueue<T> b)
         {
-            m_queue = new LinkedList<DataType>(b.GetQueue());
+            m_queue = new LinkedList<T>(b.GetQueue());
         }
 
 
@@ -84,7 +84,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-		public bool IsExist(DataType data)
+		public bool IsExist(T data)
         {
             lock(m_queueLock)
             {
@@ -110,7 +110,7 @@ namespace EpLibrary.cs
         /// Return peek element
         /// </summary>
         /// <returns>the peek element of the queue </returns>
-        public DataType Peek()
+        public T Peek()
         {
             return Front();
         }
@@ -119,7 +119,7 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-		public DataType Front()
+		public T Front()
         {
             lock(m_queueLock)
             {
@@ -131,7 +131,7 @@ namespace EpLibrary.cs
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-		public DataType Back()
+		public T Back()
         {
             lock(m_queueLock)
             {
@@ -143,7 +143,7 @@ namespace EpLibrary.cs
         /// Insert the new item into the queue.
 		/// </summary>
         /// <param name="data">The inserting data.</param>
-		public virtual void Enqueue(DataType data)
+		public virtual void Enqueue(T data)
         {
             lock(m_queueLock)
             {
@@ -154,11 +154,11 @@ namespace EpLibrary.cs
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual DataType Dequeue()
+        public virtual T Dequeue()
         {
             lock (m_queueLock)
             {
-                DataType data=m_queue.First();
+                T data=m_queue.First();
                 m_queue.Remove(m_queue.First);
                 return data;
             }
@@ -170,11 +170,11 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(DataType data)
+        public bool Erase(T data)
         {
             lock (m_queueLock)
             {
-                LinkedListNode<DataType> node = m_queue.Find(data);
+                LinkedListNode<T> node = m_queue.Find(data);
                 if (node != null)
                 {
                     m_queue.Remove(node);
@@ -200,18 +200,18 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public LinkedList<DataType> GetQueue()
+        public LinkedList<T> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new LinkedList<DataType>(m_queue);
+                return new LinkedList<T>(m_queue);
             }
         }
 
         /// <summary>
         /// Actual queue structure
         /// </summary>
-        protected LinkedList<DataType> m_queue = new LinkedList<DataType>();
+        protected LinkedList<T> m_queue = new LinkedList<T>();
 
         /// <summary>
         /// lock

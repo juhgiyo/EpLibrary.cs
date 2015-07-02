@@ -46,22 +46,22 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class for Thread Safe Priority Queue.
     /// </summary>
-    /// <typeparam name="DataType">the element type</typeparam>
-    public class ThreadSafePQueue<DataType> where DataType : IComparable<DataType>
+    /// <typeparam name="T">the element type</typeparam>
+    public class ThreadSafePQueue<T> where T : IComparable<T>
     {
         /// <summary>
         /// Reverse order comparer
         /// </summary>
-        public class ReverseOrderClass : IComparer<DataType>
+        public class ReverseOrderClass : IComparer<T>
         {
 
             // Calls CaseInsensitiveComparer.Compare with the parameters reversed. 
-            int IComparer<DataType>.Compare(DataType x, DataType y)
+            int IComparer<T>.Compare(T x, T y)
             {
                 return x.CompareTo(y) * -1;
             }
         }
-        IComparer<DataType> pQueueComparer = new ReverseOrderClass();
+        IComparer<T> pQueueComparer = new ReverseOrderClass();
 
         /// <summary>
         /// Default constructor
@@ -75,9 +75,9 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">object to copy from</param>
-		public ThreadSafePQueue(ThreadSafePQueue<DataType> b)
+		public ThreadSafePQueue(ThreadSafePQueue<T> b)
         {
-            m_queue = new List<DataType>(b.GetQueue());
+            m_queue = new List<T>(b.GetQueue());
         }
 
 
@@ -99,7 +99,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-        public bool Contains(DataType data)
+        public bool Contains(T data)
         {
             lock (m_queueLock)
             {
@@ -125,7 +125,7 @@ namespace EpLibrary.cs
         /// Return peek element
         /// </summary>
         /// <returns>the peek element of the queue </returns>
-        public DataType Peek()
+        public T Peek()
         {
             return Front();
         }
@@ -134,7 +134,7 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public DataType Front()
+        public T Front()
         {
             lock (m_queueLock)
             {
@@ -146,7 +146,7 @@ namespace EpLibrary.cs
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-        public DataType Back()
+        public T Back()
         {
             lock (m_queueLock)
             {
@@ -157,7 +157,7 @@ namespace EpLibrary.cs
         /// Insert the new item into the priority queue.
         /// </summary>
         /// <param name="data">The inserting data.</param>
-        public void Enqueue(DataType data)
+        public void Enqueue(T data)
         {
             lock(m_queueLock)
             {
@@ -170,11 +170,11 @@ namespace EpLibrary.cs
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual DataType Dequeue()
+        public virtual T Dequeue()
         {
             lock (m_queueLock)
             {
-                DataType data = m_queue[m_queue.Count-1];
+                T data = m_queue[m_queue.Count-1];
                 m_queue.RemoveAt(m_queue.Count - 1);
                 return data;
             }
@@ -185,7 +185,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(DataType data)
+        public bool Erase(T data)
         {
             lock (m_queueLock)
             {
@@ -214,18 +214,18 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public List<DataType> GetQueue()
+        public List<T> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new List<DataType>(m_queue);
+                return new List<T>(m_queue);
             }
         }
 
         /// <summary>
         /// Actual queue structure
         /// </summary>
-        protected List<DataType> m_queue = new List<DataType>();
+        protected List<T> m_queue = new List<T>();
 
         /// <summary>
         /// lock

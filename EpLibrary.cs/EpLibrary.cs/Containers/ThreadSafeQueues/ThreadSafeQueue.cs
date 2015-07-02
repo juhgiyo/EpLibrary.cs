@@ -9,8 +9,8 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class for Thread Safe Queue.
     /// </summary>
-    /// <typeparam name="DataType">the element type</typeparam>
-    public class ThreadSafeQueue<DataType>
+    /// <typeparam name="T">the element type</typeparam>
+    public class ThreadSafeQueue<T>
     {
         /// <summary>
         /// Default constructor
@@ -24,9 +24,9 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">the object to copy from</param>
-        public ThreadSafeQueue(ThreadSafeQueue<DataType> b)
+        public ThreadSafeQueue(ThreadSafeQueue<T> b)
         {
-            m_queue = new Queue<DataType>(b.GetQueue());
+            m_queue = new Queue<T>(b.GetQueue());
         }
 
 
@@ -47,7 +47,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-        public bool Contains(DataType data)
+        public bool Contains(T data)
         {
             lock (m_queueLock)
             {
@@ -73,7 +73,7 @@ namespace EpLibrary.cs
         /// Return peek element
         /// </summary>
         /// <returns>the peek element of the queue </returns>
-        public DataType Peek()
+        public T Peek()
         {
             return Front();
         }
@@ -82,7 +82,7 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public DataType Front()
+        public T Front()
         {
             lock (m_queueLock)
             {
@@ -94,7 +94,7 @@ namespace EpLibrary.cs
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-        public DataType Back()
+        public T Back()
         {
             lock (m_queueLock)
             {
@@ -106,7 +106,7 @@ namespace EpLibrary.cs
         /// Insert the new item into the queue.
         /// </summary>
         /// <param name="data">The inserting data.</param>
-        public virtual void Enqueue(DataType data)
+        public virtual void Enqueue(T data)
         {
             lock (m_queueLock)
             {
@@ -118,7 +118,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual DataType Dequeue()
+        public virtual T Dequeue()
         {
             lock (m_queueLock)
             {
@@ -141,18 +141,18 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public List<DataType> GetQueue()
+        public List<T> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new List<DataType>(m_queue);
+                return new List<T>(m_queue);
             }
         }
 
         /// <summary>
         /// Actual queue structure
         /// </summary>
-        protected Queue<DataType> m_queue = new Queue<DataType>();
+        protected Queue<T> m_queue = new Queue<T>();
 
         /// <summary>
         /// lock
