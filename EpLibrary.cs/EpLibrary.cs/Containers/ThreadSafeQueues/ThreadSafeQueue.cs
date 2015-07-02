@@ -10,7 +10,7 @@ namespace EpLibrary.cs
     /// A class for Thread Safe Queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
-    public class ThreadSafeQueue<T>
+    public class ThreadSafeQueue<T> : IQueue<T> where T : IComparable<T>
     {
         /// <summary>
         /// Default constructor
@@ -124,6 +124,16 @@ namespace EpLibrary.cs
             {
                 return m_queue.Dequeue();
             }
+        }
+
+        /// <summary>
+        /// Erase the given item from the queue.
+        /// </summary>
+        /// <param name="data">The data to erase.</param>
+        /// <returns>true if successful, otherwise false</returns>
+        public bool Erase(T data)
+        {
+            throw new NotImplementedException("Erase is not implemented for ThreadSafeQueue");
         }
 
         /// <summary>

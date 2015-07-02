@@ -1,9 +1,9 @@
 ﻿/*! 
-@file ErasableQueue.cs
+@file IQueue.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eplibrary.cs>
 @date April 01, 2014
-@brief ErasableQueue Interface
+@brief Queue Interface
 @version 2.0
 
 @section LICENSE
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-A ErasableQueue Class.
+A Queue Interface.
 
 */
 using System;
@@ -40,147 +40,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace EpLibrary.cs
 {
     /// <summary>
-    /// A class for Erasable Queue.
+    /// A template Queue Interface class
     /// </summary>
-    /// <typeparam name="T">the element type</typeparam>
-    public class ErasableQueue<T> : IQueue<T> where T : IComparable<T>
+    /// <typeparam name="T">Queue element type</typeparam>
+    interface IQueue<T> where T : IComparable<T>
     {
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public ErasableQueue()
-        {
-
-        }
-
-        /// <summary>
-        /// Default copy constructor
-        /// </summary>
-        /// <param name="b">the object to copy from</param>
-        public ErasableQueue(ErasableQueue<T> b)
-        {
-            m_queue = new LinkedList<T>(b.GetQueue());
-        }
-
-
         /// <summary>
         /// Check if the queue is empty.
         /// </summary>
         /// <returns>true if the queue is empty, otherwise false.</returns>
-        public virtual bool IsEmpty()
-        {
-            return m_queue.Count == 0;
-        }
+        bool IsEmpty();
 
         /// <summary>
-        /// Check if the given obj exists in the queue.
+        /// Check if the given item exists in the queue.
         /// </summary>
-        /// <param name="data">obj to check</param>
-        /// <returns>true if exists, otherwise false.</returns>
-        public virtual bool Contains(T data)
-        {
-            return m_queue.Contains(data);
-        }
-
-        /// <summary>
-        /// Return the size of the queue.
-        /// </summary>
-        public virtual int Count
-        {
-            get
-            {
-                return m_queue.Count;
-            }
-        }
-
-        /// <summary>
-        /// Return peek element
-        /// </summary>
-        /// <returns>the peek element of the queue </returns>
-        public virtual T Peek()
-        {
-            return Front();
-        }
+        /// <param name="queueItem">item to check</param>
+        /// <returns>true if exists, otherwise false</returns>
+        bool Contains(T queueItem);
 
         /// <summary>
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public virtual T Front()
-        {
-            return m_queue.First();
-        }
+        T Peek();
 
+        /// <summary>
+        /// Return the first item within the queue.
+        /// </summary>
+        /// <returns>the first element of the queue.</returns>
+        T Front();
+        
         /// <summary>
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-        public virtual T Back()
-        {
-            return m_queue.Last();
-        }
+        T Back();
 
         /// <summary>
         /// Insert the new item into the queue.
         /// </summary>
-        /// <param name="data">The inserting data.</param>
-        public virtual void Enqueue(T data)
-        {
-            m_queue.AddLast(data);
-        }
+        /// <param name="queueItem">The inserting item.</param>
+        void Enqueue(T queueItem);
 
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual T Dequeue()
-        {
-            T data = m_queue.First();
-            m_queue.Remove(m_queue.First);
-            return data;
-        }
-
+        /// <returns>removed item</returns>
+        T Dequeue();
 
         /// <summary>
         /// Erase the given item from the queue.
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public virtual bool Erase(T data)
-        {
-            LinkedListNode<T> node = m_queue.Find(data);
-            if (node != null)
-            {
-                m_queue.Remove(node);
-                return true;
-            }
-            return false;
-        }
+        bool Erase(T data);
 
         /// <summary>
-        /// Clear the queue.
+        /// Clear the queue
         /// </summary>
-        public virtual void Clear()
-        {
-            m_queue.Clear();
-        }
+        void Clear();
 
         /// <summary>
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public virtual List<T> GetQueue()
-        {
-            return new List<T>(m_queue);
-        }
+        List<T> GetQueue();
 
         /// <summary>
-        /// Actual queue structure
+        /// Return the number of element in the queue.
         /// </summary>
-        protected LinkedList<T> m_queue = new LinkedList<T>();
-
+        int Count
+        {
+            get;
+        }
     }
 }

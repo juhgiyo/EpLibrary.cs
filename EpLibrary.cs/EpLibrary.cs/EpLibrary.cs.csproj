@@ -46,8 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers\ErasableQueue.cs" />
+    <Compile Include="Containers\IQueue.cs" />
     <Compile Include="Containers\Pair.cs" />
-    <Compile Include="Containers\PriorityQueue.cs" />
+    <Compile Include="Containers\PQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafePQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeErasableQueue.cs" />
     <Compile Include="Containers\ThreadSafeQueues\ThreadSafeQueue.cs" />

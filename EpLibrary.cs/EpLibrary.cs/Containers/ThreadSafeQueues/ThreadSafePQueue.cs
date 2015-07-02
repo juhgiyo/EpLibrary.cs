@@ -47,26 +47,12 @@ namespace EpLibrary.cs
     /// A class for Thread Safe Priority Queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
-    public class ThreadSafePQueue<T> where T : IComparable<T>
+    public class ThreadSafePQueue<T> : PQueue<T>, IQueue<T> where T : IComparable<T>
     {
-        /// <summary>
-        /// Reverse order comparer
-        /// </summary>
-        public class ReverseOrderClass : IComparer<T>
-        {
-
-            // Calls CaseInsensitiveComparer.Compare with the parameters reversed. 
-            int IComparer<T>.Compare(T x, T y)
-            {
-                return x.CompareTo(y) * -1;
-            }
-        }
-        IComparer<T> pQueueComparer = new ReverseOrderClass();
-
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ThreadSafePQueue()
+        public ThreadSafePQueue():base()
         {
             
         }
@@ -75,9 +61,8 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">object to copy from</param>
-		public ThreadSafePQueue(ThreadSafePQueue<T> b)
+		public ThreadSafePQueue(ThreadSafePQueue<T> b):base(b)
         {
-            m_queue = new List<T>(b.GetQueue());
         }
 
 
@@ -85,11 +70,11 @@ namespace EpLibrary.cs
         /// Check if the queue is empty.
         /// </summary>
         /// <returns>true if the queue is empty, otherwise false.</returns>
-        public bool IsEmpty()
+        public override bool IsEmpty()
         {
             lock (m_queueLock)
             {
-                return m_queue.Count == 0;
+                return base.IsEmpty();
             }
         }
 
@@ -99,24 +84,24 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-        public bool Contains(T data)
+        public override bool Contains(T data)
         {
             lock (m_queueLock)
             {
-                return m_queue.Contains(data);
+                return base.Contains(data);
             }
         }
 
         /// <summary>
         /// Return the size of the queue.
         /// </summary>
-        public int Count
+        public override int Count
         {
             get
             {
                 lock (m_queueLock)
                 {
-                    return m_queue.Count;
+                    return base.Count;
                 }
             }
         }
@@ -125,20 +110,20 @@ namespace EpLibrary.cs
         /// Return peek element
         /// </summary>
         /// <returns>the peek element of the queue </returns>
-        public T Peek()
+        public override T Peek()
         {
-            return Front();
+            return base.Front();
         }
 
         /// <summary>
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public T Front()
+        public override T Front()
         {
             lock (m_queueLock)
             {
-                return m_queue.Last();
+                return base.Front();
             }
         }
 
@@ -146,23 +131,22 @@ namespace EpLibrary.cs
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-        public T Back()
+        public override T Back()
         {
             lock (m_queueLock)
             {
-                return m_queue.First();
+                return base.Back();
             }
         }
         /// <summary>
         /// Insert the new item into the priority queue.
         /// </summary>
         /// <param name="data">The inserting data.</param>
-        public void Enqueue(T data)
+        public override void Enqueue(T data)
         {
             lock(m_queueLock)
             {
-                m_queue.Add(data);
-                m_queue.Sort(pQueueComparer);
+                base.Enqueue(data);
             }
 		    
         }
@@ -170,13 +154,11 @@ namespace EpLibrary.cs
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual T Dequeue()
+        public override T Dequeue()
         {
             lock (m_queueLock)
             {
-                T data = m_queue[m_queue.Count-1];
-                m_queue.RemoveAt(m_queue.Count - 1);
-                return data;
+                return base.Dequeue();
             }
         }
 
@@ -185,28 +167,22 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(T data)
+        public override bool Erase(T data)
         {
             lock (m_queueLock)
             {
-                int idx = m_queue.BinarySearch(data, pQueueComparer);
-                if (idx >= 0)
-                {
-                    m_queue.RemoveAt(idx);
-                    return true;
-                }
-                return false;
+                return base.Erase(data);
             }
         }
 
         /// <summary>
         /// Clear the queue.
         /// </summary>
-        public void Clear()
+        public override void Clear()
         {
             lock (m_queueLock)
             {
-                m_queue.Clear();
+                base.Clear();
             }
         }
 
@@ -214,18 +190,13 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public List<T> GetQueue()
+        public override List<T> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new List<T>(m_queue);
+                return base.GetQueue();
             }
         }
-
-        /// <summary>
-        /// Actual queue structure
-        /// </summary>
-        protected List<T> m_queue = new List<T>();
 
         /// <summary>
         /// lock

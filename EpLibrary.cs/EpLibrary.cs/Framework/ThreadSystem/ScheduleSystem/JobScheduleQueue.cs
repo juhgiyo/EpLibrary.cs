@@ -84,14 +84,14 @@ namespace EpLibrary.cs
         {
             lock(m_queueLock)
             {
-	            if(m_queue.Count==0)
+                if (m_list.Count == 0)
 		            return false;
-	            for(int idx=m_queue.Count-1;idx>=0;idx--)
+                for (int idx = m_list.Count - 1; idx >= 0; idx--)
                 {
-                    if(m_queue[idx].Equals(data))
+                    if (m_list[idx].Equals(data))
                     {
                         data.JobReport(JobStatus.TIMEOUT);
-                        m_queue.RemoveAt(idx);
+                        m_list.RemoveAt(idx);
                         return true;
                     }
                 }
@@ -108,7 +108,7 @@ namespace EpLibrary.cs
             List<BaseJob> queue=null;
             lock(m_queueLock)
             {
-                queue=new List<BaseJob>(m_queue);
+                queue = new List<BaseJob>(m_list);
             }
             foreach(BaseJob job in queue)
             {

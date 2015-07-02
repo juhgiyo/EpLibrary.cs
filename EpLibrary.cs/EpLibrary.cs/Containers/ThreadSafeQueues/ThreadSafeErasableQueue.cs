@@ -47,12 +47,12 @@ namespace EpLibrary.cs
     /// A class for Thread Safe Erasable Queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
-    public class ThreadSafeErasableQueue<T>
+    public class ThreadSafeErasableQueue<T> :ErasableQueue<T>, IQueue<T> where T : IComparable<T>
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ThreadSafeErasableQueue()
+        public ThreadSafeErasableQueue():base()
         {
 
         }
@@ -61,9 +61,8 @@ namespace EpLibrary.cs
         /// Default copy constructor
         /// </summary>
         /// <param name="b">the object to copy from</param>
-        public ThreadSafeErasableQueue(ThreadSafeErasableQueue<T> b)
+        public ThreadSafeErasableQueue(ThreadSafeErasableQueue<T> b):base(b)
         {
-            m_queue = new LinkedList<T>(b.GetQueue());
         }
 
 
@@ -71,11 +70,11 @@ namespace EpLibrary.cs
          /// Check if the queue is empty.
         /// </summary>
          /// <returns>true if the queue is empty, otherwise false.</returns>
-		public bool IsEmpty()
+        public override bool IsEmpty()
         {
             lock(m_queueLock)
             {
-                return m_queue.Count==0;
+                return base.IsEmpty();
             }
         }
 
@@ -84,24 +83,24 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">obj to check</param>
         /// <returns>true if exists, otherwise false.</returns>
-		public bool IsExist(T data)
+        public override bool Contains(T data)
         {
             lock(m_queueLock)
             {
-                return m_queue.Contains(data);
+                return base.Contains(data);
             }
         }
 
        /// <summary>
         /// Return the size of the queue.
        /// </summary>
-		public int Count
+        public override int Count
         {
             get
             {
                 lock (m_queueLock)
                 {
-                    return m_queue.Count;
+                    return base.Count;
                 }
             }
         }
@@ -110,20 +109,20 @@ namespace EpLibrary.cs
         /// Return peek element
         /// </summary>
         /// <returns>the peek element of the queue </returns>
-        public T Peek()
+        public override T Peek()
         {
-            return Front();
+            return base.Peek();
         }
 
         /// <summary>
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-		public T Front()
+        public override T Front()
         {
             lock(m_queueLock)
             {
-                return m_queue.First();
+                return base.Front();
             }
         }
 
@@ -131,11 +130,11 @@ namespace EpLibrary.cs
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-		public T Back()
+        public override T Back()
         {
             lock(m_queueLock)
             {
-                return m_queue.Last();
+                return base.Back();
             }
         }
 
@@ -143,24 +142,22 @@ namespace EpLibrary.cs
         /// Insert the new item into the queue.
 		/// </summary>
         /// <param name="data">The inserting data.</param>
-		public virtual void Enqueue(T data)
+        public override void Enqueue(T data)
         {
             lock(m_queueLock)
             {
-                m_queue.AddLast(data);
+                base.Enqueue(data);
             }
         }
 
         /// <summary>
         /// Remove the first item from the queue.
         /// </summary>
-        public virtual T Dequeue()
+        public override T Dequeue()
         {
             lock (m_queueLock)
             {
-                T data=m_queue.First();
-                m_queue.Remove(m_queue.First);
-                return data;
+                return base.Dequeue();
             }
         }
 
@@ -170,17 +167,11 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(T data)
+        public override bool Erase(T data)
         {
             lock (m_queueLock)
             {
-                LinkedListNode<T> node = m_queue.Find(data);
-                if (node != null)
-                {
-                    m_queue.Remove(node);
-                    return true;
-                }
-                return false;
+                return base.Erase(data);
             }
 
         }
@@ -188,11 +179,11 @@ namespace EpLibrary.cs
         /// <summary>
         /// Clear the queue.
         /// </summary>
-		public void Clear()
+        public override void Clear()
         {
             lock (m_queueLock)
             {
-                m_queue.Clear();
+                base.Clear();
             }
         }
 
@@ -200,18 +191,13 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public LinkedList<T> GetQueue()
+        public override List<T> GetQueue()
         {
             lock (m_queueLock)
             {
-                return new LinkedList<T>(m_queue);
+                return base.GetQueue();
             }
         }
-
-        /// <summary>
-        /// Actual queue structure
-        /// </summary>
-        protected LinkedList<T> m_queue = new LinkedList<T>();
 
         /// <summary>
         /// lock

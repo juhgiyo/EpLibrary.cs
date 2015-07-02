@@ -1,9 +1,9 @@
 /*! 
-@file PriorityQueue.cs
+@file PQueue.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eplibrary.cs>
 @date April 01, 2014
-@brief PriorityQueue Interface
+@brief Priority Queue Interface
 @version 2.0
 
 @section LICENSE
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-A PriorityQueue Class.
+A PQueue Class.
 
 */
 using System;
@@ -48,7 +48,7 @@ namespace EpLibrary.cs
     /// A template PriorityQueue class
     /// </summary>
     /// <typeparam name="T">Queue element type</typeparam>
-    public sealed class PriorityQueue<T> where T : IComparable
+    public class PQueue<T>:IQueue<T> where T : IComparable<T>
     {
         /// <summary>
         /// Reverse order comparer
@@ -65,25 +65,24 @@ namespace EpLibrary.cs
         }
         IComparer<T> queueComparer = new ReverseOrderClass();
 
-        private List<T> m_data;
+        protected List<T> m_list = new List<T>();
 
-        public PriorityQueue()
+        public PQueue()
         {
-            this.m_data = new List<T>();
         }
 
-        public PriorityQueue(PriorityQueue<T> b)
+        public PQueue(PQueue<T> b)
         {
-            m_data = new List<T>(b.m_data);
+            m_list = new List<T>(b.m_list);
         }
 
         /// <summary>
         /// Check if the queue is empty.
         /// </summary>
         /// <returns>true if the queue is empty, otherwise false.</returns>
-        public bool IsEmpty()
+        public virtual bool IsEmpty()
         {
-            return m_data.Count == 0;
+            return m_list.Count == 0;
         }
 
         /// <summary>
@@ -91,19 +90,19 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="queueItem">item to check</param>
         /// <returns>true if exists, otherwise false</returns>
-        public bool Contains(T queueItem)
+        public virtual bool Contains(T queueItem)
         {
-            return m_data.Contains(queueItem);
+            return m_list.Contains(queueItem);
         }
 
         /// <summary>
         /// Return the number of element in the queue.
         /// </summary>
-        public int Count
+        public virtual int Count
         {
             get
             {
-                return m_data.Count;
+                return m_list.Count;
             }
         }
 
@@ -111,7 +110,7 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public T Peek()
+        public virtual T Peek()
         {
             return Front();
         }
@@ -120,18 +119,18 @@ namespace EpLibrary.cs
         /// Return the first item within the queue.
         /// </summary>
         /// <returns>the first element of the queue.</returns>
-        public T Front()
+        public virtual T Front()
         {
-            return m_data.Last();
+            return m_list.Last();
         }
 
         /// <summary>
         /// Return the last item within the queue.
         /// </summary>
         /// <returns>the last element of the queue.</returns>
-        public T Back()
+        public virtual T Back()
         {
-            return m_data.First();
+            return m_list.First();
         }
 
 
@@ -139,10 +138,10 @@ namespace EpLibrary.cs
         /// Insert the new item into the queue.
         /// </summary>
         /// <param name="queueItem">The inserting item.</param>
-        public void Enqueue(T queueItem)
+        public virtual void Enqueue(T queueItem)
         {
-            m_data.Add(queueItem);
-            m_data.Sort(queueComparer);
+            m_list.Add(queueItem);
+            m_list.Sort(queueComparer);
         }
 
 
@@ -150,10 +149,10 @@ namespace EpLibrary.cs
         /// Remove the first item from the queue.
         /// </summary>
         /// <returns>removed item</returns>
-        public T Dequeue()
+        public virtual T Dequeue()
         {
-            T frontItem = m_data[m_data.Count - 1];
-            m_data.RemoveAt(m_data.Count - 1);
+            T frontItem = m_list[m_list.Count - 1];
+            m_list.RemoveAt(m_list.Count - 1);
             return frontItem;
         }
 
@@ -162,15 +161,15 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">The data to erase.</param>
         /// <returns>true if successful, otherwise false</returns>
-        public bool Erase(T data)
+        public virtual bool Erase(T data)
         {
-            int idx = m_data.FindIndex(delegate(T i)
+            int idx = m_list.FindIndex(delegate(T i)
             {
                 return i.CompareTo(data) == 0;
             });
             if (idx >= 0)
             {
-                m_data.RemoveAt(idx);
+                m_list.RemoveAt(idx);
                 return true;
             }
             return false;
@@ -180,9 +179,9 @@ namespace EpLibrary.cs
         /// <summary>
         /// Clear the queue
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
-            m_data.Clear();
+            m_list.Clear();
         }
               
 
@@ -190,9 +189,9 @@ namespace EpLibrary.cs
         /// Return the actual queue structure
         /// </summary>
         /// <returns>the actual queue structure</returns>
-        public List<T> GetQueue()
+        public virtual List<T> GetQueue()
         {
-            return new List<T>(m_data);
+            return new List<T>(m_list);
         }
 
 
