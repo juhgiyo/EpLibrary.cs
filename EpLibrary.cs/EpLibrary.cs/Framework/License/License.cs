@@ -89,82 +89,92 @@ namespace EpLibrary.cs
     /// </summary>
     public class License
     {
-
-        /// <summary>
-        /// license crypt password
-        /// </summary>
-        private String m_password;
-        /// <summary>
-        /// license type
-        /// </summary>
-        private LicenseType m_licenseType;
-
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public License(String password,LicenseType licenseType)
-        {
-            m_password = password;
-            m_licenseType = licenseType;
-        }
-        /// <summary>
-        /// Default copy constructor
-        /// </summary>
-        /// <param name="b">the object to copy from</param>
-        public License(License b)
-        {
-            m_password = b.m_password;
-            m_licenseType = b.m_licenseType;
-        }
-
         /// <summary>
         /// Create License and return as string
         /// </summary>
         /// <param name="macAddress">mac address which licensed</param>
         /// <param name="dateTime">expiration date</param>
         /// <returns></returns>
-        public String CreateLicense(String macAddress=null, DateTime? expirationDate=null)
+        public static String CreateLicense(String password,LicenseType licenseType,String macAddress=null, DateTime? expirationDate=null)
         {
             String licenseData = "";
-            if ((m_licenseType & LicenseType.MacAddress) == LicenseType.MacAddress)
+            if ((licenseType & LicenseType.MacAddress) == LicenseType.MacAddress)
             {
-                licenseData += Crypt.GetCrypt(CryptAlgo.Rijndael, "macaddress:" + macAddress, m_password, CryptType.Encrypt);
+                licenseData += Crypt.GetCrypt(CryptAlgo.Rijndael, "macaddress:" + macAddress, password, CryptType.Encrypt);
                 licenseData += "\r\n";
             }
-            if ((m_licenseType & LicenseType.ExpireDate) == LicenseType.ExpireDate && expirationDate.HasValue)
+            if ((licenseType & LicenseType.ExpireDate) == LicenseType.ExpireDate && expirationDate.HasValue)
             {
-                licenseData += Crypt.GetCrypt(CryptAlgo.Rijndael, "expirationdate:" + expirationDate.Value.ToString("d"), m_password, CryptType.Encrypt);
+                licenseData += Crypt.GetCrypt(CryptAlgo.Rijndael, "expirationdate:" + expirationDate.Value.ToString("d"), password, CryptType.Encrypt);
                 licenseData += "\r\n";
             }
             return licenseData;
         }
 
         /// <summary>
+        /// Return encrypted Mac Address
+        /// </summary>
+        /// <param name="password">password</param>
+        /// <param name="licenseData">license data</param>
+        /// <returns>decrypted Mac Address</returns>
+        public static String GetDecryptedMacAddr(String password, String licenseData)
+        {
+            String[] lines = Regex.Split(licenseData, "\r\n");
+            String licensedMacAddress = null;
+            foreach (String line in lines)
+            {
+                String decryptedData = Crypt.GetCrypt(CryptAlgo.Rijndael, line, password, CryptType.Decrypt);
+                if (decryptedData!=null && decryptedData.Contains("macaddress:"))
+                {
+                    decryptedData=decryptedData.Remove(0, "macaddress:".Length);
+                    licensedMacAddress = decryptedData;
+                }
+            }
+            return licensedMacAddress;
+        }
+
+        public static DateTime? GetDecryptedExpirationDate(String password, String licenseData)
+        {
+            DateTime? expirationDate = null;
+            String[] lines = Regex.Split(licenseData, "\r\n");
+            foreach (String line in lines)
+            {
+                String decryptedData = Crypt.GetCrypt(CryptAlgo.Rijndael, line, password, CryptType.Decrypt);
+                if (decryptedData != null && decryptedData.Contains("expirationdate:"))
+                {
+                    decryptedData = decryptedData.Remove(0, "expirationdate:".Length);
+                    expirationDate = Convert.ToDateTime(decryptedData);
+                }
+            }
+            return expirationDate;
+        }
+
+
+        /// <summary>
         /// Check License with given license string
         /// </summary>
         /// <param name="licenseData">license string</param>
         /// <returns>result of checking</returns>
-        public LicenseResult CheckLicense(String licenseData)
+        public static LicenseResult CheckLicense(String password, LicenseType licenseType, String licenseData)
         {
             String licensedMacAddress = null;
             DateTime? expirationDate=null;
             String[] lines=Regex.Split(licenseData,"\r\n");
             foreach (String line in lines)
             {
-                String decryptedData = Crypt.GetCrypt(CryptAlgo.Rijndael, line, m_password, CryptType.Decrypt);
-                if (decryptedData.Contains("macaddress:"))
+                String decryptedData = Crypt.GetCrypt(CryptAlgo.Rijndael, line, password, CryptType.Decrypt);
+                if (decryptedData != null && decryptedData.Contains("macaddress:"))
                 {
-                    decryptedData.Remove(0, "macaddress:".Length);
+                    decryptedData = decryptedData.Remove(0, "macaddress:".Length);
                     licensedMacAddress = decryptedData;
                 }
-                else if (decryptedData.Contains("expirationdate:"))
+                else if (decryptedData != null && decryptedData.Contains("expirationdate:"))
                 {
-                    decryptedData.Remove(0, "expirationdate:".Length);
+                    decryptedData = decryptedData.Remove(0, "expirationdate:".Length);
                     expirationDate = Convert.ToDateTime(decryptedData);
                 }
             }
-            if ((m_licenseType & LicenseType.MacAddress) == LicenseType.MacAddress)
+            if ((licenseType & LicenseType.MacAddress) == LicenseType.MacAddress)
             {
                 if (licensedMacAddress == null)
                     return LicenseResult.CorruptedLicense;
@@ -172,7 +182,7 @@ namespace EpLibrary.cs
                     return LicenseResult.MacAddressMisMatch;
             }
 
-            if ((m_licenseType & LicenseType.ExpireDate) == LicenseType.ExpireDate)
+            if ((licenseType & LicenseType.ExpireDate) == LicenseType.ExpireDate)
             {
                 if (!expirationDate.HasValue)
                     return LicenseResult.CorruptedLicense;
@@ -203,10 +213,8 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="licenesedMacAddress">licensed mac address</param>
         /// <returns>true if matched otherwise false</returns>
-        private bool checkMacAddress(String licenesedMacAddress)
+        private static bool checkMacAddress(String licenesedMacAddress)
         {
-            List<String> macAddresses = new List<String>();
-
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (licenesedMacAddress.CompareTo(nic.GetPhysicalAddress().ToString()) == 0)
@@ -222,7 +230,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="expirationDate">expiration date</param>
         /// <returns>true if not expired otherwise false</returns>
-        private bool checkDate(DateTime expirationDate)
+        private static bool checkDate(DateTime expirationDate)
         {
 
             DateTime curTime= DateTime.Now;
