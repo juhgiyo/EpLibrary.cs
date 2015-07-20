@@ -79,7 +79,7 @@ namespace EpLibrary.cs
         /// Set the text with the given text
         /// </summary>
         /// <param name="val">the text value</param>
-		void SetText(String val)
+		public void SetText(String val)
         {
             lock(m_baseTextLock)
             {
@@ -92,7 +92,7 @@ namespace EpLibrary.cs
         /// Get the value of the text
         /// </summary>
         /// <returns>text value holding</returns>
-		String GetText()
+		public String GetText()
         {
             lock(m_baseTextLock)
             {
@@ -104,7 +104,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// Clear the text
         /// </summary>
-		void Clear()
+		public void Clear()
         {
             lock(m_baseTextLock)
             {

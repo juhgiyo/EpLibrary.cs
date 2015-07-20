@@ -183,6 +183,22 @@ namespace EpLibrary.cs
         }
 
         /// <summary>
+        /// Return the list of MAC Addresses
+        /// </summary>
+        /// <returns>the list of MAC Addresses</returns>
+        public static List<String> GetMacAddress()
+        {
+            List<String> macAddresses = new List<String>();
+
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if(nic.GetPhysicalAddress().ToString().Length>0)
+                    macAddresses.Add(nic.GetPhysicalAddress().ToString());
+            }
+            return macAddresses;
+        }
+
+        /// <summary>
         /// Check if current mac address matches licensed mac address
         /// </summary>
         /// <param name="licenesedMacAddress">licensed mac address</param>
@@ -198,6 +214,8 @@ namespace EpLibrary.cs
             }
             return false;
         }
+
+
 
         /// <summary>
         /// Check if license is expired with current date
