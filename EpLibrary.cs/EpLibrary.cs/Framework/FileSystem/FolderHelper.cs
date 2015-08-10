@@ -134,7 +134,7 @@ namespace EpLibrary.cs
         /// <returns>true if the folder exists, otherwise false</returns>
         public static bool IsPathExist(String path)
         {
-            return Directory.Exists(path);
+            return Directory.Exists(path) || File.Exists(path);
         }
 
         /// <summary>
