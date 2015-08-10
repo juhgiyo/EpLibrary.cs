@@ -130,11 +130,31 @@ namespace EpLibrary.cs
         /// <summary>
         /// Check if the given path exists
         /// </summary>
-        /// <param name="path">the file path to check</param>
-        /// <returns>true if the folder exists, otherwise false</returns>
+        /// <param name="path">the path to check</param>
+        /// <returns>true if the path exists, otherwise false</returns>
         public static bool IsPathExist(String path)
         {
             return Directory.Exists(path) || File.Exists(path);
+        }
+
+        /// <summary>
+        /// Check if the given directory exists
+        /// </summary>
+        /// <param name="path">the directory path to check</param>
+        /// <returns>true if the directory exists, otherwise false</returns>
+        public static bool IsDirectoryExist(String path)
+        {
+            return Directory.Exists(path);
+        }
+
+        /// <summary>
+        /// Check if the given file path exists
+        /// </summary>
+        /// <param name="path">the file path to check</param>
+        /// <returns>true if the file exists, otherwise false</returns>
+        public static bool IsFileExist(String path)
+        {
+            return File.Exists(path);
         }
 
         /// <summary>
