@@ -74,6 +74,7 @@
     <Compile Include="Framework\FileSystem\BaseTextFile.cs" />
     <Compile Include="Framework\FileSystem\BinaryFile.cs" />
     <Compile Include="Framework\FileSystem\FolderHelper.cs" />
+    <Compile Include="Framework\FileSystem\LogWorker.cs" />
     <Compile Include="Framework\FileSystem\LogWriter.cs" />
     <Compile Include="Framework\FileSystem\PropertiesFile.cs" />
     <Compile Include="Framework\FileSystem\TextFile.cs" />
