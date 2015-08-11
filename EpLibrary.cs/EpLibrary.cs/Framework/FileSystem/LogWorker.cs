@@ -149,7 +149,7 @@ namespace EpLibrary.cs
                         m_logQueue.Dequeue();
 
                         DateTime curTime = DateTime.Now;
-                        m_logString += "[" + curTime.Year + "-" + curTime.Month + "-" + curTime.Day + " " + curTime.Hour + ":" + curTime.Minute + ":" + curTime.Second + " -" + curTime.Millisecond + "] : " + logString + "\r\n";
+                        m_logString += "[" + curTime.Year + "-" + curTime.Month + "-" + curTime.Day + " " + curTime.Hour + ":" + curTime.Minute + ":" + curTime.Second + "-" + curTime.Millisecond + "] : " + logString + "\r\n";
                     }
                 }
 
