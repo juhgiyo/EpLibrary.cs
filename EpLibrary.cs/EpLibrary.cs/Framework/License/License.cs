@@ -43,6 +43,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace EpLibrary.cs
 {
@@ -133,6 +134,12 @@ namespace EpLibrary.cs
             return licensedMacAddress;
         }
 
+        /// <summary>
+        /// Get Decrypted Expiration Date with license data
+        /// </summary>
+        /// <param name="password">password</param>
+        /// <param name="licenseData">license data</param>
+        /// <returns>retrieved expiration date</returns>
         public static DateTime? GetDecryptedExpirationDate(String password, String licenseData)
         {
             DateTime? expirationDate = null;
@@ -149,6 +156,21 @@ namespace EpLibrary.cs
             return expirationDate;
         }
 
+        /// <summary>
+        /// Get license data from the stream
+        /// </summary>
+        /// <param name="reader">stream reader</param>
+        /// <returns>retrieved license data</returns>
+        public static string GetLicenseDataFromStream(StringReader reader)
+        {
+            string licenseData = null;
+            string tmpData = null;
+            while ((tmpData = reader.ReadLine()) != null)
+            {
+                licenseData += tmpData + "\r\n";
+            }
+            return licenseData;
+        }
 
         /// <summary>
         /// Check License with given license string
