@@ -184,6 +184,8 @@ namespace EpLibrary.cs
             String[] lines=Regex.Split(licenseData,"\r\n");
             foreach (String line in lines)
             {
+                if(line.Trim().Equals(""))
+                    continue;
                 String decryptedData = Crypt.GetCrypt(CryptAlgo.Rijndael, line, password, CryptType.Decrypt);
                 if (decryptedData != null && decryptedData.Contains("macaddress:"))
                 {
