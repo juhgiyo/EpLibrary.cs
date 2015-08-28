@@ -94,7 +94,8 @@ namespace EpLibrary.cs
         /// <returns>the path of the executable</returns>
         public static string GetApplicationPath()
         {
-            return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+            //return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+            return FolderHelper.GetModuleFileDirectory();
         }
     }
 }
