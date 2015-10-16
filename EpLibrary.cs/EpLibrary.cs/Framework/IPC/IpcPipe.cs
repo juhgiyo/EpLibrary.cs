@@ -44,6 +44,7 @@ using System.Threading;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
@@ -319,7 +320,7 @@ namespace EpLibrary.cs
             {
                 m_writeQueue.Clear();
             }
-            Thread t = new Thread(delegate()
+            Task t = new Task(delegate()
             {
                 m_options.m_callBackObj.OnDisconnected(this);
             });
