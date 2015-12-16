@@ -127,11 +127,15 @@ namespace EpLibrary.cs
                 try
                 {
 
-                    m_writer = new StreamWriter(filename, false, m_encoding);
-                    writeLoop();
-                    m_writer.Flush();
-                    m_writer.Close();
-                    return true;
+                    using (m_writer = new StreamWriter(filename, false, m_encoding))
+                    {
+                        writeLoop();
+                        m_writer.Flush();
+                        m_writer.Close();
+                        m_writer = null;
+                        return true;
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -155,11 +159,15 @@ namespace EpLibrary.cs
                 try
                 {
 
-                    m_writer = new StreamWriter(filename, true, m_encoding);
-                    writeLoop();
-                    m_writer.Flush();
-                    m_writer.Close();
-                    return true;
+                    using (m_writer = new StreamWriter(filename, true, m_encoding))
+                    {
+                        writeLoop();
+                        m_writer.Flush();
+                        m_writer.Close();
+                        m_writer = null;
+                        return true;
+
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -181,10 +189,13 @@ namespace EpLibrary.cs
             {
                 try
                 {
-                    m_reader=new StreamReader(filename,m_encoding,true);
-                    loadFromFile(m_reader);
-                    m_reader.Close();
-                    return true;
+                    using (m_reader = new StreamReader(filename, m_encoding, true))
+                    {
+                        loadFromFile(m_reader);
+                        m_reader.Close();
+                        m_reader = null;
+                        return true;
+                    }
                 }
                 catch (Exception ex)
                 {
