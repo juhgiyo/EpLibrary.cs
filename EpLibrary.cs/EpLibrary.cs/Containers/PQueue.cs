@@ -53,10 +53,8 @@ namespace EpLibrary.cs
         /// <summary>
         /// Reverse order comparer
         /// </summary>
-        public class ReverseOrderClass : IComparer<T>
+        public sealed class ReverseOrderClass : IComparer<T>
         {
-
-            
             // Calls CaseInsensitiveComparer.Compare with the parameters reversed. 
             int IComparer<T>.Compare(T x, T y)
             {

@@ -48,7 +48,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// Log Worker
     /// </summary>
-    public class LogWorker : BaseTextFile
+    public class LogWorker : BaseTextFile, IDisposable
     {
         /// <summary>
         /// Loggin stop event
@@ -107,7 +107,7 @@ namespace EpLibrary.cs
         /// </summary>
         ~LogWorker()
         {
-            stop();
+            Dispose(false);
         }
 
         /// <summary>
@@ -195,6 +195,37 @@ namespace EpLibrary.cs
         /// <param name="stream"></param>
         protected override void loadFromFile(StreamReader stream)
         {
+        }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        private void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            stop();
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_threadStopEvent != null)
+                {
+                    m_threadStopEvent.Dispose();
+                    m_threadStopEvent = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
         }
     }
 }

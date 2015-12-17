@@ -47,16 +47,8 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class for Binary File.
     /// </summary>
-    public class BinaryFile
+    public class BinaryFile: IDisposable
     {
-        /// <summary>
-        /// Binary stream reader
-        /// </summary>
-        protected BinaryReader m_reader=null;
-        /// <summary>
-        /// Binary stream writer
-        /// </summary>
-        protected BinaryWriter m_writer=null;
         /// <summary>
         /// stream
         /// </summary>
@@ -81,8 +73,7 @@ namespace EpLibrary.cs
         {
             lock (b.m_baseBinaryLock)
             {
-                m_reader = b.m_reader;
-                m_writer = b.m_writer;
+                m_stream = b.m_stream;
             }
         }
 
@@ -99,19 +90,15 @@ namespace EpLibrary.cs
                 try
                 {
 
-                    m_writer = new BinaryWriter(File.Open(filename, FileMode.Create));
-                    m_writer.Write(m_stream.ToArray());
-                    m_writer.Flush();
-                    m_writer.Close();
+                    using (BinaryWriter writer = new BinaryWriter(File.Open(filename, FileMode.Create)))
+                    {
+                        writer.Write(m_stream.ToArray());
+                        writer.Flush();
+                    }
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    if (m_writer != null)
-                    {
-                        m_writer.Close();
-                        m_writer = null;
-                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
@@ -130,19 +117,14 @@ namespace EpLibrary.cs
                 try
                 {
 
-                    m_writer = new BinaryWriter(File.Open(filename,FileMode.Append));
-                    m_writer.Write(m_stream.ToArray());
-                    m_writer.Flush();
-                    m_writer.Close();
+                    using(BinaryWriter writer = new BinaryWriter(File.Open(filename,FileMode.Append))){
+                        writer.Write(m_stream.ToArray());
+                        writer.Flush();
+                    }
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    if (m_writer != null)
-                    {
-                        m_writer.Close();
-                        m_writer = null;
-                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
@@ -161,21 +143,17 @@ namespace EpLibrary.cs
             {
                 try
                 {
-                    m_reader = new BinaryReader(File.Open(filename, FileMode.Open));
-                    FileInfo fInfo = new FileInfo(filename);
-                    m_stream.SetLength(fInfo.Length);
-                    m_reader.Read(m_stream.GetBuffer(),0,(int)fInfo.Length);
-                    m_reader.Close();
-                    m_stream.Seek(0, SeekOrigin.Begin);
+                    using (BinaryReader reader = new BinaryReader(File.Open(filename, FileMode.Open)))
+                    {
+                        FileInfo fInfo = new FileInfo(filename);
+                        m_stream.SetLength(fInfo.Length);
+                        reader.Read(m_stream.GetBuffer(), 0, (int)fInfo.Length);
+                        m_stream.Seek(0, SeekOrigin.Begin);
+                    }
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    if (m_reader != null)
-                    {
-                        m_reader.Close();
-                        m_reader = null;
-                    }
                     Console.WriteLine(ex.Message + " >" + ex.StackTrace);
                     return false;
                 }
@@ -205,6 +183,36 @@ namespace EpLibrary.cs
             {
                 m_stream = stream;
             }
+        }
+
+          bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_stream != null)
+                {
+                    m_stream.Dispose();
+                    m_stream = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
         }
     }
 }

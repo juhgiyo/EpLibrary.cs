@@ -50,7 +50,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class that handles the event functionality.
     /// </summary>
-    public sealed class EventEx:BaseLock
+    public sealed class EventEx:BaseLock, IDisposable
     {
         /// <summary>
         /// event
@@ -206,7 +206,36 @@ namespace EpLibrary.cs
         {
             return m_event;
         }
-	
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        private void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_event != null)
+                {
+                    m_event.Dispose();
+                    m_event = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
 
         
     }

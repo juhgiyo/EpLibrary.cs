@@ -168,15 +168,14 @@ namespace EpLibrary.cs
             {
                 ICryptoTransform cryptoTranform = (cryptType == CryptType.Encrypt) ? crypAlg.CreateEncryptor() : crypAlg.CreateDecryptor();
 
-                using (MemoryStream memStream = new MemoryStream())
+                MemoryStream memStream = new MemoryStream();
+                using (CryptoStream cryptStream = new CryptoStream(memStream, cryptoTranform, CryptoStreamMode.Write))
                 {
-                    using (CryptoStream cryptStream = new CryptoStream(memStream, cryptoTranform, CryptoStreamMode.Write))
-                    {
-                        cryptStream.Write(cryptData, offset, count);
-                        cryptStream.FlushFinalBlock();
-                        return memStream.ToArray();
-                    }
+                    cryptStream.Write(cryptData, offset, count);
+                    cryptStream.FlushFinalBlock();
+                    return memStream.ToArray();
                 }
+
             }
             catch (Exception ex)
             {

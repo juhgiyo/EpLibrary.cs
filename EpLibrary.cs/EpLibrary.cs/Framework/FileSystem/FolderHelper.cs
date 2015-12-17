@@ -334,7 +334,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// his is a class for Open File Dialog
     /// </summary>
-	public class OpenFileDialogEx
+	public class OpenFileDialogEx : IDisposable
     {
 	    private OpenFileDialog openFileDialog=new OpenFileDialog();
         private IWin32Window owner = null;
@@ -408,13 +408,44 @@ namespace EpLibrary.cs
             return openFileDialog.ShowDialog();
         }
 
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (openFileDialog != null)
+                {
+                    openFileDialog.Dispose();
+                    openFileDialog = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
+
 	}
 
 
     /// <summary>
     /// This is a class for Open Multi-File Dialog
     /// </summary>
-	public class OpenMultiFileDialog{
+    public class OpenMultiFileDialog : IDisposable
+    {
 		private OpenFileDialog openFileDialog=new OpenFileDialog();
         private IWin32Window owner = null;
 
@@ -456,12 +487,42 @@ namespace EpLibrary.cs
                 return openFileDialog.ShowDialog(owner);
             return openFileDialog.ShowDialog();
         }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (openFileDialog != null)
+                {
+                    openFileDialog.Dispose();
+                    openFileDialog = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
 	}
 
     /// <summary>
     /// This is a class for Open Folder Dialog
     /// </summary>
-	public class OpenFolderDialog
+    public class OpenFolderDialog : IDisposable
     {
 	    private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
         private IWin32Window owner = null;
@@ -501,13 +562,43 @@ namespace EpLibrary.cs
                 return folderBrowserDialog.ShowDialog(owner);
             return folderBrowserDialog.ShowDialog();
         }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (folderBrowserDialog != null)
+                {
+                    folderBrowserDialog.Dispose();
+                    folderBrowserDialog = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
 	}
 
 
     /// <summary>
     /// This is a class for Save File Dialog
     /// </summary>
-	public class SaveFileDialogEx
+    public class SaveFileDialogEx : IDisposable
     {
 	    private SaveFileDialog saveFileDialog=new SaveFileDialog();
         private IWin32Window owner = null;
@@ -578,6 +669,36 @@ namespace EpLibrary.cs
             if (owner != null)
                 return saveFileDialog.ShowDialog(owner);
             return saveFileDialog.ShowDialog();
+        }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (saveFileDialog != null)
+                {
+                    saveFileDialog.Dispose();
+                    saveFileDialog = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
         }
 
 	};

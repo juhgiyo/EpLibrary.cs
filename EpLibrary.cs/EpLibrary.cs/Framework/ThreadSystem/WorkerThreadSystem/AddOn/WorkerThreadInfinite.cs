@@ -48,7 +48,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class that implements infinite-looping Worker Thread Class.
     /// </summary>
-    public sealed class WorkerThreadInfinite:BaseWorkerThread
+    public sealed class WorkerThreadInfinite:BaseWorkerThread, IDisposable
     {
 
         /// <summary>
@@ -131,6 +131,36 @@ namespace EpLibrary.cs
                     jobPtr.JobReport(JobStatus.INCOMPLETE);
                 }
             }
+        }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        private void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_terminateEvent != null)
+                {
+                    m_terminateEvent.Dispose();
+                    m_terminateEvent = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
         }
 
     }

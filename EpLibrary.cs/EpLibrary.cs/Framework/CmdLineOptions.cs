@@ -38,6 +38,7 @@ A CmdLineOptions Class.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 
@@ -46,7 +47,8 @@ namespace EpLibrary.cs
     /// <summary>
     /// A CmdLine Options class.
     /// </summary>
-    public class CmdLineOptions: Dictionary<String,CmdLineOptions.CmdArgs>
+    [Serializable]
+    public class CmdLineOptions : Dictionary<String, CmdLineOptions.CmdArgs>, ISerializable
     {
         /// <summary>
         /// A CmdLine Argument List class.
@@ -67,6 +69,17 @@ namespace EpLibrary.cs
         /// Default constructor
         /// </summary>
         public CmdLineOptions(): base(StringComparer.OrdinalIgnoreCase)
+        {
+
+        }
+
+        /// <summary>
+        /// Serialization constructor
+        /// </summary>
+        /// <param name="info">info</param>
+        /// <param name="context">context</param>
+        protected CmdLineOptions(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
 
         }
@@ -196,5 +209,6 @@ namespace EpLibrary.cs
 	        }
 	        return false;
         }
+        
     }
 }

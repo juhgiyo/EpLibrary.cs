@@ -47,7 +47,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// A class that handles the mutex functionality
     /// </summary>
-    public class MutexEx:BaseLock
+    public class MutexEx:BaseLock, IDisposable
     {
         /// <summary>
         /// lock
@@ -181,6 +181,35 @@ namespace EpLibrary.cs
             return m_isMutexAbandoned;
         }
 
-        
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_mutex != null)
+                {
+                    m_mutex.Dispose();
+                    m_mutex = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
     }
 }

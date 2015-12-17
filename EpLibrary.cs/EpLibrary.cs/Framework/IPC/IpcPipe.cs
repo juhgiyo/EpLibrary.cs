@@ -144,7 +144,7 @@ namespace EpLibrary.cs
     /// <summary>
     /// IPC Pipe class
     /// </summary>
-    public sealed class IpcPipe:IpcInterface
+    public sealed class IpcPipe:IpcInterface, IDisposable
     {
 
         /// <summary>
@@ -443,6 +443,35 @@ namespace EpLibrary.cs
             }
         }
 
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        private void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_pipeHandle != null)
+                {
+                    m_pipeHandle.Dispose();
+                    m_pipeHandle = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
+        }
 
     }
 }

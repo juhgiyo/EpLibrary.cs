@@ -100,6 +100,7 @@
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\BaseWorkerThread.cs" />
     <Compile Include="Framework\ThreadSystem\WorkerThreadSystem\WorkerThreadFactory.cs" />
     <Compile Include="Framework\WebRequestEx.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUI\TaskbarNotifier.cs">
       <SubType>Form</SubType>
     </Compile>

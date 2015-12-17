@@ -48,7 +48,7 @@ using System.Threading.Tasks;
 
 namespace EpLibrary.cs
 {
-    public sealed class IpcClient : ThreadEx, IpcClientInterface
+    public sealed class IpcClient : ThreadEx, IpcClientInterface, IDisposable
     {
         /// <summary>
         /// connect wait time in milliseconds
@@ -377,6 +377,36 @@ namespace EpLibrary.cs
                     pipeInst.m_options.m_callBackObj.OnWriteComplete(pipeInst, IpcWriteStatus.SUCCESS);
                 }
             }
+        }
+
+        bool m_disposed = false;
+
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        private void Dispose(bool disposing)
+        {
+            if (m_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                if (m_pipeHandle != null)
+                {
+                    m_pipeHandle.Dispose();
+                    m_pipeHandle = null;
+                }
+            }
+
+            // Free any unmanaged objects here.
+            m_disposed = true;
         }
 
     }

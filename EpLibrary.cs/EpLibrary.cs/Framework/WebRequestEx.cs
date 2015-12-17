@@ -137,7 +137,6 @@ namespace EpLibrary.cs
                     {
                         e.Result.CopyTo(stream);
                         stream.Flush();
-                        stream.Close();
                         doneEvent.SetEvent();
                     }
 
@@ -197,7 +196,6 @@ namespace EpLibrary.cs
                     {
                         e.Result.CopyTo(stream);
                         stream.Flush();
-                        stream.Close();
                     }
 
                 }
