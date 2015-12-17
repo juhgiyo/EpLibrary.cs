@@ -214,5 +214,7 @@ namespace EpLibrary.cs
             // Free any unmanaged objects here.
             m_disposed = true;
         }
+
+        ~BinaryFile() { Dispose(false); }
     }
 }

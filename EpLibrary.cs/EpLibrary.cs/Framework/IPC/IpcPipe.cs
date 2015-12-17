@@ -216,7 +216,7 @@ namespace EpLibrary.cs
         /// </summary>
 		~IpcPipe()
         {
-            KillConnection();
+            Dispose(false);
         }
 
         /// <summary>
@@ -459,6 +459,7 @@ namespace EpLibrary.cs
             if (m_disposed)
                 return;
 
+            KillConnection();
             if (disposing)
             {
                 // Free any other managed objects here.

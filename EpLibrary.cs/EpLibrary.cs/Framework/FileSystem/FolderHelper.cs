@@ -438,6 +438,8 @@ namespace EpLibrary.cs
             m_disposed = true;
         }
 
+        ~OpenFileDialogEx() { Dispose(false); }
+
 	}
 
 
@@ -517,6 +519,8 @@ namespace EpLibrary.cs
             // Free any unmanaged objects here.
             m_disposed = true;
         }
+
+        ~OpenMultiFileDialog() { Dispose(false); }
 	}
 
     /// <summary>
@@ -592,6 +596,8 @@ namespace EpLibrary.cs
             // Free any unmanaged objects here.
             m_disposed = true;
         }
+
+        ~OpenFolderDialog() { Dispose(false); }
 	}
 
 
@@ -700,6 +706,8 @@ namespace EpLibrary.cs
             // Free any unmanaged objects here.
             m_disposed = true;
         }
+
+        ~SaveFileDialogEx() { Dispose(false); }
 
 	};
 }

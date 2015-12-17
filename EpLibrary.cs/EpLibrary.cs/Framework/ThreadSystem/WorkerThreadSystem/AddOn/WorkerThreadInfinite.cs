@@ -163,5 +163,7 @@ namespace EpLibrary.cs
             m_disposed = true;
         }
 
+        ~WorkerThreadInfinite() { Dispose(false); }
+
     }
 }

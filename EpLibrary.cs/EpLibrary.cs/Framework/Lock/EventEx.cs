@@ -237,6 +237,7 @@ namespace EpLibrary.cs
             m_disposed = true;
         }
 
+        ~EventEx() { Dispose(false); }
         
     }
 }

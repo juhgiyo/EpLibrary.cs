@@ -94,7 +94,7 @@ namespace EpLibrary.cs
         /// </summary>
 		~IpcClient()
         {
-            Disconnect();
+            Dispose(false);
         }
 
         /// <summary>
@@ -394,6 +394,9 @@ namespace EpLibrary.cs
         {
             if (m_disposed)
                 return;
+
+            Disconnect();
+
 
             if (disposing)
             {
