@@ -408,7 +408,14 @@ namespace EpLibrary.cs
             return openFileDialog.ShowDialog();
         }
 
-        bool m_disposed = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Default initialization for a bool is 'false'</remarks>
+        private bool IsDisposed { get; set; }
 
         public void Dispose()
         {
@@ -419,23 +426,29 @@ namespace EpLibrary.cs
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool isDisposing)
         {
-            if (m_disposed)
-                return;
-
-            if (disposing)
+            try
             {
-                // Free any other managed objects here.
-                if (openFileDialog != null)
+                if (!this.IsDisposed)
                 {
-                    openFileDialog.Dispose();
-                    openFileDialog = null;
+                    if (isDisposing)
+                    {
+                        // Free any other managed objects here.
+                        if (openFileDialog != null)
+                        {
+                            openFileDialog.Dispose();
+                            openFileDialog = null;
+                        }
+                     }
+
+                    // Free any unmanaged objects here.
                 }
             }
-
-            // Free any unmanaged objects here.
-            m_disposed = true;
+            finally
+            {
+                this.IsDisposed = true;
+            }
         }
 
         ~OpenFileDialogEx() { Dispose(false); }
@@ -490,7 +503,14 @@ namespace EpLibrary.cs
             return openFileDialog.ShowDialog();
         }
 
-        bool m_disposed = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Default initialization for a bool is 'false'</remarks>
+        private bool IsDisposed { get; set; }
 
         public void Dispose()
         {
@@ -501,23 +521,29 @@ namespace EpLibrary.cs
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool isDisposing)
         {
-            if (m_disposed)
-                return;
-
-            if (disposing)
+            try
             {
-                // Free any other managed objects here.
-                if (openFileDialog != null)
+                if (!this.IsDisposed)
                 {
-                    openFileDialog.Dispose();
-                    openFileDialog = null;
+                    if (isDisposing)
+                    {
+                        // Free any other managed objects here.
+                        if (openFileDialog != null)
+                        {
+                            openFileDialog.Dispose();
+                            openFileDialog = null;
+                        }
+                    }
+
+                    // Free any unmanaged objects here.
                 }
             }
-
-            // Free any unmanaged objects here.
-            m_disposed = true;
+            finally
+            {
+                this.IsDisposed = true;
+            }
         }
 
         ~OpenMultiFileDialog() { Dispose(false); }
@@ -567,7 +593,14 @@ namespace EpLibrary.cs
             return folderBrowserDialog.ShowDialog();
         }
 
-        bool m_disposed = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Default initialization for a bool is 'false'</remarks>
+        private bool IsDisposed { get; set; }
 
         public void Dispose()
         {
@@ -578,23 +611,29 @@ namespace EpLibrary.cs
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool isDisposing)
         {
-            if (m_disposed)
-                return;
-
-            if (disposing)
+            try
             {
-                // Free any other managed objects here.
-                if (folderBrowserDialog != null)
+                if (!this.IsDisposed)
                 {
-                    folderBrowserDialog.Dispose();
-                    folderBrowserDialog = null;
+                    if (isDisposing)
+                    {
+                        // Free any other managed objects here.
+                        if (folderBrowserDialog != null)
+                        {
+                            folderBrowserDialog.Dispose();
+                            folderBrowserDialog = null;
+                        }
+                    }
+
+                    // Free any unmanaged objects here.
                 }
             }
-
-            // Free any unmanaged objects here.
-            m_disposed = true;
+            finally
+            {
+                this.IsDisposed = true;
+            }
         }
 
         ~OpenFolderDialog() { Dispose(false); }
@@ -677,7 +716,14 @@ namespace EpLibrary.cs
             return saveFileDialog.ShowDialog();
         }
 
-        bool m_disposed = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Default initialization for a bool is 'false'</remarks>
+        private bool IsDisposed { get; set; }
 
         public void Dispose()
         {
@@ -688,23 +734,29 @@ namespace EpLibrary.cs
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool isDisposing)
         {
-            if (m_disposed)
-                return;
-
-            if (disposing)
+            try
             {
-                // Free any other managed objects here.
-                if (saveFileDialog != null)
+                if (!this.IsDisposed)
                 {
-                    saveFileDialog.Dispose();
-                    saveFileDialog = null;
+                    if (isDisposing)
+                    {
+                        // Free any other managed objects here.
+                        if (saveFileDialog != null)
+                        {
+                            saveFileDialog.Dispose();
+                            saveFileDialog = null;
+                        }
+                    }
+
+                    // Free any unmanaged objects here.
                 }
             }
-
-            // Free any unmanaged objects here.
-            m_disposed = true;
+            finally
+            {
+                this.IsDisposed = true;
+            }
         }
 
         ~SaveFileDialogEx() { Dispose(false); }

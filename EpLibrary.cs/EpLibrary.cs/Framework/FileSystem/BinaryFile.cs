@@ -185,7 +185,14 @@ namespace EpLibrary.cs
             }
         }
 
-          bool m_disposed = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is disposed.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>Default initialization for a bool is 'false'</remarks>
+        private bool IsDisposed { get; set; }
 
         public void Dispose()
         {
@@ -196,23 +203,29 @@ namespace EpLibrary.cs
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool isDisposing)
         {
-            if (m_disposed)
-                return;
-
-            if (disposing)
+            try
             {
-                // Free any other managed objects here.
-                if (m_stream != null)
+                if (!this.IsDisposed)
                 {
-                    m_stream.Dispose();
-                    m_stream = null;
+                    if (isDisposing)
+                    {
+                        // Free any other managed objects here.
+                        if (m_stream != null)
+                        {
+                            m_stream.Dispose();
+                            m_stream = null;
+                        }
+                    }
+
+                    // Free any unmanaged objects here.
                 }
             }
-
-            // Free any unmanaged objects here.
-            m_disposed = true;
+            finally
+            {
+                this.IsDisposed = true;
+            }
         }
 
         ~BinaryFile() { Dispose(false); }
