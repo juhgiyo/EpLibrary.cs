@@ -12,6 +12,10 @@ You will no longer have to create the basic functionalities over and over again.
 EpLibrary.cs supports Visual C# 2012.
 Source can be downloaded at [EpLibrary](http://github.com/juhgiyo/eplibrary.cs)
 
+Nuget Package
+------------
+[Nuget Package](https://www.nuget.org/packages/EpLibrary.cs/)
+
 
 FEATURES
 --------
