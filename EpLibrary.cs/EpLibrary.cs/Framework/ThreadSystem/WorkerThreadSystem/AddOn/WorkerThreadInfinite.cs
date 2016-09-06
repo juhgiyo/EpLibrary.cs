@@ -81,7 +81,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="waitTimeInMilliSec">the time-out interval, in milliseconds.</param>
         /// <returns>the terminate result of the thread</returns>
-        public new TerminateResult TerminateWorker(int waitTimeInMilliSec= Timeout.Infinite)
+        public override TerminateResult TerminateWorker(int waitTimeInMilliSec= Timeout.Infinite)
         {
             m_terminateEvent.SetEvent();
 	        Resume();

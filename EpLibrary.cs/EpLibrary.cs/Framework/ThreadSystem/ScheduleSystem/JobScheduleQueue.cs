@@ -80,7 +80,7 @@ namespace EpLibrary.cs
         /// </summary>
         /// <param name="data">the schedule policy holder to erase</param>
         /// <returns>true if successful, otherwise false.</returns>
-		public new bool Erase(BaseJob data)
+		public override bool Erase(BaseJob data)
         {
             lock(m_queueLock)
             {

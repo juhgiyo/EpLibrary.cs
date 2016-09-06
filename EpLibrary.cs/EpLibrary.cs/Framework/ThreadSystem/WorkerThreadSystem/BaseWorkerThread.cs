@@ -227,7 +227,7 @@ namespace EpLibrary.cs
         /// <summary>
         /// Pure Worker Thread Code.
         /// </summary>
-		protected new abstract void execute();
+		protected abstract void execute();
 
         /// <summary>
         /// Call the Call Back Class if callback class is assigned.
