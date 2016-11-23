@@ -1,9 +1,9 @@
-/*! 
-@file SingletonHolder.cs
+﻿/*! 
+@file Singleton.cs
 @author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
 		<http://github.com/juhgiyo/eplibrary.cs>
 @date April 01, 2014
-@brief SingletonHolder Interface
+@brief Singleton Interface
 @version 2.0
 
 @section LICENSE
@@ -32,52 +32,50 @@ THE SOFTWARE.
 
 @section DESCRIPTION
 
-A SingletonHolder Class.
+A Singleton Class.
 
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
+using System.Reflection;  
 
 namespace EpLibrary.cs
 {
-    /// <summary>
-    /// This is a template holding class for Singleton classes  
-    /// </summary>
-    /// <typeparam name="T">Class to make singlton</typeparam>
-    public sealed class SingletonHolder<T> where T :class, new()
+    public class Singleton<T> where T:class
     {
-        /// <summary>
-        /// singleton instance
-        /// </summary>
+        private static object syncRoot = new object();
         private static volatile T m_instance = null;
-        private static object syncRoot = new Object();
 
-        private SingletonHolder()
-        {
-        }
-
-        /// <summary>
-        /// Get the Singleton Instance of the Object
-        /// </summary>
         public static T Instance
         {
             get
             {
                 if (m_instance == null)
                 {
-                    lock (syncRoot)
-                    {
-                        if (m_instance == null)
-                        {
-                            m_instance = new T();
-                        }
-                    }
+                    CreateInstance();
                 }
                 return m_instance;
             }
         }
+
+        private static void CreateInstance()
+        {
+            lock (syncRoot)
+            {
+                if (m_instance == null)
+                {
+                    Type t = typeof(T);
+
+                    // Ensure there are no public constructors...  
+                    ConstructorInfo[] ctors = t.GetConstructors();
+                    if (ctors.Length > 0)
+                    {
+                        throw new InvalidOperationException(String.Format("{0} has at least one accessible ctor making it impossible to enforce singleton behaviour", t.Name));
+                    }
+
+                    // Create an instance via the private constructor  
+                    m_instance = (T)Activator.CreateInstance(t, true);
+                }
+            }
+        }   
     }
 }

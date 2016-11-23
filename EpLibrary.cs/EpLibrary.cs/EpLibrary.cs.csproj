@@ -90,6 +90,7 @@
     <Compile Include="Framework\Lock\InterlockedEx.cs" />
     <Compile Include="Framework\Lock\MutexEx.cs" />
     <Compile Include="Framework\Lock\NoLock.cs" />
+    <Compile Include="Framework\Singleton.cs" />
     <Compile Include="Framework\SingletonHolder.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJob.cs" />
     <Compile Include="Framework\ThreadSystem\JobSystem\BaseJobProcessor.cs" />
