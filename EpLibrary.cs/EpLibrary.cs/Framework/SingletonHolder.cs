@@ -47,12 +47,12 @@ namespace EpLibrary.cs
     /// This is a template holding class for Singleton classes  
     /// </summary>
     /// <typeparam name="T">Class to make singlton</typeparam>
-    public sealed class SingletonHolder<T> where T :class, new()
+    public sealed class SingletonHolder<T> where T : new()
     {
         /// <summary>
         /// singleton instance
         /// </summary>
-        private static volatile T m_instance = null;
+        private static T m_instance;
         private static object syncRoot = new Object();
 
         private SingletonHolder()
