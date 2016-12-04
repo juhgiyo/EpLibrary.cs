@@ -86,6 +86,7 @@ namespace EpLibrary.cs
         {
             m_fileName = FolderHelper.GetModuleFileName();
             m_fileName = m_fileName.Replace(".EXE", ".log");
+            m_fileName = m_fileName.Replace(".exe", ".log");
          
 
         }
@@ -99,6 +100,7 @@ namespace EpLibrary.cs
             {
                 m_fileName = FolderHelper.GetModuleFileName();
                 m_fileName = m_fileName.Replace(".EXE", ".log");
+                m_fileName = m_fileName.Replace(".exe", ".log");
             }
             else
                 m_fileName = logFilename;
