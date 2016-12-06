@@ -90,7 +90,7 @@ namespace EpLibrary.cs
                 procStartInfo.RedirectStandardOutput = redirectStdOutput;
                 procStartInfo.UseShellExecute = false;
                 // Do not create the black window.
-                procStartInfo.CreateNoWindow = isShowWindow;
+                procStartInfo.CreateNoWindow = !isShowWindow;
                 // Now we create a process, assign its ProcessStartInfo and start it
                 Process proc = new Process();
                 proc.StartInfo = procStartInfo;
