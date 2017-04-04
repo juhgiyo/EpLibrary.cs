@@ -120,7 +120,17 @@ namespace EpLibrary.cs
         /// <returns>the first element of the queue.</returns>
         public virtual T Front()
         {
-            return m_list.Last();
+            if (m_list == null)
+                throw new ArgumentNullException();
+            try
+            {
+                return m_list[m_list.Count - 1];
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException();
+            }
+            
         }
 
         /// <summary>
@@ -129,7 +139,17 @@ namespace EpLibrary.cs
         /// <returns>the last element of the queue.</returns>
         public virtual T Back()
         {
-            return m_list.First();
+            if (m_list == null)
+                throw new ArgumentNullException();
+            try
+            {
+                return m_list[0];
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException();
+            }
+            
         }
 
 
