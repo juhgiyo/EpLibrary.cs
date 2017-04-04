@@ -160,9 +160,9 @@ namespace EpLibrary.cs
         public virtual void Enqueue(T queueItem)
         {
             int idx = m_list.BinarySearch(queueItem, queueComparer);
-            if (idx <= 0)
+            if (idx < 0)
             {
-                m_list.Insert(0, queueItem);
+                m_list.Insert(~idx, queueItem);
             }
             else
             {
