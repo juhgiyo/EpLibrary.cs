@@ -162,7 +162,7 @@ namespace EpLibrary.cs
             int idx = m_list.BinarySearch(queueItem, queueComparer);
             if (idx <= 0)
             {
-                m_list.Insert(~idx, queueItem);
+                m_list.Insert(0, queueItem);
             }
             else
             {
